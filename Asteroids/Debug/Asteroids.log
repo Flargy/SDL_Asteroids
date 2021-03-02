@@ -1,28 +1,2 @@
-﻿  Alien.cpp
-  Asteroid.cpp
-  CollidableObject.cpp
-  CollisionHandler.cpp
-  Game.cpp
-  main.cpp
-  Player.cpp
-  Projectile.cpp
-  Renderer.cpp
-C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(123,46): warning C4838: conversion from 'double' to 'int' requires a narrowing conversion
-C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(123,46): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(123,71): warning C4838: conversion from 'double' to 'int' requires a narrowing conversion
-C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(123,71): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(123,98): warning C4838: conversion from 'double' to 'int' requires a narrowing conversion
-C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(123,98): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(123,116): warning C4838: conversion from 'double' to 'int' requires a narrowing conversion
-C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(123,116): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(123,143): warning C4838: conversion from 'double' to 'int' requires a narrowing conversion
-C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(123,143): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(123,167): warning C4838: conversion from 'double' to 'int' requires a narrowing conversion
-C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(123,167): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(123,194): warning C4838: conversion from 'double' to 'int' requires a narrowing conversion
-C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(123,194): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(123,218): warning C4838: conversion from 'double' to 'int' requires a narrowing conversion
-C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(123,218): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-  SpawnSystem.cpp
-  Generating Code...
+﻿  Player.cpp
   Asteroids.vcxproj -> C:\GitHubRepositories\SDL_Asteroids\Asteroids\Debug\Asteroids.exe

@@ -10,9 +10,15 @@
 * Sets starting values
 */
 Player::Player(int xPos, int yPos, int width, int height) :
-	_xPosition(xPos), _yPosition(yPos), _width(width), _height(height) {
+	_width(width), _height(height) {
 	CreatePoints();
 
+	double rotation[4]{ 0,-1,1,0 };
+	double movement[2]{ 1,0 };
+	int position[2]{ xPos, yPos };
+	
+
+	transform = new Transform(rotation, movement, position, 1);
 }
 /*
 * Destructor for the player, clears out the 2d array
@@ -54,14 +60,14 @@ double** Player::GetPoints() {
 * Returns the X position of the player
 */
 double Player::GetXPosition() {
-	return _xPosition;
+	return transform->GetPosition()[0];
 }
 
 /*
 * Returns the Y position of the player
 */
 double Player::GetYPosition() {
-	return _yPosition;
+	return transform->GetPosition()[1];
 }
 
 /*
@@ -81,45 +87,7 @@ void Player::Rotate(int degrees) {
 	rotationMatrix[0][1] = -sinValue;
 	rotationMatrix[1][1] = cosValue;
 
-
-	/*double multiplication[2][2];
-
-	multiplication[0][0] = rotationMatrix[0][0] * _currentRotation[0][0] + rotationMatrix[0][1] * _currentRotation[1][0];
-	multiplication[1][0] = rotationMatrix[1][0] * _currentRotation[0][0] + rotationMatrix[1][1] * _currentRotation[1][0];
-
-	multiplication[0][1] = rotationMatrix[0][0] * _currentRotation[0][1] + rotationMatrix[0][1] * _currentRotation[1][1];
-	multiplication[1][1] = rotationMatrix[1][0] * _currentRotation[0][1] + rotationMatrix[1][1] * _currentRotation[1][1];
-
-	for (int i = 0; i < 2; i++)
-	{
-		for (int j = 0; j < 2; j++)
-		{
-			_currentRotation[i][j] = multiplication[i][j];
-		}
-
-	}*/
-
-	// creates a new matrix which is the (players current rotation * rotation matrix from degrees)
-	double product[2][2];
-
-	for (int i = 0; i < 2; i++) {
-		for (int j = 0; j < 2; j++) {
-			product[i][j] = 0;
-
-			for (int k = 0; k < 2; k++)
-				product[i][j] = product[i][j] + (_currentRotation[i][k] * rotationMatrix[k][j]);
-		}
-	}
-
-	// overwrites the current rotation with the previously created rotation matrix
-	for (int i = 0; i < 2; i++)
-	{
-		for (int j = 0; j < 2; j++)
-		{
-			_currentRotation[i][j] = product[i][j];
-		}
-	}
-
+	transform->Rotate(degrees);
 
 	// applies the rotation to the draw points for redenering
 	for (int i = 0; i < 3; i++)
@@ -130,16 +98,18 @@ void Player::Rotate(int degrees) {
 		_drawPoints[0][i] = rotationMatrix[0][0] * x + rotationMatrix[1][0] * y;
 		_drawPoints[1][i] = rotationMatrix[0][1] * x + rotationMatrix[1][1] * y;
 	}
-
 }
 
 /*
 * moves the player "forwards" * rotation
 */
 void Player::Move() {
-	double x = _movementVector[0];
-	double y = _movementVector[1];
+	double x = transform->GetMovementVector()[0];
+	double y = transform->GetMovementVector()[1];
 
-	_xPosition += _currentRotation[0][0] * x + _currentRotation[1][0] * y;
-	_yPosition += _currentRotation[0][1] * x + _currentRotation[1][1] * y;
+	double addX = transform->GetRotation()[0][0] * x + transform->GetRotation()[1][0] * y;
+	double addY = transform->GetRotation()[0][1] * x + transform->GetRotation()[1][1] * y;
+
+	double newPos[2]{ addX,addY };
+	transform->AddToPosition(newPos);
 }

@@ -1,4 +1,5 @@
 #pragma once
+#include "Transform.h"
 
 class Player {
 public:
@@ -13,11 +14,12 @@ public:
 	void Move();
 
 private:
-	double _xPosition;
-	double _yPosition;
+	//double _xPosition;
+	//double _yPosition;
 	int _width;
 	int _height;
 	double** _drawPoints;
-	double _currentRotation[2][2]{ {0,-1},{1,0} };
-	double _movementVector[2]{ 1,0 };
+	//double _currentRotation[2][2]{ {0,-1},{1,0} };
+	//double _movementVector[2]{ 1,0 };
+	Transform* transform;
 };

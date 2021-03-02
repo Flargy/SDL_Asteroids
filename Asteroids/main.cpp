@@ -2,12 +2,13 @@
 #include <map>
 #include <chrono>
 #include "Renderer.h"
+#include "Transform.h"
 
 
 
 int main(int args, char** argv) {
 	Player* player = new Player(400, 400, 6, 10);
-	Window window("Conway's game of life", 800, 800);
+	Window window("Asteroids", 800, 800);
 	window.Setplayer(player);
 	using namespace std::chrono;
 	bool quit = false;
