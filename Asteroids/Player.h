@@ -12,14 +12,12 @@ public:
 	double GetYPosition();
 	void Rotate(int direction);
 	void Move();
+	void Accelerate();
+	void Drag();
 
 private:
-	//double _xPosition;
-	//double _yPosition;
 	int _width;
 	int _height;
 	double** _drawPoints;
-	//double _currentRotation[2][2]{ {0,-1},{1,0} };
-	//double _movementVector[2]{ 1,0 };
-	Transform* transform;
+	Transform* _transform;
 };

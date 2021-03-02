@@ -14,16 +14,17 @@ Player::Player(int xPos, int yPos, int width, int height) :
 	CreatePoints();
 
 	double rotation[4]{ 0,-1,1,0 };
-	double movement[2]{ 1,0 };
+	double movement[2]{ 0,0 };
 	int position[2]{ xPos, yPos };
 	
 
-	transform = new Transform(rotation, movement, position, 1);
+	_transform = new Transform(rotation, movement, position);
 }
 /*
 * Destructor for the player, clears out the 2d array
 */
-Player::~Player() {
+Player::~Player() 
+{
 	for (int i = 0; i < 2; i++)
 	{
 		delete _drawPoints[i];
@@ -35,7 +36,8 @@ Player::~Player() {
 /*
 * Sets up the relative points for drawing the player ship
 */
-void Player::CreatePoints() {
+void Player::CreatePoints() 
+{
 	_drawPoints = new double* [2];
 
 	for (int i = 0; i < 2; i++)
@@ -52,29 +54,32 @@ void Player::CreatePoints() {
 	_drawPoints[1][2] = _height;
 }
 
-double** Player::GetPoints() {
+double** Player::GetPoints() 
+{
 	return _drawPoints;
 }
 
 /*
 * Returns the X position of the player
 */
-double Player::GetXPosition() {
-	return transform->GetPosition()[0];
+double Player::GetXPosition() 
+{
+	return _transform->GetPosition()[0];
 }
 
 /*
 * Returns the Y position of the player
 */
-double Player::GetYPosition() {
-	return transform->GetPosition()[1];
+double Player::GetYPosition() 
+{
+	return _transform->GetPosition()[1];
 }
 
 /*
 * Rotates the player by "degrees"
 */
-void Player::Rotate(int degrees) {
-
+void Player::Rotate(int degrees) 
+{
 	double rotationMatrix[2][2];
 
 	// remakes the rotation in degrees into a 2d rotation matrix
@@ -87,7 +92,7 @@ void Player::Rotate(int degrees) {
 	rotationMatrix[0][1] = -sinValue;
 	rotationMatrix[1][1] = cosValue;
 
-	transform->Rotate(degrees);
+	_transform->Rotate(degrees);
 
 	// applies the rotation to the draw points for redenering
 	for (int i = 0; i < 3; i++)
@@ -103,13 +108,17 @@ void Player::Rotate(int degrees) {
 /*
 * moves the player "forwards" * rotation
 */
-void Player::Move() {
-	double x = transform->GetMovementVector()[0];
-	double y = transform->GetMovementVector()[1];
+void Player::Move() 
+{
+	_transform->AddToPosition();
+}
 
-	double addX = transform->GetRotation()[0][0] * x + transform->GetRotation()[1][0] * y;
-	double addY = transform->GetRotation()[0][1] * x + transform->GetRotation()[1][1] * y;
+void Player::Accelerate()
+{
+	_transform->AccelerateForward();
+}
 
-	double newPos[2]{ addX,addY };
-	transform->AddToPosition(newPos);
+void Player::Drag()
+{
+	
 }

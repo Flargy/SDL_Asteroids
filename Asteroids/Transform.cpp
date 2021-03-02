@@ -1,21 +1,16 @@
 #include "Transform.h"
 #include <math.h>
+#include <iostream>
 
 #define SIN(x) sin(x * 3.141592653589 / 180) 
 #define COS(x) cos(x * 3.141592653589 / 180)
 
-Transform::Transform(double rotation[4], double movementDirection[2], int position[2], double velocity) {
+Transform::Transform(double rotation[4], double movementDirection[2], int position[2]) {
 
-	_velocity = velocity;
 	_position[0] = position[0];
 	_position[1] = position[1];
-	_movementVector[0] = movementDirection[0];
-	_movementVector[1] = movementDirection[1];
-	_currentRotation = new double* [2]; 
-	for (int i = 0; i < 2; i++)
-	{
-		_currentRotation[i] = new double[2];
-	}
+	_velocity[0] = movementDirection[0];
+	_velocity[1] = movementDirection[1];
 	_currentRotation[0][0] = rotation[0];
 	_currentRotation[0][1] = rotation[1];
 	_currentRotation[1][0] = rotation[2];
@@ -23,12 +18,7 @@ Transform::Transform(double rotation[4], double movementDirection[2], int positi
 }
 
 Transform::~Transform() {
-	for (int i = 0; i < 2; i++)
-	{
-		delete _currentRotation[i];
-	}
-
-	delete[] _currentRotation;
+	
 }
 
 void Transform::Rotate(int degrees) {
@@ -67,11 +57,40 @@ void Transform::Rotate(int degrees) {
 	}
 }
 
-void Transform::ChangeVelocity(double speed) {
-	_velocity = fmin(0, _velocity + speed);
+
+void Transform::AddToPosition() {
+	for (int i = 0; i < 2; i++)
+	{
+		_position[i] += _velocity[i];
+	}
 }
 
-void Transform::AddToPosition(double AddToPosition[2]) {
-	_position[0] += AddToPosition[0];
-	_position[1] += AddToPosition[1];
+void Transform::AccelerateForward()
+{
+
+	double accelerationDirection[2];
+
+	accelerationDirection[0] = _currentRotation[0][0] * 1 + _currentRotation[0][1] * 0;
+	accelerationDirection[1] = (_currentRotation[1][0] * 1 + _currentRotation[1][1] * 0) * -1;
+
+	
+
+	for (int i = 0; i < 2; i++)
+	{
+		_velocity[i] += accelerationDirection[i] * _acceleration;
+	}
+	
+	std::cout << "y: " << accelerationDirection[1] << std::endl;
+
+	// Clamps the magnitude to _maxMagnitude
+	double currentMagnitude = sqrt(pow(_velocity[0], 2) + pow(_velocity[1], 2));
+	if (currentMagnitude > _maxMagnitude)
+	{
+		double reductionValue = fmin(currentMagnitude, _maxMagnitude) / currentMagnitude;
+		for (int i = 0; i < 2; i++)
+		{
+			_velocity[i] *= reductionValue;
+		}
+	}
 }
+

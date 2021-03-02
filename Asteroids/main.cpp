@@ -30,6 +30,7 @@ int main(int args, char** argv) {
 
 		while (accumulator >= dt) { // TODO: make player move and rotate
 			//Do physics here
+			player->Move();
 
 			if (window.PollEvents()) {
 				play = !play;

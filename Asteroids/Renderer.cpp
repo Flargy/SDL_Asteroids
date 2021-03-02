@@ -62,7 +62,7 @@ bool Window::PollEvents() {
 		RotatePlayer(-3);
 	}
 	if (state[SDL_SCANCODE_UP]) {
-		_player->Move();
+		_player->Accelerate();
 	}
 
 
