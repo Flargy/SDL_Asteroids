@@ -4,5 +4,11 @@
 
 class SpawnSystem
 {
+	/*
+	asteroid spawn perimeter
+	
+	*/
+
+	//SpawnAsteroids()
 
 };

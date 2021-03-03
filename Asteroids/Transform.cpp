@@ -63,6 +63,8 @@ void Transform::AddToPosition() {
 	{
 		_position[i] += _velocity[i];
 	}
+
+	Decelerate();
 }
 
 void Transform::AccelerateForward()
@@ -73,7 +75,6 @@ void Transform::AccelerateForward()
 	accelerationDirection[0] = _currentRotation[0][0] * 1 + _currentRotation[0][1] * 0;
 	accelerationDirection[1] = (_currentRotation[1][0] * 1 + _currentRotation[1][1] * 0) * -1;
 
-	
 
 	for (int i = 0; i < 2; i++)
 	{
@@ -91,6 +92,13 @@ void Transform::AccelerateForward()
 		{
 			_velocity[i] *= reductionValue;
 		}
+	}
+}
+
+void Transform::Decelerate() {
+	for (int i = 0; i < 2; i++)
+	{
+		_velocity[i] *=  _deceleration;
 	}
 }
 

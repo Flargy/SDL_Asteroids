@@ -1,6 +1,7 @@
 #pragma once
+#include "CollidableObject.h"
 
-class Projectile
+class Projectile : CollidableObject
 {
 
 };

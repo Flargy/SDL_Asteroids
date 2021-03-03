@@ -47,39 +47,6 @@ void Window::SetBackground() {
 }
 
 
-bool Window::PollEvents() {
-	SDL_Event event;
-
-	//std::vector<int> positions;
-
-	SDL_PumpEvents();
-	const Uint8* state = SDL_GetKeyboardState(NULL);
-
-	if (state[SDL_SCANCODE_LEFT]) {
-		RotatePlayer(3);
-	}
-	if (state[SDL_SCANCODE_RIGHT]) {
-		RotatePlayer(-3);
-	}
-	if (state[SDL_SCANCODE_UP]) {
-		_player->Accelerate();
-	}
-
-
-	while (SDL_PollEvent(&event)) {
-		switch (event.type)
-		{
-		case SDL_QUIT:
-			_closed = true;
-			break;
-		default:
-			break;
-		}
-	}
-
-
-	return false;
-}
 
 void Window::DrawRect(int height, int width, int xPos, int yPos, bool alive) {
 
@@ -123,6 +90,47 @@ void Window::DrawPlayer() {
 	SDL_Point lines[4] = { {_points[0][0] + 0.5 + x, _points[1][0] + 0.5 + y}, {_points[0][1] + 0.5 + x,_points[1][1] + y}, {_points[0][2] + 0.5 + x,_points[1][2] + 0.5 + y}, {_points[0][0] + 0.5 + x,_points[1][0] + 0.5 + y} };
 
 	SDL_RenderDrawLines(_renderer, lines, 4);
+}
+
+
+
+// This will not be needed here later, functionality will be moved to Game.cpp
+bool Window::PollEvents() {
+	SDL_Event event;
+
+	//std::vector<int> positions;
+
+	SDL_PumpEvents();
+	const Uint8* state = SDL_GetKeyboardState(NULL);
+
+	if (state[SDL_SCANCODE_LEFT]) {
+		RotatePlayer(3);
+	}
+	if (state[SDL_SCANCODE_RIGHT]) {
+		RotatePlayer(-3);
+	}
+	if (state[SDL_SCANCODE_UP]) {
+		_player->Accelerate();
+	}
+	if (state[SDL_SCANCODE_SPACE]) // && fire timer < time since last shot
+	{
+		// shoot
+	}
+
+
+	while (SDL_PollEvent(&event)) {
+		switch (event.type)
+		{
+		case SDL_QUIT:
+			_closed = true;
+			break;
+		default:
+			break;
+		}
+	}
+
+
+	return false;
 }
 
 void Window::RotatePlayer(int direction) {
