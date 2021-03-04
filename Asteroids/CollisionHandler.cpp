@@ -59,6 +59,7 @@ bool checkCollision(CollidableObject* obj, CollidableObject* otherObj) {
 	return false;
 }
 
+//Loops through each grid cell that `object` occupies
 template<typename T>
 void for_each_occupied_grid_cell(CollidableObject& object, float& gridSize, T func)
 {
