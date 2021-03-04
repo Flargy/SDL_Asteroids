@@ -4,7 +4,7 @@
 #include <functional>
 #include <iostream>
 
-
+//todo move implementations to cpp
 class CollidableObject
 {
 public:
@@ -29,7 +29,7 @@ public:
 	{
 		//if(active)
 			//collisionFunction(); // think it works, needs to be tested
-		std::cout << "i have collided" << std::endl;
+		//std::cout << "i have collided" << std::endl;
 	}
 
 	std::vector<std::array<double, 2>>* GetPoints() { return &_points; }

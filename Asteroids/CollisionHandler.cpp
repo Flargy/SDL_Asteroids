@@ -78,6 +78,7 @@ bool CollisionHandler::CheckCollision(CollidableObject* obj, CollidableObject* o
 	targetAxis[0] *= 1 / currentMagnitude;
 	targetAxis[1] *= 1 / currentMagnitude;
 
+
 	double p1min = DOT(targetAxis[0], targetAxis[1], points1[0][0], points1[0][1]);
 	double p1max = p1min;
 
@@ -92,6 +93,7 @@ bool CollisionHandler::CheckCollision(CollidableObject* obj, CollidableObject* o
 	double polyOffset = DOT(targetAxis[0], targetAxis[1], offset[0], offset[1]);
 	p1min += polyOffset;
 	p1max += polyOffset;
+	//---------------Correct-----------
 
 
 	double p2min = DOT(targetAxis[0], targetAxis[1], points2[0][0], points2[0][1]);
@@ -100,8 +102,8 @@ bool CollisionHandler::CheckCollision(CollidableObject* obj, CollidableObject* o
 	for (int i = 0; i < size2; i++)
 	{
 		double dot = DOT(targetAxis[0], targetAxis[1], points2[i][0], points2[i][1]);
-		p1min = fmin(p1min, dot);
-		p1max = fmax(p1max, dot);
+		p2min = fmin(p2min, dot);
+		p2max = fmax(p2max, dot);
 	}
 
 
@@ -145,7 +147,8 @@ void CollisionHandler::FindAllCollisions(
 	
 	auto addToMap = [this, gridSize](CollidableObject& object, grid_cell cell)
 	{
-		debugRenderer.DrawRect(gridSize, gridSize, gridSize * cell.first, gridSize * cell.second);
+		//debugRenderer.DrawRect(gridSize, gridSize, gridSize * cell.first, gridSize * cell.second);
+
 
 		auto mapIterator = map.find(cell);
 		if (mapIterator == map.end())

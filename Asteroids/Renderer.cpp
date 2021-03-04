@@ -77,11 +77,24 @@ void Window::DrawLine(int x1, int y1, int x2, int y2, int x3, int y3, int x4, in
 	SDL_RenderDrawLines(_renderer, points, 5);
 }
 
-void Window::DrawLineDynamic(std::vector<std::array<double, 2>> vec) // not dynamic yes, this is just for testing
+void Window::DrawLine(int x1, int y1, int x2, int y2){
+	SDL_SetRenderDrawColor(_renderer, 255, 255, 255, 255);
+	SDL_Point points[2] = { {x1,y1}, {x2,y2}};
+
+	SDL_RenderDrawLines(_renderer, points, 2);
+}
+
+void Window::DrawLineDynamic(std::vector<std::array<int, 2>> vec) // needs to be tested
 {
 	SDL_SetRenderDrawColor(_renderer, 255, 255, 255, 255);
-	SDL_Point points[5] = { {vec[0][0], vec[0][1]}, {vec[1][0], vec[1][1]}, {vec[2][0], vec[2][1]}, {vec[3][0], vec[3][1]}, {vec[0][0], vec[0][1]}, };
-	SDL_RenderDrawLines(_renderer, points, 5);
+	int size = vec.size() + 1;
+	SDL_Point* const points = new SDL_Point[size];
+	for(int i = 0; i < size; i++)
+	{
+		points[i] = SDL_Point{vec[i][0], vec[i][1]};
+	}
+	SDL_RenderDrawLines(_renderer, points, size);
+	delete points;
 }
 
 void Window::DrawPlayer() {

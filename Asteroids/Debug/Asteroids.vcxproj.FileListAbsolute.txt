@@ -1,3 +1,5 @@
 C:\GitHubRepositories\SDL_Asteroids\Asteroids\Debug\Asteroids.exe
 C:\GitHubRepositories\SDL_Asteroids\Asteroids\Debug\Asteroids.pdb
 D:\GitProjects\SDL_Asteroids\Asteroids\Debug\Asteroids.exe
+C:\Users\Colin.Brook\Desktop\SDL_Asteroids\Asteroids\Debug\Asteroids.exe
+C:\Users\Colin.Brook\Desktop\SDL_Asteroids\Asteroids\Debug\Asteroids.pdb

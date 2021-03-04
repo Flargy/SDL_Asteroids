@@ -18,6 +18,7 @@ int main(int args, char** argv) {
 	window.SetDebugAsteroid(debugAsteroid);
 	window.Setplayer(player);
 	CollisionHandler collisionHandler(window);
+
 	
 	int PlayerBounds[4] = { -10, 10, -6, 6 };
 	player->SetBoundingBox(PlayerBounds);
