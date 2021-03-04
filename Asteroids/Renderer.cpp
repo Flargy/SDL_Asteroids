@@ -46,21 +46,16 @@ void Window::SetBackground() {
 
 }
 
-
-
-void Window::DrawRect(int height, int width, int xPos, int yPos, bool alive) {
+void Window::DrawRect(int height, int width, int xPos, int yPos) {
 
 	SDL_Rect rect;
 	rect.w = width;
 	rect.h = height;
 	rect.x = xPos;
 	rect.y = yPos;
-	if (alive) {
-		SDL_SetRenderDrawColor(_renderer, 0, 0, 0, 255);
-	}
-	else
-		SDL_SetRenderDrawColor(_renderer, 255, 255, 255, 255);
-	SDL_RenderFillRect(_renderer, &rect);
+	
+	SDL_SetRenderDrawColor(_renderer, 255, 255, 255, 255);
+	SDL_RenderDrawRect(_renderer, &rect);
 }
 
 void Window::PresentRenderer() {
@@ -82,16 +77,51 @@ void Window::DrawLine(int x1, int y1, int x2, int y2, int x3, int y3, int x4, in
 	SDL_RenderDrawLines(_renderer, points, 5);
 }
 
+void Window::DrawLineDynamic(std::vector<std::array<double, 2>> vec) // not dynamic yes, this is just for testing
+{
+	SDL_SetRenderDrawColor(_renderer, 255, 255, 255, 255);
+	SDL_Point points[5] = { {vec[0][0], vec[0][1]}, {vec[1][0], vec[1][1]}, {vec[2][0], vec[2][1]}, {vec[3][0], vec[3][1]}, {vec[0][0], vec[0][1]}, };
+	SDL_RenderDrawLines(_renderer, points, 5);
+}
+
 void Window::DrawPlayer() {
 
-	double x = _player->GetXPosition();
-	double y = _player->GetYPosition();
+	double x = _player->transform->GetPosition()[0];
+	double y = _player->transform->GetPosition()[1];
+	//_points = _player->GetPoints();
 	SDL_SetRenderDrawColor(_renderer, 255, 255, 255, 255);
-	SDL_Point lines[4] = { {_points[0][0] + 0.5 + x, _points[1][0] + 0.5 + y}, {_points[0][1] + 0.5 + x,_points[1][1] + y}, {_points[0][2] + 0.5 + x,_points[1][2] + 0.5 + y}, {_points[0][0] + 0.5 + x,_points[1][0] + 0.5 + y} };
+	SDL_Point lines[4] = { 
+		{(*_points)[0][0] + 0.5 + x, (*_points)[0][1] + 0.5 + y},
+		{(*_points)[1][0] + 0.5 + x, (*_points)[1][1] + 0.5 + y},
+		{(*_points)[2][0] + 0.5 + x, (*_points)[2][1] + 0.5 + y},
+		{(*_points)[0][0] + 0.5 + x, (*_points)[0][1] + 0.5 + y} };
 
 	SDL_RenderDrawLines(_renderer, lines, 4);
 }
 
+// -------------- Debug Stuff ---------------------
+
+void Window::RenderDebugCube()
+{
+	double x = debugAsteroid->transform->GetPosition()[0];
+	double y = debugAsteroid->transform->GetPosition()[1];
+
+	SDL_SetRenderDrawColor(_renderer, 255, 255, 255, 255);
+	SDL_Point lines[4] = { 
+		{(*_debugPoints)[0][0] + 0.5 + x,(*_debugPoints)[0][1] + 0.5 + y}, 
+		{(*_debugPoints)[1][0] + 0.5 + x,(*_debugPoints)[1][1] + 0.5 + y},
+		{(*_debugPoints)[2][0] + 0.5 + x,(*_debugPoints)[2][1] + 0.5 + y},
+		{(*_debugPoints)[0][0] + 0.5 + x,(*_debugPoints)[0][1] + 0.5 + y} };
+
+	SDL_RenderDrawLines(_renderer, lines, 4);
+
+
+}
+void Window::SetDebugAsteroid(Asteroid* asteroid)
+{
+	debugAsteroid = asteroid;
+	_debugPoints = debugAsteroid->GetPoints();
+}
 
 
 // This will not be needed here later, functionality will be moved to Game.cpp
@@ -141,3 +171,5 @@ void Window::Setplayer(Player* player) {
 	_player = player;
 	_points = _player->GetPoints();
 }
+
+

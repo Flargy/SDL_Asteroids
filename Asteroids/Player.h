@@ -1,23 +1,19 @@
 #pragma once
 #include "Transform.h"
+#include "CollidableObject.h"
 
-class Player {
+class Player : public CollidableObject
+{ 
 public:
 	Player(int xPos, int yPos, int width, int height);
 	~Player();
 
-	double** GetPoints();
 	void CreatePoints();
-	double GetXPosition();
-	double GetYPosition();
 	void Rotate(int direction);
 	void Move();
 	void Accelerate();
-	void Drag();
 
 private:
-	int _width;
-	int _height;
-	double** _drawPoints;
-	Transform* _transform;
+	double _width;
+	double _height;
 };

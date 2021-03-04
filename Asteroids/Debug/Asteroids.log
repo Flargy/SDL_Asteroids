@@ -1,2 +1,262 @@
-﻿  Game.cpp
+﻿  Renderer.cpp
+C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(83,35): warning C4838: conversion from '_Ty' to 'int' requires a narrowing conversion
+          with
+          [
+              _Ty=double
+          ]
+C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(83,35): warning C4244: 'initializing': conversion from '_Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
+C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(83,46): warning C4838: conversion from '_Ty' to 'int' requires a narrowing conversion
+          with
+          [
+              _Ty=double
+          ]
+C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(83,46): warning C4244: 'initializing': conversion from '_Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
+C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(83,59): warning C4838: conversion from '_Ty' to 'int' requires a narrowing conversion
+          with
+          [
+              _Ty=double
+          ]
+C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(83,59): warning C4244: 'initializing': conversion from '_Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
+C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(83,70): warning C4838: conversion from '_Ty' to 'int' requires a narrowing conversion
+          with
+          [
+              _Ty=double
+          ]
+C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(83,70): warning C4244: 'initializing': conversion from '_Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
+C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(83,83): warning C4838: conversion from '_Ty' to 'int' requires a narrowing conversion
+          with
+          [
+              _Ty=double
+          ]
+C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(83,83): warning C4244: 'initializing': conversion from '_Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
+C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(83,94): warning C4838: conversion from '_Ty' to 'int' requires a narrowing conversion
+          with
+          [
+              _Ty=double
+          ]
+C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(83,94): warning C4244: 'initializing': conversion from '_Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
+C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(83,107): warning C4838: conversion from '_Ty' to 'int' requires a narrowing conversion
+          with
+          [
+              _Ty=double
+          ]
+C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(83,107): warning C4244: 'initializing': conversion from '_Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
+C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(83,118): warning C4838: conversion from '_Ty' to 'int' requires a narrowing conversion
+          with
+          [
+              _Ty=double
+          ]
+C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(83,118): warning C4244: 'initializing': conversion from '_Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
+C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(83,131): warning C4838: conversion from '_Ty' to 'int' requires a narrowing conversion
+          with
+          [
+              _Ty=double
+          ]
+C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(83,131): warning C4244: 'initializing': conversion from '_Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
+C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(83,142): warning C4838: conversion from '_Ty' to 'int' requires a narrowing conversion
+          with
+          [
+              _Ty=double
+          ]
+C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(83,142): warning C4244: 'initializing': conversion from '_Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
+C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(94,27): warning C4838: conversion from '_Ty' to 'int' requires a narrowing conversion
+          with
+          [
+              _Ty=double
+          ]
+C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(94,27): warning C4244: 'initializing': conversion from '_Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
+C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(94,55): warning C4838: conversion from '_Ty' to 'int' requires a narrowing conversion
+          with
+          [
+              _Ty=double
+          ]
+C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(94,55): warning C4244: 'initializing': conversion from '_Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
+C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(95,27): warning C4838: conversion from '_Ty' to 'int' requires a narrowing conversion
+          with
+          [
+              _Ty=double
+          ]
+C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(95,27): warning C4244: 'initializing': conversion from '_Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
+C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(95,55): warning C4838: conversion from '_Ty' to 'int' requires a narrowing conversion
+          with
+          [
+              _Ty=double
+          ]
+C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(95,55): warning C4244: 'initializing': conversion from '_Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
+C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(96,27): warning C4838: conversion from '_Ty' to 'int' requires a narrowing conversion
+          with
+          [
+              _Ty=double
+          ]
+C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(96,27): warning C4244: 'initializing': conversion from '_Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
+C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(96,55): warning C4838: conversion from '_Ty' to 'int' requires a narrowing conversion
+          with
+          [
+              _Ty=double
+          ]
+C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(96,55): warning C4244: 'initializing': conversion from '_Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
+C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(97,27): warning C4838: conversion from '_Ty' to 'int' requires a narrowing conversion
+          with
+          [
+              _Ty=double
+          ]
+C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(97,27): warning C4244: 'initializing': conversion from '_Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
+C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(97,55): warning C4838: conversion from '_Ty' to 'int' requires a narrowing conversion
+          with
+          [
+              _Ty=double
+          ]
+C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(97,55): warning C4244: 'initializing': conversion from '_Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
+C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(111,32): warning C4838: conversion from '_Ty' to 'int' requires a narrowing conversion
+          with
+          [
+              _Ty=double
+          ]
+C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(111,32): warning C4244: 'initializing': conversion from '_Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
+C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(111,64): warning C4838: conversion from '_Ty' to 'int' requires a narrowing conversion
+          with
+          [
+              _Ty=double
+          ]
+C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(111,64): warning C4244: 'initializing': conversion from '_Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
+C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(112,32): warning C4838: conversion from '_Ty' to 'int' requires a narrowing conversion
+          with
+          [
+              _Ty=double
+          ]
+C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(112,32): warning C4244: 'initializing': conversion from '_Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
+C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(112,64): warning C4838: conversion from '_Ty' to 'int' requires a narrowing conversion
+          with
+          [
+              _Ty=double
+          ]
+C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(112,64): warning C4244: 'initializing': conversion from '_Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
+C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(113,32): warning C4838: conversion from '_Ty' to 'int' requires a narrowing conversion
+          with
+          [
+              _Ty=double
+          ]
+C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(113,32): warning C4244: 'initializing': conversion from '_Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
+C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(113,64): warning C4838: conversion from '_Ty' to 'int' requires a narrowing conversion
+          with
+          [
+              _Ty=double
+          ]
+C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(113,64): warning C4244: 'initializing': conversion from '_Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
+C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(114,32): warning C4838: conversion from '_Ty' to 'int' requires a narrowing conversion
+          with
+          [
+              _Ty=double
+          ]
+C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(114,32): warning C4244: 'initializing': conversion from '_Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
+C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(114,64): warning C4838: conversion from '_Ty' to 'int' requires a narrowing conversion
+          with
+          [
+              _Ty=double
+          ]
+C:\GitHubRepositories\SDL_Asteroids\Asteroids\Renderer.cpp(114,64): warning C4244: 'initializing': conversion from '_Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
   Asteroids.vcxproj -> C:\GitHubRepositories\SDL_Asteroids\Asteroids\Debug\Asteroids.exe

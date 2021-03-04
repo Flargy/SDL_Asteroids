@@ -1,15 +1,28 @@
 #include <memory>
 #include <map>
 #include <chrono>
+#include <vector>
 #include "Renderer.h"
 #include "Transform.h"
-
+#include "CollisionHandler.h"
+#include "Asteroid.h"
 
 
 int main(int args, char** argv) {
 	Player* player = new Player(400, 400, 6, 10);
 	Window window("Asteroids", 800, 800);
+
+	Asteroid* debugAsteroid = new Asteroid(50);
+	debugAsteroid->transform->SetPosition(100, 100); // change their positions here
+
+	window.SetDebugAsteroid(debugAsteroid);
 	window.Setplayer(player);
+	CollisionHandler collisionHandler(window);
+	
+	int PlayerBounds[4] = { -10, 10, -6, 6 };
+	player->SetBoundingBox(PlayerBounds);
+	
+
 	using namespace std::chrono;
 	bool quit = false;
 	bool play = false;
@@ -17,6 +30,11 @@ int main(int args, char** argv) {
 	double dt = 1.0 / 60.0;
 	double accumulator = 0.0;
 	steady_clock::time_point currentTime = steady_clock::now();
+
+	std::vector<CollidableObject> debugAsteroids = {*debugAsteroid};
+	std::vector<CollidableObject> debugplayer = { *player };
+	std::vector<CollidableObject> alien = { };
+	std::vector<CollidableObject> bullets = { };
 
 
 	while (!window.IsClosed()) {
@@ -28,9 +46,10 @@ int main(int args, char** argv) {
 		accumulator += frameTime;
 		window.SetBackground();
 
-		while (accumulator >= dt) { // TODO: make player move and rotate
+		while (accumulator >= dt) {
 			//Do physics here
 			player->Move();
+			collisionHandler.FindAllCollisions(debugAsteroids, bullets, *player, 20);
 
 			if (window.PollEvents()) {
 				play = !play;
@@ -42,7 +61,7 @@ int main(int args, char** argv) {
 		// draw call here
 
 		window.DrawPlayer();
-
+		window.RenderDebugCube();
 		window.PresentRenderer();
 	}
 

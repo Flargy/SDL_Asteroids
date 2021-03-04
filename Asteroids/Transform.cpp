@@ -58,30 +58,27 @@ void Transform::Rotate(int degrees) {
 }
 
 
-void Transform::AddToPosition() {
+void Transform::Move() { //ToDo Make the objects loop back around when exiting the view of the window
 	for (int i = 0; i < 2; i++)
 	{
 		_position[i] += _velocity[i];
 	}
 
-	Decelerate();
+	if(_deceleration != 1)
+		Decelerate();
 }
 
 void Transform::AccelerateForward()
 {
-
 	double accelerationDirection[2];
 
 	accelerationDirection[0] = _currentRotation[0][0] * 1 + _currentRotation[0][1] * 0;
 	accelerationDirection[1] = (_currentRotation[1][0] * 1 + _currentRotation[1][1] * 0) * -1;
 
-
 	for (int i = 0; i < 2; i++)
 	{
 		_velocity[i] += accelerationDirection[i] * _acceleration;
 	}
-	
-	std::cout << "y: " << accelerationDirection[1] << std::endl;
 
 	// Clamps the magnitude to _maxMagnitude
 	double currentMagnitude = sqrt(pow(_velocity[0], 2) + pow(_velocity[1], 2));
