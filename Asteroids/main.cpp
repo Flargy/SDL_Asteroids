@@ -50,7 +50,6 @@ int main(int args, char** argv) {
 		while (accumulator >= dt) {
 			//Do physics here
 			player->Move();
-			collisionHandler.FindAllCollisions(debugAsteroids, bullets, *player, 20);
 
 			if (window.PollEvents()) {
 				play = !play;
@@ -60,6 +59,7 @@ int main(int args, char** argv) {
 
 		}
 		// draw call here
+		collisionHandler.FindAllCollisions(debugAsteroids, bullets, *player, 20);
 
 		window.DrawPlayer();
 		window.RenderDebugCube();
