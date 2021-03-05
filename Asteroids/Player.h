@@ -1,5 +1,4 @@
 #pragma once
-#include "Transform.h"
 #include "CollidableObject.h"
 
 class Player : public CollidableObject
@@ -12,6 +11,7 @@ public:
 	void Rotate(int direction);
 	void Move();
 	void Accelerate();
+	void Collide();
 
 private:
 	double _width;

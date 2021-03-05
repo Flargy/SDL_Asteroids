@@ -62,6 +62,25 @@ void Transform::Move() { //ToDo Make the objects loop back around when exiting t
 	for (int i = 0; i < 2; i++)
 	{
 		_position[i] += _velocity[i];
+		
+	}
+
+	if (_position[0] < 0) //Basic functionality that is non dynamic,
+	{
+		_position[0] = windowWidth;
+	}
+	else if (_position[0] > windowWidth)
+	{
+		_position[0] = 0;
+	}
+
+	if (_position[1] < 0) //Basic functionality that is non dynamic,
+	{
+		_position[1] = windowHeight;
+	}
+	else if (_position[0] > windowHeight)
+	{
+		_position[1] = 0;
 	}
 
 	if(_deceleration != 1)

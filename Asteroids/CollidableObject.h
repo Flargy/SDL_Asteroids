@@ -1,6 +1,5 @@
 #pragma once
 #include "Transform.h"
-#include <vector>
 #include <functional>
 #include <iostream>
 
@@ -27,8 +26,8 @@ public:
 
 	void Collision()
 	{
-		//if(active)
-			//collisionFunction(); // think it works, needs to be tested
+		if(active)
+			collisionFunction(); // think it works, needs to be tested
 		//std::cout << "i have collided" << std::endl;
 	}
 

@@ -1,9 +1,6 @@
 #pragma once
-#include "CollidableObject.h"
-#include <cmath>
 #include <map>
 #include <utility>
-#include <array>
 #include "Renderer.h"
 
 class CollisionHandler
@@ -29,6 +26,8 @@ private:
 	Window& debugRenderer;
 
 	bool CheckCollision(CollidableObject* obj, CollidableObject* otherObj, int iteration, bool looped);
+
+	bool CheckCollisionV2(CollidableObject* obj, CollidableObject* otherObj);
 	
 	//Loops through each grid cell that `object` occupies
 	template<typename T>

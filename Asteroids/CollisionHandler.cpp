@@ -1,8 +1,50 @@
 #include "CollisionHandler.h"
 
-#include <iostream>
+#define DOT(x1,y1,x2,y2)((x1 * x2) + (y1 * y2)) 
 
-#define DOT(x1,y1,x2,y2)(x1 * x2 + y1 * y2) 
+
+
+struct Vector2
+{
+	double x, y;
+};
+
+Vector2 operator-(Vector2& lhs, Vector2& rhs)
+{
+	return Vector2{ lhs.x - rhs.x, lhs.y - rhs.y };
+}
+
+bool BoundsTestLineSegment(float t) { return t >= 0 && t <= 1; };
+
+const float PARALLEL_DETERMINANT_THRESHOLD = 0.00001f;
+
+float Determinant /*or Cross*/(Vector2 a, Vector2 b) { return a.x * b.y - a.y * b.x; } // 2D "cross product"
+bool GetLineLineTValues(Vector2 aToB, Vector2 aDir, Vector2 bDir, float& tA, float& tB)
+{
+	float d = Determinant(aDir, bDir);
+	if (fabsf(d) < PARALLEL_DETERMINANT_THRESHOLD)
+	{
+		tA = tB = 0.0;
+		return false;
+	}
+
+	tA = Determinant(aToB, bDir) / d;
+	tB = Determinant(aToB, aDir) / d;
+	return true;
+}
+
+/*
+* Returns whether two lines intersect or not
+*/
+bool IntersectLineSegments(Vector2 aStart, Vector2 aEnd, Vector2 bStart, Vector2 bEnd)
+{
+	float tA, tB;
+	return (GetLineLineTValues(bStart - aStart, aEnd - aStart, bEnd - bStart, tA, tB)
+		&& BoundsTestLineSegment(tA)
+		&& BoundsTestLineSegment(tB));
+}
+
+
 
 /*
 js code for grid intersection
@@ -56,27 +98,31 @@ bool CollisionHandler::CheckCollision(CollidableObject* obj, CollidableObject* o
 	//todo should returns true if the objects intersect, fine grained collision algorithm here.
 	//Algorithm is in place, just needs to be tested now
 
-	std::array<double, 2> targetAxis;
-	int j = iteration + 1;
-	// gets reocurring values to avoid calling the Get functions multiple times.
 	std::vector<std::array<double, 2>>& points1 = *obj->GetPoints();
 	std::vector<std::array<double, 2>>& points2 = *otherObj->GetPoints();
 	int size1 = points1.size();
 	int size2 = points2.size();
-
-	/*if (j >= size1) // replaced by j % size1
+	for (int i = 0; i < size1; i++)
 	{
-		j = 0;
-	}*/
+
+
+	std::array<double, 2> targetAxis;
+	int j = i + 1;
+	// gets reocurring values to avoid calling the Get functions multiple times.
+
+	
 
 	// calculates the axis which we will test, this is perpendicular to a side of the polygon
-	targetAxis[0] = -(points1[j % size1][1] - points1[iteration][1]);
-	targetAxis[1] = (points1[j % size1][0] - points1[iteration][0]);
+	targetAxis[0] = -(points1[j % size1][1] - points1[i][1]);
+	targetAxis[1] = (points1[j % size1][0] - points1[i][0]);
 
 	double currentMagnitude = sqrt(pow(targetAxis[0], 2) + pow(targetAxis[1], 2));
 
-	targetAxis[0] *= 1 / currentMagnitude;
-	targetAxis[1] *= 1 / currentMagnitude;
+	if (currentMagnitude != 0)
+	{
+		targetAxis[0] *= 1 / currentMagnitude;
+		targetAxis[1] *= 1 / currentMagnitude;
+	}
 
 
 	double p1min = DOT(targetAxis[0], targetAxis[1], points1[0][0], points1[0][1]);
@@ -106,24 +152,72 @@ bool CollisionHandler::CheckCollision(CollidableObject* obj, CollidableObject* o
 		p2max = fmax(p2max, dot);
 	}
 
-
-	if (p1min - p2max > 0 || p2min - p1max > 0)
+	if (p2max < p1min || p1max < p2min)
 	{
+		std::cout << "false" << std::endl;
 		return false;
 	}
-	if (iteration + 1 < size1)
-	{
-		return CheckCollision(obj, otherObj, iteration + 1, looped);
 	}
-	if (iteration == size1 && looped == false)
-	{
-		return CheckCollision(otherObj, obj, 0, true);
-	}
+	
+	
 
 	return true;
 }
 
+std::array<double, 2> operator+(std::array<double, 2> left, std::array<double, 2> right) {
+	return std::array<double, 2>{ left[0]+right[0], left[1]+right[1] };
+}
 
+std::array<double, 2> operator-(std::array<double, 2> left, std::array<double, 2> right) {
+	return std::array<double, 2>{ left[0]-right[0], left[1]-right[1] };
+}
+
+double dot(std::array<double, 2> left, std::array<double, 2> right) 
+{	
+	return left[0] * right[0] + left[1] * right[1];
+}
+
+bool CollisionHandler::CheckCollisionV2(CollidableObject* obj, CollidableObject* otherObj) {
+	//todo should returns true if the objects intersect, fine grained collision algorithm here.
+	//Algorithm is in place, just needs to be tested now
+
+	std::vector<std::array<double, 2>>& a = *obj->GetPoints(); //todo why is this returning a pointer?
+	std::vector<std::array<double, 2>>& b = *otherObj->GetPoints();
+
+	std::array<double, 2> position_a = obj->transform->GetPosition();
+	std::array<double, 2> position_b = otherObj->transform->GetPosition();
+
+
+	int size_a = a.size();
+	int size_b = b.size();
+	
+	for (int i = 0; i < size_a; ++i) {
+
+		auto current_a = a[i];
+		auto next_a = a[(i + 1) % size_a];
+
+		Vector2 aStart{ current_a[0] + position_a[0], current_a[1] + position_a[1] };
+		Vector2 aEnd{ next_a[0] + position_a[0], next_a[1] + position_a[1] };
+
+		for (int i = 0; i < size_b; i++)
+		{
+			auto current_b = b[i];
+			auto next_b = b[(i + 1) % size_b];
+
+			Vector2 bStart{ current_b[0] + position_b[0], current_b[1] + position_b[1] };
+			Vector2 bEnd{ next_b[0] + position_b[0], next_b[1] + position_b[1] };
+
+			if (IntersectLineSegments(aStart, aEnd, bStart, bEnd))
+			{
+				return true;
+			}
+
+		}
+	}
+	
+	return false;
+	
+}
 
 
 /*
@@ -140,7 +234,7 @@ and make sure checkCollision(...) returns false if already handled?
 void CollisionHandler::FindAllCollisions(
 	std::vector<CollidableObject>& asteroids,
 	std::vector<CollidableObject>& bullets,
-	CollidableObject& player, int gridSize) //todo gridsize int or float?
+	CollidableObject& player, int gridSize) 
 					// think the gridsize should be an int as the size of the window is calculated in ints(pixels)
 {
 	map.clear();
@@ -165,7 +259,7 @@ void CollisionHandler::FindAllCollisions(
 			for (CollidableObject* otherObject : mapIterator->second)
 			{
 				if ((object.active || otherObject->active)
-					&& CheckCollision(&object, otherObject))
+					&& CheckCollisionV2(&object, otherObject))
 				{
 					object.Collision();
 					otherObject->Collision();//todo ugly pointers?
@@ -174,13 +268,12 @@ void CollisionHandler::FindAllCollisions(
 		}
 	};
 
-	std::cout << "begin asteroids" << std::endl;
+
 	for (CollidableObject& asteroid : asteroids)
 		for_each_occupied_grid_cell(asteroid, gridSize, addToMap);
-	//for_each_occupied_grid_cell(alien, gridSize, addToMap);
+	//for_each_occupied_grid_cell(alien, gridSize, addToMap); todo add alien
 	
 	//---------------------- collide bullets with the asteroids&alien in the map, then put the bullets into the map	
-	std::cout << "begin bullets" << std::endl;
 	DeferredFunctions<std::function<void()>> deferredMapInserts;	
 	auto collideAndDeferAddToMap = [&collide, &addToMap, &deferredMapInserts](CollidableObject& object, grid_cell cell)
 	{
@@ -197,6 +290,5 @@ void CollisionHandler::FindAllCollisions(
 	deferredMapInserts.invoke();
 
 	//---------------------- collide the player against everything in the map (asteroids, alien, bullets)		
-	std::cout << "begin player" << std::endl;
 	for_each_occupied_grid_cell(player, gridSize, collide);
 };

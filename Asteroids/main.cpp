@@ -5,12 +5,16 @@
 #include "Renderer.h"
 #include "Transform.h"
 #include "CollisionHandler.h"
-#include "Asteroid.h"
+#include "Global.h"
 
+int windowHeight, windowWidth;
 
 int main(int args, char** argv) {
+	windowHeight = 800;
+	windowWidth = 800;
+
 	Player* player = new Player(400, 400, 6, 10);
-	Window window("Asteroids", 800, 800);
+	Window window("Asteroids", windowWidth, windowHeight);
 
 	Asteroid* debugAsteroid = new Asteroid(50);
 	debugAsteroid->transform->SetPosition(100, 100); // change their positions here

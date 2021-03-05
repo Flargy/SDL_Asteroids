@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <array>
+#include "Global.h"
 
 template<typename T ,int X, int Y>
 using array2D = std::array<std::array<T, X>, Y>;

@@ -16,6 +16,7 @@ Player::Player(int xPos, int yPos, int width, int height) :
 	double rotation[4]{ 0,-1,1,0 };
 	double movement[2]{ 0,0 };
 	int position[2]{ xPos, yPos };
+	collisionFunction = std::bind(&Player::Collide, this); 
 	
 
 	transform = new Transform(rotation, movement, position);
@@ -81,5 +82,11 @@ void Player::Move()
 void Player::Accelerate()
 {
 	transform->AccelerateForward();
+}
+
+void Player::Collide()
+{
+	std::cout << "collision" << std::endl;
+	// collision code here
 }
 
