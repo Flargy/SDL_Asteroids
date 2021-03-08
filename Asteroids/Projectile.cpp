@@ -1,9 +1,15 @@
 #include "Projectile.h"
 
+Projectile::Projectile(int ID)
+{
+	CreateDrawPoints();
+	transform.SetVelocity(4, 0);
+	collisionFunction = std::bind(&Projectile::Collide, this);
+}
+
 Projectile::Projectile()
 {
-	CreatePoints();
-	collisionFunction = std::bind(&Projectile::Collide, this);
+
 }
 
 void Projectile::Collide()
@@ -11,7 +17,7 @@ void Projectile::Collide()
 	active = false;
 }
 
-void Projectile::CreatePoints() // sets a shot to be 2x2 pixels
+void Projectile::CreateDrawPoints() // sets a shot to be 2x2 pixels
 {
 	_points.push_back(Vector2{ -1,1 });
 	_points.push_back(Vector2{ -1,-1 });
@@ -38,7 +44,6 @@ void Projectile::Update()
 void Projectile::Instantiate(Vector2 position, array2D<double, 2, 2> fireRotation)
 {
 	_timeFired = std::chrono::steady_clock::now();
-	transform.SetVelocity(4, 0);
 	transform.SetPosition(position);
 	transform.SetRotation(fireRotation);
 	active = true;

@@ -103,10 +103,9 @@ void Transform::AccelerateForward()
 	if (currentMagnitude > _maxMagnitude)
 	{
 		double reductionValue = fmin(currentMagnitude, _maxMagnitude) / currentMagnitude;
-		for (int i = 0; i < 2; i++)
-		{
-			_velocity.x *= reductionValue;
-		}
+		
+		_velocity.x *= reductionValue;
+		_velocity.y *= reductionValue;
 	}
 }
 
