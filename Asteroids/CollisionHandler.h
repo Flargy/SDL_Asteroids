@@ -3,6 +3,7 @@
 #include <utility>
 #include "Renderer.h"
 #include "Projectile.h"
+#include "GameObjectBuffer.h"
 
 class CollisionHandler
 {
@@ -14,8 +15,8 @@ public:
 	};
 
 	void FindAllCollisions(
-		std::vector<Asteroid>& asteroids,
-		std::vector<Projectile>& bullets,
+		GameObjectBuffer<Asteroid, 32>& asteroids,
+		GameObjectBuffer<Projectile, 16>& bullets,
 		Player& player,
 		int gridSize);
 

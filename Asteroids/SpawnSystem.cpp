@@ -1,66 +1,53 @@
 #include "SpawnSystem.h"
 #include <cassert>
 
-SpawnSystem::SpawnSystem(std::vector<Asteroid>& asteroids, std::vector<Projectile>& projectiles,
- 
-	std::vector<Alien>& aliens,
- std::vector<Player>& player)
-	: _asteroids(asteroids), _projectiles(projectiles), _aliens(aliens), _player(player)
-	
+SpawnSystem::SpawnSystem(GameObjectBuffer<Asteroid, 32>& asteroids,
+	GameObjectBuffer<Projectile, 16>& projectiles, Alien& alien, Player& player)
+	: _asteroids(asteroids), _projectiles(projectiles), _alien(alien), _player(player)	
 {	
-	memorySanityCheck = asteroids.data();
+
 }
 
 void SpawnSystem::SpawnAsteroids()
 {
-	assert(_asteroids.capacity() == 32 && memorySanityCheck == _asteroids.data());	
-
-	_asteroids.resize(8, Asteroid(50));
+	_asteroids.reset();
 	for (size_t i = 0; i < 8; i++) 
 	{
-		_asteroids[i].entity_id = i; //todo asteroid setup
+		_asteroids.increase_active_size();
+		_asteroids[i].Instantiate(Vector2{100,100}, 5.0, i); // todo set spawn positions according to some perimeter
 	}
-
-	assert(_asteroids.capacity() == 32 && memorySanityCheck == _asteroids.data());
 }
 
 void SpawnSystem::DestroyAsteroid(const int entity_id, int split) 
-{
-	assert(_asteroids.capacity() == 32 && memorySanityCheck == _asteroids.data());
-	
-	int maxIndex = _asteroids.size()-1;
-	
+{	
 	if (split == 0)
 	{
-		_asteroids[entity_id] = _asteroids[maxIndex];
-		_asteroids[entity_id].entity_id = entity_id;
-		_asteroids.pop_back();
+		OverwriteWithLast(_asteroids, entity_id);
 	}
 	else if (split == 1)
 	{
-		//todo choose a way to create the new asteroids
-		_asteroids[entity_id] = Asteroid(15, entity_id);
-		_asteroids.push_back(Asteroid(15, maxIndex));
+		//overwrite old with new asteroid info
+		Vector2 pos = _asteroids[entity_id].transform.GetPosition();
+		_asteroids[entity_id].Instantiate(pos, 15, entity_id);	
+
+		_asteroids.increase_active_size();
+		_asteroids.get_last().Instantiate(pos, 15, entity_id);
 	}
 	else if (split == 2)
 	{
-		//todo choose a way to create the new asteroids
-		_asteroids[entity_id] = Asteroid(30, entity_id);
-		_asteroids.push_back(Asteroid(30, maxIndex));
+		Vector2 pos = _asteroids[entity_id].transform.GetPosition();
+		_asteroids[entity_id].Instantiate(pos, 10, entity_id);
+
+		_asteroids.increase_active_size();
+		_asteroids.get_last().Instantiate(pos, 10, entity_id);
 	}
-	assert(_asteroids.capacity() == 32 && memorySanityCheck == _asteroids.data());
-	
 }
 
 void SpawnSystem::DestroyProjectile(const int entity_id) {
-	_projectiles[entity_id] = _projectiles[_projectiles.size() - 1];
-	_projectiles[entity_id].entity_id = entity_id;
-	_projectiles.pop_back();
+	OverwriteWithLast(_projectiles, entity_id);
 }
 
-void SpawnSystem::SpawnProjectile(/*velocity*/) {
-	auto&& proj = Projectile();
-	proj.entity_id = _projectiles.size(); //todo find out if this works as expected 
-								//OR get just get a better way to create bullets, with velocity and stuff
-	_projectiles.push_back(proj);
+void SpawnSystem::SpawnProjectile(Vector2 pos, array2D<double,2,2> rotation) {
+	_projectiles.increase_active_size();
+	_projectiles.get_last().Instantiate(pos, rotation);
 }

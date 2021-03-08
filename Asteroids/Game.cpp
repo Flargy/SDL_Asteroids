@@ -39,18 +39,17 @@ void Game::Update()
 
 Game::Game(Window& window)
 	: _renderer(window), 
-	_spawnSystem(_asteroids, _projectiles, _aliens, _player),
+	_spawnSystem(_asteroids, _projectiles, _alien, _player),
 	_collisionHandler(_renderer)
 {
 	Asteroid* debugAsteroid = new Asteroid(50);
 	debugAsteroid->transform.SetPosition(100, 100); // change their positions here
 		
-	_asteroids.reserve(32);
-	_projectiles.reserve(16);
+	
+	_asteroids.push_back(*debugAsteroid);
+	//_asteroids = { *debugAsteroid };
 
-	_asteroids = { *debugAsteroid };
-
-	_player.push_back(Player(400, 400, 6, 10));
+	_player = Player(400, 400, 10, 10);
 	
 }
 
@@ -78,7 +77,7 @@ void Game::GameLoop()
 		while (accumulator >= dt)
 		{
 			//Do physics here
-			_player[0].Move();
+			_player.Move();
 
 			PlayerInput();
 			t += dt;
@@ -86,11 +85,11 @@ void Game::GameLoop()
 
 		}
 		// draw call here
-		_collisionHandler.FindAllCollisions(_asteroids, _projectiles, _player[0], 20);
+		_collisionHandler.FindAllCollisions(_asteroids, _projectiles, _player, 20);
 
 		//_renderer.DrawPlayer();
 		_renderer.DrawObject(_asteroids[0]);
-		_renderer.DrawObject(_player[0]);
+		_renderer.DrawObject(_player);
 		_renderer.PresentRenderer();
 	}
 }
@@ -106,15 +105,15 @@ void Game::PlayerInput()
 
 	if (state[SDL_SCANCODE_LEFT])
 	{
-		_player[0].Rotate(3);
+		_player.Rotate(3);
 	}
 	if (state[SDL_SCANCODE_RIGHT])
 	{
-		_player[0].Rotate(-3);
+		_player.Rotate(-3);
 	}
 	if (state[SDL_SCANCODE_UP])
 	{
-		_player[0].Accelerate();
+		_player.Accelerate();
 	}
 	if (state[SDL_SCANCODE_SPACE])
 	{

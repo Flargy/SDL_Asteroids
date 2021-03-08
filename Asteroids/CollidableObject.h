@@ -2,6 +2,7 @@
 #include "Transform.h"
 #include <functional>
 #include <iostream>
+#include "GameObjectBuffer.h"
 
 //todo move implementations to cpp
 class CollidableObject

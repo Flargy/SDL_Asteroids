@@ -1,16 +1,13 @@
 #include "Asteroid.h"
 
+Asteroid::Asteroid()
+{
+}
+
 Asteroid::Asteroid(double halfSided)
 {
 	CreatePoints(halfSided);
 	collisionFunction = std::bind(&Asteroid::Collide, this); //this seems to work, it binds a member function to a function variable
-}
-
-Asteroid::Asteroid(double halfSided, int entity_id)
-{
-	CreatePoints(halfSided);
-	collisionFunction = std::bind(&Asteroid::Collide, this); 
-	this->entity_id = entity_id;
 }
 
 Asteroid::~Asteroid()
@@ -45,7 +42,7 @@ void Asteroid::ChangeShape(std::vector<Vector2>& newShape) // changes its curren
 	_points = newShape;
 }
 
-void Asteroid::Instantiate(Vector2 spawnPosition, double speed) // activates the object at a new position
+void Asteroid::Instantiate(Vector2 spawnPosition, double speed, int entity_id) // activates the object at a new position
 {
 	transform.SetPosition(spawnPosition);
 	transform.SetVelocity(speed, 0);

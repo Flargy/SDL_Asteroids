@@ -4,8 +4,11 @@
 class Player : public CollidableObject
 { 
 public:
+	Player();
 	Player(int xPos, int yPos, int width, int height);
 	~Player();
+
+
 
 	void CreatePoints();
 	void Rotate(int direction);

@@ -3,5 +3,6 @@
 
 class Alien : public CollidableObject
 {
+public:
 	Alien();
 };

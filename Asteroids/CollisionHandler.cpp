@@ -2,6 +2,7 @@
 #include "Global.h"
 
 
+
 #define DOT(x1,y1,x2,y2)((x1 * x2) + (y1 * y2)) 
 
 
@@ -43,35 +44,7 @@ bool IntersectLineSegments(Vector2 aStart, Vector2 aEnd, Vector2 bStart, Vector2
 
 
 
-/*
-js code for grid intersection
-//boxes are list of d intervals
-// H is the side length for the grid
 
-function gridIntersect2D(boxes, H) {
-  var grid = {}, result = [], x = [0,0]
-  boxes.forEach(function(b, id) {
-	for(x[0]=Math.floor(b[0][0]/H); x[0]<=Math.ceil(b[0][1]/H); ++x[0])
-	for(x[1]=Math.floor(b[1][0]/H); x[1]<=Math.ceil(b[1][1]/H); ++x[1]) {
-	  var list = grid[x]
-	  if(list) {
-		list.forEach(function(otherId) {
-		  var a = boxes[otherId]
-		  for(var i=0; i<2; ++i) {
-			var s = Math.max(a[i][0], b[i][0]),
-				t = Math.min(a[i][1], b[i][1])
-			if(t < s || Math.floor(s/H) !== x[i])
-			  return
-		  }
-		  result.push([id, otherId])
-		})
-		list.push(id)
-	  } else grid[x] = [id]
-	}
-  })
-  return result
-}
-*/
 using grid_cell = std::pair<int, int>;
 using grid_map = std::map<grid_cell, std::vector<CollidableObject*>>;
 
@@ -229,10 +202,10 @@ should keep a record of which objects have collided
 and make sure checkCollision(...) returns false if already handled?
 */
 void CollisionHandler::FindAllCollisions(
-	std::vector<Asteroid>& asteroids,
-	std::vector<Projectile>& bullets,
+	GameObjectBuffer<Asteroid, 32>& asteroids,
+	GameObjectBuffer<Projectile, 16>& bullets,
 	Player& player, int gridSize) 
-					// think the gridsize should be an int as the size of the window is calculated in ints(pixels)
+	// think the gridsize should be an int as the size of the window is calculated in ints(pixels)
 {
 	map.clear();
 	
@@ -265,9 +238,10 @@ void CollisionHandler::FindAllCollisions(
 		}
 	};
 
-
-	for (CollidableObject& asteroid : asteroids)
-		for_each_occupied_grid_cell(asteroid, gridSize, addToMap);
+	for (size_t i = 0; i < asteroids.active_size(); i++)
+	{
+		for_each_occupied_grid_cell(asteroids[i], gridSize, addToMap);
+	}
 	//for_each_occupied_grid_cell(alien, gridSize, addToMap); todo add alien
 	
 	//---------------------- collide bullets with the asteroids&alien in the map, then put the bullets into the map	
@@ -280,9 +254,9 @@ void CollisionHandler::FindAllCollisions(
 				addToMap(object, cell);
 			});		
 	};
-	for (CollidableObject& bullet : bullets)
+	for (size_t i = 0; i < bullets.active_size(); i++)
 	{
-		for_each_occupied_grid_cell(bullet, gridSize, collideAndDeferAddToMap);
+		for_each_occupied_grid_cell(bullets[i], gridSize, collideAndDeferAddToMap);
 	}
 	deferredMapInserts.invoke();
 
