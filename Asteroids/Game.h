@@ -8,6 +8,8 @@
 #include "SpawnSystem.h"
 #include "Alien.h"
 #include <chrono>
+#include "Renderer.h"
+#include "CollisionHandler.h"
 
 
 /*
@@ -17,7 +19,8 @@ class Game
 {
 public:
 	void PlayerInput();
-
+	void GameLoop();
+	Game(Window& window);
 
 private:
 	double _shotDelay = 0.7;
@@ -25,22 +28,22 @@ private:
 	
 	std::vector<Asteroid> _asteroids = std::vector<Asteroid>();
 	std::vector<Projectile> _projectiles = std::vector<Projectile>();
+	std::vector<Alien> _aliens = std::vector<Alien>();
+	std::vector<Player> _player = std::vector<Player>();
 	
-	Player* _player;
+	//Player* _player;
 	//Alien* _alien;
 
 	SpawnSystem _spawnSystem;
+	Window& _renderer;
+	CollisionHandler _collisionHandler;
 
 	//space partition	
 	//quad tree for asteroids.
 
 	
 	
-	Game() 
-	{
-		_asteroids.reserve(32);
-		//projectiles.reserve(10);
-	}
+	
 
 	void Update();
 

@@ -63,44 +63,31 @@ void Window::PresentRenderer() {
 
 }
 
-void Window::DrawLine(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4) {
-	SDL_SetRenderDrawColor(_renderer, 255, 255, 255, 255);
-	SDL_Point points[4] = { {x1,y1}, {x2,y2}, {x3,y3}, {x4,y4} };
 
-	SDL_RenderDrawLines(_renderer, points, 4);
-}
-
-void Window::DrawLine(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4, int x5, int y5) {
-	SDL_SetRenderDrawColor(_renderer, 255, 255, 255, 255);
-	SDL_Point points[5] = { {x1,y1}, {x2,y2}, {x3,y3}, {x4,y4},{x5,y5} };
-
-	SDL_RenderDrawLines(_renderer, points, 5);
-}
-
-void Window::DrawLine(int x1, int y1, int x2, int y2){
-	SDL_SetRenderDrawColor(_renderer, 255, 255, 255, 255);
-	SDL_Point points[2] = { {x1,y1}, {x2,y2}};
-
-	SDL_RenderDrawLines(_renderer, points, 2);
-}
-
-void Window::DrawLineDynamic(std::vector<std::array<int, 2>> vec) // needs to be tested
+void Window::DrawObject(CollidableObject& obj) // needs to be tested
 {
 	SDL_SetRenderDrawColor(_renderer, 255, 255, 255, 255);
-	int size = vec.size() + 1;
-	SDL_Point* const points = new SDL_Point[size];
-	for(int i = 0; i < size; i++)
+	int size = obj.GetPoints()->size();
+	double x = obj.transform.GetPosition().x;
+	double y = obj.transform.GetPosition().y;
+	SDL_Point* const drawPoints = new SDL_Point[size + 1];
+	std::vector<Vector2> pointPositions = *obj.GetPoints();
+	int intX, intY;
+	for(int i = 0; i < size + 1; i++)
 	{
-		points[i] = SDL_Point{vec[i][0], vec[i][1]};
+		intX = pointPositions[i % size].x + 0.5 + x;
+		intY = pointPositions[i % size].y + 0.5 + y;
+		drawPoints[i] = SDL_Point{intX, intY};
 	}
-	SDL_RenderDrawLines(_renderer, points, size);
-	delete points;
+
+	SDL_RenderDrawLines(_renderer, drawPoints, size + 1);
+	delete[] drawPoints;
 }
 
 void Window::DrawPlayer() {
 
-	double x = _player->transform->GetPosition()[0];
-	double y = _player->transform->GetPosition()[1];
+	double x = _player->transform.GetPosition().x;
+	double y = _player->transform.GetPosition().y;
 	//_points = _player->GetPoints();
 	SDL_SetRenderDrawColor(_renderer, 255, 255, 255, 255);
 	SDL_Point lines[4] = { 
@@ -114,75 +101,11 @@ void Window::DrawPlayer() {
 
 // -------------- Debug Stuff ---------------------
 
-void Window::RenderDebugCube()
-{
-	double x = debugAsteroid->transform->GetPosition()[0];
-	double y = debugAsteroid->transform->GetPosition()[1];
-
-	SDL_SetRenderDrawColor(_renderer, 255, 255, 255, 255);
-	SDL_Point lines[4] = { 
-		{(*_debugPoints)[0][0] + 0.5 + x,(*_debugPoints)[0][1] + 0.5 + y}, 
-		{(*_debugPoints)[1][0] + 0.5 + x,(*_debugPoints)[1][1] + 0.5 + y},
-		{(*_debugPoints)[2][0] + 0.5 + x,(*_debugPoints)[2][1] + 0.5 + y},
-		{(*_debugPoints)[0][0] + 0.5 + x,(*_debugPoints)[0][1] + 0.5 + y} };
-
-	SDL_RenderDrawLines(_renderer, lines, 4);
 
 
-}
-void Window::SetDebugAsteroid(Asteroid* asteroid)
-{
-	debugAsteroid = asteroid;
-	_debugPoints = debugAsteroid->GetPoints();
-}
 
 
-// This will not be needed here later, functionality will be moved to Game.cpp
-bool Window::PollEvents() {
-	SDL_Event event;
-
-	//std::vector<int> positions;
-
-	SDL_PumpEvents();
-	const Uint8* state = SDL_GetKeyboardState(NULL);
-
-	if (state[SDL_SCANCODE_LEFT]) {
-		RotatePlayer(3);
-	}
-	if (state[SDL_SCANCODE_RIGHT]) {
-		RotatePlayer(-3);
-	}
-	if (state[SDL_SCANCODE_UP]) {
-		_player->Accelerate();
-	}
-	if (state[SDL_SCANCODE_SPACE]) // && fire timer < time since last shot
-	{
-		// shoot
-	}
 
 
-	while (SDL_PollEvent(&event)) {
-		switch (event.type)
-		{
-		case SDL_QUIT:
-			_closed = true;
-			break;
-		default:
-			break;
-		}
-	}
-
-
-	return false;
-}
-
-void Window::RotatePlayer(int direction) {
-	_player->Rotate(direction);
-}
-
-void Window::Setplayer(Player* player) {
-	_player = player;
-	_points = _player->GetPoints();
-}
 
 

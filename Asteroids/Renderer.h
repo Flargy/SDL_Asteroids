@@ -15,19 +15,11 @@ public:
 
 	inline bool IsClosed() const { return _closed; }
 	void SetBackground();
-	bool PollEvents();
 	void DrawRect(int height, int width, int xPos, int yPos);
 	void PresentRenderer();
-	void DrawLine(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4);
-	void DrawLine(int x1, int y1, int x2, int y2);
-	void DrawLine(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4, int x5, int y5);
-	void DrawLineDynamic(std::vector<std::array<int, 2>>);
+	void DrawObject(CollidableObject& obj);
 	void DrawPlayer();
-	void Setplayer(Player* player);
-	void RotatePlayer(int direction);
 
-	void RenderDebugCube();
-	void SetDebugAsteroid(Asteroid* asteroid);
 
 private:
 	bool Init();

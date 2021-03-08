@@ -7,7 +7,13 @@
 class CollidableObject
 {
 public:
-	Transform* transform;
+	Transform transform;
+
+	CollidableObject() : transform()
+	{
+
+	}
+
 	
 	struct AABB
 	{
@@ -31,12 +37,12 @@ public:
 		//std::cout << "i have collided" << std::endl;
 	}
 
-	std::vector<std::array<double, 2>>* GetPoints() { return &_points; }
+	std::vector<Vector2>* GetPoints() { return &_points; }
 
 	//placeholder name, this is currently  used to determine if collision checks 
 	//	and reactions should be done for this object
 	bool active = true; 
 
-	std::vector<std::array<double, 2>> _points;
+	std::vector<Vector2> _points;
 	std::function<void()> collisionFunction;
 };

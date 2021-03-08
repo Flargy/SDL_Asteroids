@@ -3,5 +3,10 @@
 
 class Projectile : public CollidableObject
 {
+public:
+	Projectile(double size);
+	~Projectile(){}
+
+private:
 
 };

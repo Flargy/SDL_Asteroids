@@ -2,6 +2,7 @@
 #include <map>
 #include <utility>
 #include "Renderer.h"
+#include "Projectile.h"
 
 class CollisionHandler
 {
@@ -13,9 +14,9 @@ public:
 	};
 
 	void FindAllCollisions(
-		std::vector<CollidableObject>& asteroids,
-		std::vector<CollidableObject>& bullets,
-		CollidableObject& player,
+		std::vector<Asteroid>& asteroids,
+		std::vector<Projectile>& bullets,
+		Player& player,
 		int gridSize);
 
 private:
@@ -35,9 +36,9 @@ private:
 	{
 		grid_cell currentCell;
 
-		auto&& position = object.transform->GetPosition();
-		int x = position[0];
-		int y = position[1];
+		auto&& position = object.transform.GetPosition();
+		int x = position.x;
+		int y = position.y;
 		
 		for (currentCell.first = std::floor((object.boundingBox.xMin + x) / gridSize)
 			; currentCell.first <= std::ceil((object.boundingBox.xMax + x) / gridSize)

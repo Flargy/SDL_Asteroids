@@ -7,10 +7,10 @@
 
 Transform::Transform(double rotation[4], double movementDirection[2], int position[2]) {
 
-	_position[0] = position[0];
-	_position[1] = position[1];
-	_velocity[0] = movementDirection[0];
-	_velocity[1] = movementDirection[1];
+	_position.x = position[0];
+	_position.y = position[1];
+	_velocity.x = movementDirection[0];
+	_velocity.y = movementDirection[1];
 	_currentRotation[0][0] = rotation[0];
 	_currentRotation[0][1] = rotation[1];
 	_currentRotation[1][0] = rotation[2];
@@ -59,28 +59,26 @@ void Transform::Rotate(int degrees) {
 
 
 void Transform::Move() { //ToDo Make the objects loop back around when exiting the view of the window
-	for (int i = 0; i < 2; i++)
+	
+	_position.x += _velocity.x;
+	_position.y += _velocity.y;
+
+	if (_position.x < 0) //Basic functionality that is non dynamic,
 	{
-		_position[i] += _velocity[i];
-		
+		_position.x = windowWidth;
+	}
+	else if (_position.x > windowWidth)
+	{
+		_position.x = 0;
 	}
 
-	if (_position[0] < 0) //Basic functionality that is non dynamic,
+	if (_position.y < 0) //Basic functionality that is non dynamic,
 	{
-		_position[0] = windowWidth;
+		_position.y = windowHeight;
 	}
-	else if (_position[0] > windowWidth)
+	else if (_position.y > windowHeight)
 	{
-		_position[0] = 0;
-	}
-
-	if (_position[1] < 0) //Basic functionality that is non dynamic,
-	{
-		_position[1] = windowHeight;
-	}
-	else if (_position[0] > windowHeight)
-	{
-		_position[1] = 0;
+		_position.y = 0;
 	}
 
 	if(_deceleration != 1)
@@ -89,32 +87,28 @@ void Transform::Move() { //ToDo Make the objects loop back around when exiting t
 
 void Transform::AccelerateForward()
 {
-	double accelerationDirection[2];
+	Vector2 accelerationDirection;
 
-	accelerationDirection[0] = _currentRotation[0][0] * 1 + _currentRotation[0][1] * 0;
-	accelerationDirection[1] = (_currentRotation[1][0] * 1 + _currentRotation[1][1] * 0) * -1;
+	accelerationDirection.x = _currentRotation[0][0] * 1 + _currentRotation[0][1] * 0;
+	accelerationDirection.y = (_currentRotation[1][0] * 1 + _currentRotation[1][1] * 0) * -1;
 
-	for (int i = 0; i < 2; i++)
-	{
-		_velocity[i] += accelerationDirection[i] * _acceleration;
-	}
+	_velocity.x += accelerationDirection.x * _acceleration;
+	_velocity.y += accelerationDirection.y * _acceleration;
 
 	// Clamps the magnitude to _maxMagnitude
-	double currentMagnitude = sqrt(pow(_velocity[0], 2) + pow(_velocity[1], 2));
+	double currentMagnitude = sqrt(pow(_velocity.x, 2) + pow(_velocity.y, 2));
 	if (currentMagnitude > _maxMagnitude)
 	{
 		double reductionValue = fmin(currentMagnitude, _maxMagnitude) / currentMagnitude;
 		for (int i = 0; i < 2; i++)
 		{
-			_velocity[i] *= reductionValue;
+			_velocity.x *= reductionValue;
 		}
 	}
 }
 
 void Transform::Decelerate() {
-	for (int i = 0; i < 2; i++)
-	{
-		_velocity[i] *=  _deceleration;
-	}
+	_velocity.x *= _deceleration;
+	_velocity.y *= _deceleration;
 }
 

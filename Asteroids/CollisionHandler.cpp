@@ -1,18 +1,15 @@
 #include "CollisionHandler.h"
+#include "Global.h"
+
 
 #define DOT(x1,y1,x2,y2)((x1 * x2) + (y1 * y2)) 
 
-
-
-struct Vector2
-{
-	double x, y;
-};
 
 Vector2 operator-(Vector2& lhs, Vector2& rhs)
 {
 	return Vector2{ lhs.x - rhs.x, lhs.y - rhs.y };
 }
+
 
 bool BoundsTestLineSegment(float t) { return t >= 0 && t <= 1; };
 
@@ -98,56 +95,56 @@ bool CollisionHandler::CheckCollision(CollidableObject* obj, CollidableObject* o
 	//todo should returns true if the objects intersect, fine grained collision algorithm here.
 	//Algorithm is in place, just needs to be tested now
 
-	std::vector<std::array<double, 2>>& points1 = *obj->GetPoints();
-	std::vector<std::array<double, 2>>& points2 = *otherObj->GetPoints();
+	std::vector<Vector2>& points1 = *obj->GetPoints();
+	std::vector<Vector2>& points2 = *otherObj->GetPoints();
 	int size1 = points1.size();
 	int size2 = points2.size();
 	for (int i = 0; i < size1; i++)
 	{
 
 
-	std::array<double, 2> targetAxis;
+	Vector2 targetAxis;
 	int j = i + 1;
 	// gets reocurring values to avoid calling the Get functions multiple times.
 
 	
 
 	// calculates the axis which we will test, this is perpendicular to a side of the polygon
-	targetAxis[0] = -(points1[j % size1][1] - points1[i][1]);
-	targetAxis[1] = (points1[j % size1][0] - points1[i][0]);
+	targetAxis.x = -(points1[j % size1].y - points1[i].y);
+	targetAxis.y = (points1[j % size1].x - points1[i].x);
 
-	double currentMagnitude = sqrt(pow(targetAxis[0], 2) + pow(targetAxis[1], 2));
+	double currentMagnitude = sqrt(pow(targetAxis.x, 2) + pow(targetAxis.y, 2));
 
 	if (currentMagnitude != 0)
 	{
-		targetAxis[0] *= 1 / currentMagnitude;
-		targetAxis[1] *= 1 / currentMagnitude;
+		targetAxis.x *= 1 / currentMagnitude;
+		targetAxis.y *= 1 / currentMagnitude;
 	}
 
 
-	double p1min = DOT(targetAxis[0], targetAxis[1], points1[0][0], points1[0][1]);
+	double p1min = DOT(targetAxis.x, targetAxis.y, points1[0].x, points1[0].y);
 	double p1max = p1min;
 
 	for (int i = 0; i < size1; i++)
 	{
-		double dot = DOT(targetAxis[0], targetAxis[1], points1[i][0], points1[i][1]);
+		double dot = DOT(targetAxis.x, targetAxis.y, points1[i].x, points1[i].y);
 		p1min = fmin(p1min, dot);
 		p1max = fmax(p1max, dot);
 	}
 
-	std::array<double, 2> offset{ (obj->transform->GetPosition()[0] - otherObj->transform->GetPosition()[0]),  (obj->transform->GetPosition()[1] - otherObj->transform->GetPosition()[1]) };
-	double polyOffset = DOT(targetAxis[0], targetAxis[1], offset[0], offset[1]);
+	std::array<double, 2> offset{ (obj->transform.GetPosition().x - otherObj->transform.GetPosition().x),  (obj->transform.GetPosition().y - otherObj->transform.GetPosition().y) };
+	double polyOffset = DOT(targetAxis.x, targetAxis.y, offset[0], offset[1]);
 	p1min += polyOffset;
 	p1max += polyOffset;
 	//---------------Correct-----------
 
 
-	double p2min = DOT(targetAxis[0], targetAxis[1], points2[0][0], points2[0][1]);
+	double p2min = DOT(targetAxis.x, targetAxis.y, points2[0].x, points2[0].y);
 	double p2max = p1min;
 
 	for (int i = 0; i < size2; i++)
 	{
-		double dot = DOT(targetAxis[0], targetAxis[1], points2[i][0], points2[i][1]);
+		double dot = DOT(targetAxis.x, targetAxis.y, points2[i].x, points2[i].y);
 		p2min = fmin(p2min, dot);
 		p2max = fmax(p2max, dot);
 	}
@@ -181,11 +178,11 @@ bool CollisionHandler::CheckCollisionV2(CollidableObject* obj, CollidableObject*
 	//todo should returns true if the objects intersect, fine grained collision algorithm here.
 	//Algorithm is in place, just needs to be tested now
 
-	std::vector<std::array<double, 2>>& a = *obj->GetPoints(); //todo why is this returning a pointer?
-	std::vector<std::array<double, 2>>& b = *otherObj->GetPoints();
+	std::vector<Vector2>& a = *obj->GetPoints(); //todo why is this returning a pointer?
+	std::vector<Vector2>& b = *otherObj->GetPoints();
 
-	std::array<double, 2> position_a = obj->transform->GetPosition();
-	std::array<double, 2> position_b = otherObj->transform->GetPosition();
+	Vector2 position_a = obj->transform.GetPosition();
+	Vector2 position_b = otherObj->transform.GetPosition();
 
 
 	int size_a = a.size();
@@ -196,16 +193,16 @@ bool CollisionHandler::CheckCollisionV2(CollidableObject* obj, CollidableObject*
 		auto current_a = a[i];
 		auto next_a = a[(i + 1) % size_a];
 
-		Vector2 aStart{ current_a[0] + position_a[0], current_a[1] + position_a[1] };
-		Vector2 aEnd{ next_a[0] + position_a[0], next_a[1] + position_a[1] };
+		Vector2 aStart{ current_a.x + position_a.x, current_a.y + position_a.y };
+		Vector2 aEnd{ next_a.x + position_a.x, next_a.y + position_a.y };
 
 		for (int i = 0; i < size_b; i++)
 		{
 			auto current_b = b[i];
 			auto next_b = b[(i + 1) % size_b];
 
-			Vector2 bStart{ current_b[0] + position_b[0], current_b[1] + position_b[1] };
-			Vector2 bEnd{ next_b[0] + position_b[0], next_b[1] + position_b[1] };
+			Vector2 bStart{ current_b.x + position_b.x, current_b.y + position_b.y };
+			Vector2 bEnd{ next_b.x + position_b.x, next_b.y + position_b.y };
 
 			if (IntersectLineSegments(aStart, aEnd, bStart, bEnd))
 			{
@@ -232,9 +229,9 @@ should keep a record of which objects have collided
 and make sure checkCollision(...) returns false if already handled?
 */
 void CollisionHandler::FindAllCollisions(
-	std::vector<CollidableObject>& asteroids,
-	std::vector<CollidableObject>& bullets,
-	CollidableObject& player, int gridSize) 
+	std::vector<Asteroid>& asteroids,
+	std::vector<Projectile>& bullets,
+	Player& player, int gridSize) 
 					// think the gridsize should be an int as the size of the window is calculated in ints(pixels)
 {
 	map.clear();

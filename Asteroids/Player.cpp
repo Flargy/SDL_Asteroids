@@ -19,15 +19,17 @@ Player::Player(int xPos, int yPos, int width, int height) :
 	collisionFunction = std::bind(&Player::Collide, this); 
 	
 
-	transform = new Transform(rotation, movement, position);
-	transform->SetDeceleration(0.98);
+	transform = Transform(rotation, movement, position);
+	transform.SetDeceleration(0.98);
+
+	int PlayerBounds[4] = { -height, height, -height, height };
+	SetBoundingBox(PlayerBounds);
 }
 /*
 * Destructor for the player, clears out the 2d array
 */
 Player::~Player() 
 {
-	delete transform;
 }
 
 /*
@@ -35,9 +37,9 @@ Player::~Player()
 */
 void Player::CreatePoints() 
 {
-	_points.push_back(std::array<double, 2> {-_width, _height});
-	_points.push_back(std::array<double, 2> {0, -_height});
-	_points.push_back(std::array<double, 2> {_width, _height});
+	_points.push_back(Vector2 {-_width, _height});
+	_points.push_back(Vector2 {0, -_height});
+	_points.push_back(Vector2 {_width, _height});
 }
 
 
@@ -58,16 +60,16 @@ void Player::Rotate(int degrees)
 	rotationMatrix[0][1] = -sinValue;
 	rotationMatrix[1][1] = cosValue;
 
-	transform->Rotate(degrees);
+	transform.Rotate(degrees);
 
 	// applies the rotation to the draw points for redenering
 	for (int i = 0; i < 3; i++)
 	{
-		double x = _points[i][0];
-		double y = _points[i][1];
+		double x = _points[i].x;
+		double y = _points[i].y;
 
-		_points[i][0] = rotationMatrix[0][0] * x + rotationMatrix[1][0] * y;
-		_points[i][1] = rotationMatrix[0][1] * x + rotationMatrix[1][1] * y;
+		_points[i].x = rotationMatrix[0][0] * x + rotationMatrix[1][0] * y;
+		_points[i].y = rotationMatrix[0][1] * x + rotationMatrix[1][1] * y;
 	}
 }
 
@@ -76,12 +78,12 @@ void Player::Rotate(int degrees)
 */
 void Player::Move() 
 {
-	transform->Move();
+	transform.Move();
 }
 
 void Player::Accelerate()
 {
-	transform->AccelerateForward();
+	transform.AccelerateForward();
 }
 
 void Player::Collide()
