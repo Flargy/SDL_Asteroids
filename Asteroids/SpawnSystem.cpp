@@ -28,11 +28,11 @@ void SpawnSystem::DestroyAsteroid(const int entity_id, int split)
 {
 	assert(_asteroids.capacity() == 32 && memorySanityCheck == _asteroids.data());
 	
-	int size = _asteroids.size();
-
+	int maxIndex = _asteroids.size()-1;
+	
 	if (split == 0)
 	{
-		_asteroids[entity_id] = _asteroids[--size];
+		_asteroids[entity_id] = _asteroids[maxIndex];
 		_asteroids[entity_id].entity_id = entity_id;
 		_asteroids.pop_back();
 	}
@@ -40,13 +40,13 @@ void SpawnSystem::DestroyAsteroid(const int entity_id, int split)
 	{
 		//todo choose a way to create the new asteroids
 		_asteroids[entity_id] = Asteroid(15, entity_id);
-		_asteroids.push_back(Asteroid(15, entity_id));
+		_asteroids.push_back(Asteroid(15, maxIndex));
 	}
 	else if (split == 2)
 	{
 		//todo choose a way to create the new asteroids
 		_asteroids[entity_id] = Asteroid(30, entity_id);
-		_asteroids.push_back(Asteroid(30, entity_id));
+		_asteroids.push_back(Asteroid(30, maxIndex));
 	}
 	assert(_asteroids.capacity() == 32 && memorySanityCheck == _asteroids.data());
 	
