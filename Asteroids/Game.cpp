@@ -39,16 +39,14 @@ void Game::Update()
 
 Game::Game(Window& window)
 	: _renderer(window), 
-	_spawnSystem(_asteroids, _projectiles, _aliens, _player, _asteroidsEnd, _projectilesEnd),
+	_spawnSystem(_asteroids, _projectiles, _aliens, _player),
 	_collisionHandler(_renderer)
 {
 	Asteroid* debugAsteroid = new Asteroid(50);
 	debugAsteroid->transform.SetPosition(100, 100); // change their positions here
-
-	
-	_asteroidsEnd = _asteroids.begin();
-	_projectilesEnd = _projectiles.begin();
-
+		
+	_asteroids.reserve(32);
+	_projectiles.reserve(16);
 
 	_asteroids = { *debugAsteroid };
 

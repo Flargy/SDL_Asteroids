@@ -10,10 +10,10 @@ class SpawnSystem
 {
 public:
 
-	SpawnSystem(std::vector<Asteroid>& asteroids, std::vector<Projectile>& projectile, 
-		std::vector<Alien>& aliens, std::vector<Player>& player,
-		std::vector<Asteroid>::iterator& asteroidIterator, 
-		std::vector<Projectile>::iterator& projectileIterator);
+	SpawnSystem(std::vector<Asteroid>& asteroids, std::vector<Projectile>& projectile,
+ 
+		std::vector<Alien>& aliens,
+ std::vector<Player>& player);
 
 	/*
 	asteroid spawn perimeter	
@@ -30,8 +30,4 @@ public:
 	std::vector<Alien>& _aliens;
 	std::vector<Player>& _player;
 
-	std::vector<Asteroid>::iterator& _asteroidsEnd;
-	std::vector<Projectile>::iterator& _projectilesEnd;
-	//std::vector<Alien>::iterator _aliensEnd;
-	//std::vector<Player>::iterator _playerEnd;
 };

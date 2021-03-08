@@ -8,6 +8,7 @@ class Asteroid : public CollidableObject
 public:
 
 	Asteroid(double length);
+	Asteroid(double length, int entity_id);
 	~Asteroid();
 
 	void CreatePoints(double length);

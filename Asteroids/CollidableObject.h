@@ -42,6 +42,7 @@ public:
 	//placeholder name, this is currently  used to determine if collision checks 
 	//	and reactions should be done for this object
 	bool active = true; 
+	int entity_id = 0;
 
 	std::vector<Vector2> _points;
 	std::function<void()> collisionFunction;

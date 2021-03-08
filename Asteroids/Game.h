@@ -27,13 +27,11 @@ private:
 	std::chrono::steady_clock::time_point _lastShot = std::chrono::steady_clock::now();
 	
 
-	std::vector<Asteroid> _asteroids = std::vector<Asteroid>(32);
-	std::vector<Projectile> _projectiles = std::vector<Projectile>(16);
+	std::vector<Asteroid> _asteroids = std::vector<Asteroid>();
+	std::vector<Projectile> _projectiles = std::vector<Projectile>();
 	std::vector<Alien> _aliens = std::vector<Alien>();
 	std::vector<Player> _player = std::vector<Player>();
 	
-	std::vector<Asteroid>::iterator _asteroidsEnd;
-	std::vector<Projectile>::iterator _projectilesEnd;
 
 	//Player* _player;
 	//Alien* _alien;
