@@ -52,4 +52,15 @@ void SpawnSystem::DestroyAsteroid(const int entity_id, int split)
 	
 }
 
+void SpawnSystem::DestroyProjectile(const int entity_id) {
+	_projectiles[entity_id] = _projectiles[_projectiles.size() - 1];
+	_projectiles[entity_id].entity_id = entity_id;
+	_projectiles.pop_back();
+}
 
+void SpawnSystem::SpawnProjectile(/*velocity*/) {
+	auto&& proj = Projectile();
+	proj.entity_id = _projectiles.size(); //todo find out if this works as expected 
+								//OR get just get a better way to create bullets, with velocity and stuff
+	_projectiles.push_back(proj);
+}

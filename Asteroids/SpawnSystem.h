@@ -23,6 +23,10 @@ public:
 
 	void DestroyAsteroid(const int entity_id, int split);
 
+	void DestroyProjectile(int entity_id);
+
+	void SpawnProjectile();
+
 	Asteroid* memorySanityCheck;
 
 	std::vector<Asteroid>& _asteroids;
