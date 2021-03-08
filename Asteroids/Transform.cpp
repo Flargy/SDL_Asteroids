@@ -11,8 +11,10 @@ Transform::Transform(double rotation[4], double movementDirection[2], int positi
 	_position.y = position[1];
 	_velocity.x = movementDirection[0];
 	_velocity.y = movementDirection[1];
+	// x1 & x2
 	_currentRotation[0][0] = rotation[0];
 	_currentRotation[0][1] = rotation[1];
+	// y1 & y2
 	_currentRotation[1][0] = rotation[2];
 	_currentRotation[1][1] = rotation[3];
 }
@@ -89,8 +91,9 @@ void Transform::AccelerateForward()
 {
 	Vector2 accelerationDirection;
 
-	accelerationDirection.x = _currentRotation[0][0] * 1 + _currentRotation[0][1] * 0;
-	accelerationDirection.y = (_currentRotation[1][0] * 1 + _currentRotation[1][1] * 0) * -1;
+	accelerationDirection.x = _currentRotation[0][0]; // no need to multiply Y component of matrix as the ship moves in x = 1, y = 0
+	accelerationDirection.y = _currentRotation[1][0] * -1;
+
 
 	_velocity.x += accelerationDirection.x * _acceleration;
 	_velocity.y += accelerationDirection.y * _acceleration;
@@ -110,5 +113,10 @@ void Transform::AccelerateForward()
 void Transform::Decelerate() {
 	_velocity.x *= _deceleration;
 	_velocity.y *= _deceleration;
+}
+
+void Transform::SetRotation(array2D<double, 2, 2> newRotation)
+{
+	_currentRotation = newRotation;
 }
 
