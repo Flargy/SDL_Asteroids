@@ -5,6 +5,7 @@
 class Projectile : public CollidableObject
 {
 public:
+	Projectile(int ID);
 	Projectile();
 	~Projectile(){}
 
