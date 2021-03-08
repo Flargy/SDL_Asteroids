@@ -30,21 +30,27 @@ void Asteroid::CreatePoints(double halfSide)
 
 void Asteroid::Collide()
 {
+	active = false;
 	// collision code here
 	// activate function in spawn system that takes ints between 1-3 as input to spawn new asteroids
 }
 
-void Asteroid::Update()
+void Asteroid::Update() // Updates the objects behaviour
 {
 	transform.Move();
 }
 
-void Asteroid::ChangeShape(std::vector<Vector2>& newShape)
+void Asteroid::ChangeShape(std::vector<Vector2>& newShape) // changes its current shape to a new one
 {
 	_points = newShape;
 }
 
-void Asteroid::Instantiate()
+void Asteroid::Instantiate(Vector2 spawnPosition, double speed) // activates the object at a new position
 {
+	transform.SetPosition(spawnPosition);
+	transform.SetVelocity(speed, 0);
+	active = true;
 
+	int rotation = rand() % 359; // Rand is expensive as heck, remake this to another randomizer later
+	transform.Rotate(rotation);
 }

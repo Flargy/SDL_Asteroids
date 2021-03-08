@@ -15,11 +15,13 @@ public:
 	Vector2& GetPosition() { return _position; }
 	array2D<double, 2,2>& GetRotation() { return _currentRotation; }
 	Vector2 GetVelocity() { return _velocity; }
+	void SetVelocity(double x, double y) { _velocity.x = x, _velocity.y = y; }
 	void Rotate(int degrees);
 	void SetRotation(array2D<double, 2, 2> newRotation);
 	void Move();
 	void AccelerateForward();
 	void Decelerate();
+	void SetPosition(Vector2 newPosition) { _position = newPosition; }
 	void SetPosition(int x, int y) { _position.x = x, _position.y = y; }
 	void SetAcceleration(double accel) { _acceleration = accel; }
 	void SetDeceleration(double decel) { _deceleration = decel; }

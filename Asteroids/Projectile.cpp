@@ -35,7 +35,11 @@ void Projectile::Update()
 	transform.Move();
 }
 
-void Projectile::Instantiate()
+void Projectile::Instantiate(Vector2 position, array2D<double, 2, 2> fireRotation)
 {
 	_timeFired = std::chrono::steady_clock::now();
+	transform.SetVelocity(4, 0);
+	transform.SetPosition(position);
+	transform.SetRotation(fireRotation);
+	active = true;
 }
