@@ -10,7 +10,7 @@ public:
 	~Projectile(){}
 
 	void Collide();
-	void CreatePoints();
+	void CreateDrawPoints();
 
 	void Update();
 	void Instantiate(Vector2 spawnPosition, array2D<double, 2, 2> fireRotation);
