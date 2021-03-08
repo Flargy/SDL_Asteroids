@@ -24,4 +24,20 @@ void Asteroid::CreatePoints(double halfSide)
 void Asteroid::Collide()
 {
 	// collision code here
+	// activate function in spawn system that takes ints between 1-3 as input to spawn new asteroids
+}
+
+void Asteroid::Update()
+{
+	transform.Move();
+}
+
+void Asteroid::ChangeShape(std::vector<Vector2>& newShape)
+{
+	_points = newShape;
+}
+
+void Asteroid::Instantiate()
+{
+
 }

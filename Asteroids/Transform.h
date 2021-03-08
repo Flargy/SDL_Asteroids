@@ -16,6 +16,7 @@ public:
 	array2D<double, 2,2>& GetRotation() { return _currentRotation; }
 	Vector2 GetVelocity() { return _velocity; }
 	void Rotate(int degrees);
+	void SetRotation(array2D<double, 2, 2> newRotation);
 	void Move();
 	void AccelerateForward();
 	void Decelerate();
