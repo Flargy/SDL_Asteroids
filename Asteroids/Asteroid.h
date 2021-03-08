@@ -18,7 +18,7 @@ public:
 	void ChangeShape(std::vector<Vector2>& newShape); //This method will be used to change the shape of asteroids when instantiated or when shot
 	int GetSize(){ return _size; }
 	void AddToSize(int value) { _size += value; }
-	void Instantiate();
+	void Instantiate(Vector2 spawnPosition, double speed);
 
 
 private:
