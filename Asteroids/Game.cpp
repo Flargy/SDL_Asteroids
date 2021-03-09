@@ -83,9 +83,9 @@ void Game::GameLoop()
 			t += dt;
 			accumulator -= dt;
 
+			_collisionHandler.FindAllCollisions(_asteroids, _projectiles, _player, 20);
 		}
 		// draw call here
-		_collisionHandler.FindAllCollisions(_asteroids, _projectiles, _player, 20);
 
 		//_renderer.DrawPlayer();
 		_renderer.DrawObject(_asteroids[0]);
@@ -122,6 +122,7 @@ void Game::PlayerInput()
 		if (timeSinceShot > _shotDelay)
 		{
 			// shoot projectile
+			
 			_lastShot = currentTime;
 		}
 	}

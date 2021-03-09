@@ -3,7 +3,7 @@
 Projectile::Projectile(int ID)
 {
 	CreateDrawPoints();
-	transform.SetVelocity(4, 0);
+	transform.SetVelocity(speed, 0);
 	collisionFunction = std::bind(&Projectile::Collide, this);
 }
 
@@ -46,5 +46,14 @@ void Projectile::Instantiate(Vector2 position, array2D<double, 2, 2> fireRotatio
 	_timeFired = std::chrono::steady_clock::now();
 	transform.SetPosition(position);
 	transform.SetRotation(fireRotation);
+	active = true;
+}
+
+void Projectile::Instantiate(Vector2 position, Vector2 velocityDirection)
+{
+	_timeFired = std::chrono::steady_clock::now();
+	transform.SetPosition(position);
+	transform.SetRotation(zeroRotation);
+	transform.SetVelocity(velocityDirection.x * speed, velocityDirection.y * speed);
 	active = true;
 }

@@ -10,6 +10,7 @@ Alien::Alien(Player* player) : _player(player)
 {
 	collisionFunction = std::bind(&Alien::Collide, this);
 	transform.SetVelocity(_speed,0);
+	CreatePoints();
 }
 
 Alien::~Alien()
@@ -19,17 +20,23 @@ Alien::~Alien()
 
 void Alien::CreatePoints()
 {
-	// set up alien shape here
+	_points.push_back(Vector2{ -_width, 0 });
+	_points.push_back(Vector2{ -4, _height });
+	_points.push_back(Vector2{ 4, _height });
+	_points.push_back(Vector2{ _width, 0 });
+	_points.push_back(Vector2{ 4, -3 });
+	_points.push_back(Vector2{ -4, -3 });
 }
 
 void Alien::Collide()
 {
+	active = false;
 	// collision functionality here
 }
 
 void Alien::Update()
 {
-
+	CalculateDirectionToPlayer();
 	transform.Move();
 }
 
@@ -38,7 +45,7 @@ void Alien::CalculateDirectionToPlayer()
 	Vector2 playerPos = _player->transform.GetPosition();
 	Vector2 currentPosition = transform.GetPosition();
 	
-	Vector2 directionToPlayer = { playerPos.x - currentPosition.x, playerPos.y - currentPosition.y };
+	directionToPlayer = { playerPos.x - currentPosition.x, playerPos.y - currentPosition.y };
 
 	double currentMagnitude = sqrt(pow(directionToPlayer.x, 2) + pow(directionToPlayer.y, 2));
 	if (currentMagnitude > _speed)
@@ -48,7 +55,17 @@ void Alien::CalculateDirectionToPlayer()
 		directionToPlayer.y *= reductionValue;
 	}
 
-	transform.SetVelocity(directionToPlayer.x, directionToPlayer.y);
+	transform.SetVelocity(directionToPlayer.x * _speed, directionToPlayer.y * _speed);
+}
+
+void Alien::Shoot()
+{
+	// fetch projectile to spawn
+	// projectile.transform.SetPosition(zeroRotation);
+	// Vector2 spawnLocation = transform.GetPosition();
+	// spawnLocation.x += directionToPlayer.x * shotSpawnOffset;
+	// spawnLocation.y += directionToPlayer.y * shotSpawnOffset;
+	// projectile.Instantiate(spawnLocation, directionToPlayer);
 }
 
 void Alien::Instantiate(Vector2 spawnPosition)
