@@ -1,6 +1,7 @@
 #pragma once
 #include <array>
 #include <stdexcept>
+#include <algorithm>
 
 template <typename TObject, int SIZE>
 class GameObjectBuffer
@@ -53,5 +54,12 @@ public:
 			return buffer[i];
 		}
 	}
+
+	template <typename TLambda>
+	void for_each(TLambda f)
+	{
+		std::for_each(buffer.begin(),buffer.end(), f);
+	}
+
 };
 

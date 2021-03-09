@@ -3,8 +3,8 @@
 #include <array>
 #include "Global.h"
 
-template<typename T ,int X, int Y>
-using array2D = std::array<std::array<T, X>, Y>;
+//template<typename T ,int X, int Y>
+//using array2D = std::array<std::array<T, X>, Y>;
 
 class Transform {
 public:
@@ -25,11 +25,12 @@ public:
 	void SetPosition(int x, int y) { _position.x = x, _position.y = y; }
 	void SetAcceleration(double accel) { _acceleration = accel; }
 	void SetDeceleration(double decel) { _deceleration = decel; }
+	array2D<double, 2, 2> ConvertRotationToMatrix(double rotation);
 
 
 private:
 	Vector2 _position = {50,50};
-	array2D<double, 2, 2> _currentRotation = {0,0,0,0};
+	array2D<double, 2, 2> _currentRotation = {1,0,0,1};
 	Vector2 _velocity = {0,0};
 	double _acceleration = 0.07;
 	double _maxMagnitude = 3;

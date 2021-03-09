@@ -1,4 +1,5 @@
 #include "Asteroid.h"
+#include "SpawnSystem.h"
 
 Asteroid::Asteroid()
 {
@@ -6,30 +7,44 @@ Asteroid::Asteroid()
 
 Asteroid::Asteroid(double halfSided)
 {
-	CreatePoints(halfSided);
-	collisionFunction = std::bind(&Asteroid::Collide, this); //this seems to work, it binds a member function to a function variable
+	GetShape();
+	collisionFunction = std::bind(&Asteroid::Collided, this); //this seems to work, it binds a member function to a function variable
 }
 
 Asteroid::~Asteroid()
 {
 }
 
-void Asteroid::CreatePoints(double halfSide)
+void Asteroid::GetShape()
 {
-	_points.push_back(Vector2 {-halfSide, halfSide});
-	_points.push_back(Vector2 {halfSide, -halfSide});
-	_points.push_back(Vector2 {halfSide, halfSide});
+	std::string key;
+	switch (_split)
+	{
+	case 2:
+		key = "largeAsteroid";
+		break;
+	case 1:
+		key = "mediumAsteroid";
+		break;
+	case 0:
+		key = "smallAsteroid";
+		break;
+	default:
+		break;
+	}
 
-	int asteroidBounds[4] = { -halfSide, halfSide, -halfSide, halfSide };
+	_points = ResourceManager::getInstance()._shapes[key];
+
+	auto t = _split + 1;
+	int asteroidBounds[4] = { -t * 5, t * 5, -t * 5, t * 5};
 
 	SetBoundingBox(asteroidBounds);
 }
 
-void Asteroid::Collide()
+void Asteroid::Collided()
 {
-	active = false;
-	// collision code here
-	// activate function in spawn system that takes ints between 1-3 as input to spawn new asteroids
+	collisionActive = false;
+	_spawnSystem->DestroyAsteroid(entity_id, _split);
 }
 
 void Asteroid::Update() // Updates the objects behaviour
@@ -39,14 +54,14 @@ void Asteroid::Update() // Updates the objects behaviour
 
 void Asteroid::ChangeShape(std::vector<Vector2>& newShape) // changes its current shape to a new one
 {
-	_points = newShape;
+	//_points = newShape;
 }
 
-void Asteroid::Instantiate(Vector2 spawnPosition, double speed, int entity_id) // activates the object at a new position
+void Asteroid::Instantiate(Vector2 spawnPosition, double speed, int entity_id, int splits) // activates the object at a new position
 {
 	transform.SetPosition(spawnPosition);
 	transform.SetVelocity(speed, 0);
-	active = true;
+	collisionActive = true;
 
 	int rotation = rand() % 359; // Rand is expensive as heck, remake this to another randomizer later
 	transform.Rotate(rotation);

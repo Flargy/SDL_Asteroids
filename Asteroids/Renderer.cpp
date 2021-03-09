@@ -71,13 +71,17 @@ void Window::DrawObject(CollidableObject& obj) // needs to be tested
 	double x = obj.transform.GetPosition().x;
 	double y = obj.transform.GetPosition().y;
 	SDL_Point* const drawPoints = new SDL_Point[size + 1];
-	std::vector<Vector2> pointPositions = *obj.GetPoints();
-	int intX, intY;
+	array2D<double, 2, 2>& rotation = obj.transform.GetRotation();
+	auto pointPositions = obj.GetPoints();
+	double rotatedX, rotatedY;
 	for(int i = 0; i < size + 1; i++)
 	{
-		intX = pointPositions[i % size].x + 0.5 + x;
-		intY = pointPositions[i % size].y + 0.5 + y;
-		drawPoints[i] = SDL_Point{intX, intY};
+		double positionX = (*pointPositions)[i % size].x;
+		double positionY = (*pointPositions)[i % size].y;
+
+		rotatedX = (positionX * rotation[0][0] + rotation[1][0] * positionY) + 0.5 + x;
+		rotatedY = (positionX * rotation[0][1] + rotation[1][1] * positionY) + 0.5 + y;
+		drawPoints[i] = SDL_Point{ (int)rotatedX, (int)rotatedY};
 	}
 
 	SDL_RenderDrawLines(_renderer, drawPoints, size + 1);

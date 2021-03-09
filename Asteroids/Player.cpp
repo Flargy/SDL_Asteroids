@@ -17,7 +17,7 @@ Player::Player(int xPos, int yPos, int width, int height) :
 	_width(width), _height(height) {
 	CreatePoints();
 
-	double rotation[4]{ 0,-1,1,0 };
+	double rotation[4]{ 1,0,0,1 };
 	double movement[2]{ 0,0 };
 	int position[2]{ xPos, yPos };
 	collisionFunction = std::bind(&Player::Collide, this); 
@@ -41,9 +41,7 @@ Player::~Player()
 */
 void Player::CreatePoints() 
 {
-	_points.push_back(Vector2 {-_width, _height});
-	_points.push_back(Vector2 {0, -_height});
-	_points.push_back(Vector2 {_width, _height});
+	_points = ResourceManager::getInstance()._shapes["player"];
 }
 
 
@@ -67,14 +65,14 @@ void Player::Rotate(int degrees)
 	transform.Rotate(degrees);
 
 	// applies the rotation to the draw points for redenering
-	for (int i = 0; i < 3; i++)
+	/*for (int i = 0; i < 3; i++)
 	{
 		double x = _points[i].x;
 		double y = _points[i].y;
 
 		_points[i].x = rotationMatrix[0][0] * x + rotationMatrix[1][0] * y;
 		_points[i].y = rotationMatrix[0][1] * x + rotationMatrix[1][1] * y;
-	}
+	}*/
 }
 
 /*

@@ -91,8 +91,8 @@ void Transform::AccelerateForward()
 {
 	Vector2 accelerationDirection;
 
-	accelerationDirection.x = _currentRotation[0][0]; // no need to multiply Y component of matrix as the ship moves in x = 1, y = 0
-	accelerationDirection.y = _currentRotation[1][0] * -1;
+	accelerationDirection.x = -_currentRotation[0][1]; // no need to multiply X component of matrix as the ship moves in x = 1, y = 0
+	accelerationDirection.y = _currentRotation[1][1];
 
 
 	_velocity.x += accelerationDirection.x * _acceleration;
@@ -119,10 +119,27 @@ void Transform::SetRotation(array2D<double, 2, 2> newRotation)
 	_currentRotation = newRotation;
 
 	double xDirection = _currentRotation[0][0] * _velocity.x + _currentRotation[0][1] * _velocity.y;
-	double yDirection = _currentRotation[1][0] * _velocity.x + _currentRotation[1][1] * _velocity.y;
+	double yDirection = (_currentRotation[1][0] * _velocity.x + _currentRotation[1][1] * _velocity.y) * -1;
 
 	_velocity.x = xDirection;
 	_velocity.y = yDirection;
 
+}
+
+array2D <double, 2, 2> Transform::ConvertRotationToMatrix(double degrees)
+{
+	array2D<double, 2, 2> rotationMatrix;
+
+	// remakes the rotation in degrees into a 2d rotation matrix
+	double cosValue = COS(degrees);
+	double sinValue = SIN(degrees);
+
+	rotationMatrix[0][0] = cosValue;
+	rotationMatrix[1][0] = sinValue;
+
+	rotationMatrix[0][1] = -sinValue;
+	rotationMatrix[1][1] = cosValue;
+
+	return rotationMatrix;
 }
 

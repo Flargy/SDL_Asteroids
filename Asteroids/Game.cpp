@@ -79,6 +79,11 @@ void Game::GameLoop()
 			//Do physics here
 			_player.Move();
 
+			for (size_t i = 0; i < _projectiles.active_size(); i++)
+			{
+				_projectiles[i].Update();
+			}
+
 			PlayerInput();
 			t += dt;
 			accumulator -= dt;
@@ -88,7 +93,14 @@ void Game::GameLoop()
 		// draw call here
 
 		//_renderer.DrawPlayer();
-		_renderer.DrawObject(_asteroids[0]);
+		for (size_t i = 0; i < _asteroids.active_size(); i++)
+		{
+			_renderer.DrawObject(_asteroids[i]);
+		}
+		for (size_t i = 0; i < _projectiles.active_size(); i++)
+		{
+			_renderer.DrawObject(_projectiles[i]);
+		}
 		_renderer.DrawObject(_player);
 		_renderer.PresentRenderer();
 	}
@@ -122,7 +134,7 @@ void Game::PlayerInput()
 		if (timeSinceShot > _shotDelay)
 		{
 			// shoot projectile
-			
+			_spawnSystem.SpawnProjectile().Instantiate(_player.transform.GetPosition(), _player.transform.GetRotation(), _projectiles.active_size() - 1);
 			_lastShot = currentTime;
 		}
 	}

@@ -20,17 +20,12 @@ Alien::~Alien()
 
 void Alien::CreatePoints()
 {
-	_points.push_back(Vector2{ -_width, 0 });
-	_points.push_back(Vector2{ -4, _height });
-	_points.push_back(Vector2{ 4, _height });
-	_points.push_back(Vector2{ _width, 0 });
-	_points.push_back(Vector2{ 4, -3 });
-	_points.push_back(Vector2{ -4, -3 });
+	_points = ResourceManager::getInstance()._shapes["alien"];
 }
 
 void Alien::Collide()
 {
-	active = false;
+	collisionActive = false;
 	// collision functionality here
 }
 
@@ -71,6 +66,6 @@ void Alien::Shoot()
 void Alien::Instantiate(Vector2 spawnPosition)
 {
 	transform.SetPosition(spawnPosition);
-	active = true;
+	collisionActive = true;
 }
 

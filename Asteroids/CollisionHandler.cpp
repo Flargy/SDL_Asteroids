@@ -228,7 +228,7 @@ void CollisionHandler::FindAllCollisions(
 			
 			for (CollidableObject* otherObject : mapIterator->second)
 			{
-				if ((object.active || otherObject->active)
+				if ((object.collisionActive || otherObject->collisionActive)
 					&& CheckCollisionV2(&object, otherObject))
 				{
 					object.Collision();

@@ -2,6 +2,7 @@
 #include "CollidableObject.h"
 #include <chrono>
 
+
 class Projectile : public CollidableObject
 {
 public:
@@ -13,8 +14,8 @@ public:
 	void CreateDrawPoints();
 
 	void Update();
-	void Instantiate(Vector2 spawnPosition, array2D<double, 2, 2> fireRotation);
-	void Instantiate(Vector2 spawnPosition, Vector2 velocityDirection );
+	void Instantiate(Vector2 spawnPosition, array2D<double, 2, 2> fireRotation, int entity_ID);
+	void Instantiate(Vector2 spawnPosition, Vector2 velocityDirection, int entity_ID);
 
 
 private:
