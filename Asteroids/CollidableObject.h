@@ -3,6 +3,9 @@
 #include <functional>
 #include <iostream>
 #include "GameObjectBuffer.h"
+#include "ResourceManager.h"
+
+class SpawnSystem;
 
 //todo move implementations to cpp
 class CollidableObject
@@ -33,18 +36,19 @@ public:
 
 	void Collision()
 	{
-		if(active)
+		if(collisionActive)
 			collisionFunction(); // think it works, needs to be tested
-		//std::cout << "i have collided" << std::endl;
 	}
 
-	std::vector<Vector2>* GetPoints() { return &_points; }
+	std::shared_ptr<std::vector<Vector2>> GetPoints() { return _points; }
 
-	//placeholder name, this is currently  used to determine if collision checks 
-	//	and reactions should be done for this object
-	bool active = true; 
+
+	bool collisionActive = true; 
 	int entity_id = 0;
 
-	std::vector<Vector2> _points;
+	std::shared_ptr<std::vector<Vector2>> _points;
+
+	//std::vector<Vector2>* _points;
 	std::function<void()> collisionFunction;
+	SpawnSystem* _spawnSystem;
 };
