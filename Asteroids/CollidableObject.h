@@ -36,14 +36,14 @@ public:
 
 	void Collision()
 	{
-		if(collisionActive)
+		if(alive)
 			collisionFunction(); // think it works, needs to be tested
 	}
 
 	std::shared_ptr<std::vector<Vector2>> GetPoints() { return _points; }
 
 
-	bool collisionActive = true; 
+	bool alive = true; 
 	int entity_id = 0;
 
 	std::shared_ptr<std::vector<Vector2>> _points;

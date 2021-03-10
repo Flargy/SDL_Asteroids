@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <chrono>
 #include "Asteroid.h"
 #include "Projectile.h"
 #include "Alien.h"
@@ -29,7 +30,12 @@ public:
 	void SpawnAsteroids();
 	void DestroyAsteroid(const int entity_id, int split);
 	void DestroyProjectile(const int entity_id);
-	Projectile& SpawnProjectile();
+	void SpawnProjectile(Vector2 position, array2D<double, 2, 2> rotation);
+	void SpawnProjectile(Vector2 position, Vector2 velocityDirection);
+	void AlienTimeCounter(double currentTime);
+	void AlienKilled(double timeOfDeath);
+
+	void Reset();
 
 
 	GameObjectBuffer<Asteroid, 32>& _asteroids;
@@ -46,5 +52,6 @@ public:
 		Vector2{20, 400},
 		Vector2{780, 400}
 	};
-
+	const int alienDelay = 30;
+	int alienSpawnTime = 30;
 };

@@ -4,6 +4,7 @@
 #include "Renderer.h"
 #include "Projectile.h"
 #include "GameObjectBuffer.h"
+#include "Alien.h"
 
 class CollisionHandler
 {
@@ -17,7 +18,7 @@ public:
 	void FindAllCollisions(
 		GameObjectBuffer<Asteroid, 32>& asteroids,
 		GameObjectBuffer<Projectile, 16>& bullets,
-		Player& player,
+		Player& player, Alien& alien,
 		int gridSize);
 
 private:

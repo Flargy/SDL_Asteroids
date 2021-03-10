@@ -11,19 +11,27 @@ public:
 	Alien(Player* player);
 	~Alien();
 
+	void Reset();
+
 	void CreatePoints();
 	void Collide();
-	void Update();
+	void Update(double currentTime);
 	void Instantiate(Vector2 spawnposition);
 	void CalculateDirectionToPlayer();
 	void Shoot();
+	void ReceivePlayer(Player* player);
+
 
 private:
 	Player* _player; // pointer to player for chasing purposes
-	double _speed = 2;
-	array2D<double, 2, 2> zeroRotation = { 0,0,0,0 };
+	double _speed = 1.5;
 	Vector2 directionToPlayer;
 	double shotSpawnOffset = 2;
 	double _height = 6;
 	double _width = 10;
+
+	double shotDelay = 5;
+	double nextShotTime = 0;
+	double time;
+
 };

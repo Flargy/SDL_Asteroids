@@ -3,12 +3,14 @@
 
 Asteroid::Asteroid()
 {
+	GetShape();
+	collisionFunction = std::bind(&Asteroid::Collide, this);
 }
 
 Asteroid::Asteroid(double halfSided)
 {
 	GetShape();
-	collisionFunction = std::bind(&Asteroid::Collided, this); //this seems to work, it binds a member function to a function variable
+	collisionFunction = std::bind(&Asteroid::Collide, this); //this seems to work, it binds a member function to a function variable
 }
 
 Asteroid::~Asteroid()
@@ -41,9 +43,10 @@ void Asteroid::GetShape()
 	SetBoundingBox(asteroidBounds);
 }
 
-void Asteroid::Collided()
+void Asteroid::Collide()
 {
-	collisionActive = false;
+	std::cout << "asteroid collided: " << entity_id << std::endl;
+	alive = false; 
 	_spawnSystem->DestroyAsteroid(entity_id, _split);
 }
 
@@ -52,17 +55,18 @@ void Asteroid::Update() // Updates the objects behaviour
 	transform.Move();
 }
 
-void Asteroid::ChangeShape(std::vector<Vector2>& newShape) // changes its current shape to a new one
-{
-	//_points = newShape;
-}
 
-void Asteroid::Instantiate(Vector2 spawnPosition, double speed, int entity_id, int splits) // activates the object at a new position
+void Asteroid::Instantiate(Vector2 spawnPosition, double speed, int entity_ID, int splits) 
 {
-	transform.SetPosition(spawnPosition);
-	transform.SetVelocity(speed, 0);
-	collisionActive = true;
-
+	Vector2 vel = { 0, speed };
 	int rotation = rand() % 359; // Rand is expensive as heck, remake this to another randomizer later
 	transform.Rotate(rotation);
+	vel.Rotate(transform.GetRotation());
+	transform.SetPosition(spawnPosition);
+	transform.SetVelocity(vel.x, vel.y);
+	alive = true;
+	_split = splits;
+	entity_id = entity_ID;
+	GetShape();
+
 }

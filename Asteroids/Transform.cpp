@@ -114,16 +114,23 @@ void Transform::Decelerate() {
 	_velocity.y *= _deceleration;
 }
 
-void Transform::SetRotation(array2D<double, 2, 2> newRotation)
+void Transform::VelocityFromRotation(array2D<double, 2, 2> newRotation)
 {
 	_currentRotation = newRotation;
 
-	double xDirection = _currentRotation[0][0] * _velocity.x + _currentRotation[0][1] * _velocity.y;
-	double yDirection = (_currentRotation[1][0] * _velocity.x + _currentRotation[1][1] * _velocity.y) * -1;
+	double xDirection = (_currentRotation[0][0] * _velocity.x + _currentRotation[0][1] * _velocity.y) * -1;
+	double yDirection = _currentRotation[1][0] * _velocity.x + _currentRotation[1][1] * _velocity.y;
 
 	_velocity.x = xDirection;
 	_velocity.y = yDirection;
 
+}
+
+
+
+void Transform::SetRotation(array2D<double, 2, 2> rotation)
+{
+	_currentRotation = rotation;
 }
 
 array2D <double, 2, 2> Transform::ConvertRotationToMatrix(double degrees)

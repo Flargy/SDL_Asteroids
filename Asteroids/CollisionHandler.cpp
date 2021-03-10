@@ -1,15 +1,8 @@
 #include "CollisionHandler.h"
 #include "Global.h"
 
-
-
 #define DOT(x1,y1,x2,y2)((x1 * x2) + (y1 * y2)) 
 
-
-Vector2 operator-(Vector2& lhs, Vector2& rhs)
-{
-	return Vector2{ lhs.x - rhs.x, lhs.y - rhs.y };
-}
 
 
 bool BoundsTestLineSegment(float t) { return t >= 0 && t <= 1; };
@@ -204,7 +197,7 @@ and make sure checkCollision(...) returns false if already handled?
 void CollisionHandler::FindAllCollisions(
 	GameObjectBuffer<Asteroid, 32>& asteroids,
 	GameObjectBuffer<Projectile, 16>& bullets,
-	Player& player, int gridSize) 
+	Player& player, Alien& alien, int gridSize) 
 	// think the gridsize should be an int as the size of the window is calculated in ints(pixels)
 {
 	map.clear();
@@ -228,7 +221,7 @@ void CollisionHandler::FindAllCollisions(
 			
 			for (CollidableObject* otherObject : mapIterator->second)
 			{
-				if ((object.collisionActive || otherObject->collisionActive)
+				if ((object.alive && otherObject->alive)
 					&& CheckCollisionV2(&object, otherObject))
 				{
 					object.Collision();
@@ -242,7 +235,8 @@ void CollisionHandler::FindAllCollisions(
 	{
 		for_each_occupied_grid_cell(asteroids[i], gridSize, addToMap);
 	}
-	//for_each_occupied_grid_cell(alien, gridSize, addToMap); todo add alien
+	if(alien.alive)
+		for_each_occupied_grid_cell(alien, gridSize, addToMap); 
 	
 	//---------------------- collide bullets with the asteroids&alien in the map, then put the bullets into the map	
 	DeferredFunctions<std::function<void()>> deferredMapInserts;	
@@ -260,6 +254,9 @@ void CollisionHandler::FindAllCollisions(
 	}
 	deferredMapInserts.invoke();
 
-	//---------------------- collide the player against everything in the map (asteroids, alien, bullets)		
-	for_each_occupied_grid_cell(player, gridSize, collide);
+	//---------------------- collide the player against everything in the map (asteroids, alien, bullets)	
+	if (player.alive)
+	{
+		for_each_occupied_grid_cell(player, gridSize, collide);
+	}
 };

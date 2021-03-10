@@ -10,18 +10,20 @@ Player::Player()
 {
 }
 
-/*
-* Sets starting values
-*/
-Player::Player(int xPos, int yPos, int width, int height) :
-	_width(width), _height(height) {
-	CreatePoints();
 
+
+void Player::Init(int xPos, int yPos, int width, int height)
+{
+	_width = width;
+	_height = height;
+	CreatePoints();
+	startPosition.x = xPos;
+	startPosition.y = yPos;
 	double rotation[4]{ 1,0,0,1 };
 	double movement[2]{ 0,0 };
 	int position[2]{ xPos, yPos };
-	collisionFunction = std::bind(&Player::Collide, this); 
-	
+	collisionFunction = std::bind(&Player::Collide, this);
+
 
 	transform = Transform(rotation, movement, position);
 	transform.SetDeceleration(0.98);
@@ -29,11 +31,20 @@ Player::Player(int xPos, int yPos, int width, int height) :
 	int PlayerBounds[4] = { -height, height, -height, height };
 	SetBoundingBox(PlayerBounds);
 }
+
 /*
 * Destructor for the player, clears out the 2d array
 */
 Player::~Player() 
 {
+}
+
+void Player::Reset()
+{
+	alive = true;
+	transform.SetPosition(startPosition.x, startPosition.y);
+	transform.SetRotation(array2D<double, 2, 2>{1,0,0,1});
+	transform.SetVelocity(0,0);
 }
 
 /*
@@ -64,15 +75,6 @@ void Player::Rotate(int degrees)
 
 	transform.Rotate(degrees);
 
-	// applies the rotation to the draw points for redenering
-	/*for (int i = 0; i < 3; i++)
-	{
-		double x = _points[i].x;
-		double y = _points[i].y;
-
-		_points[i].x = rotationMatrix[0][0] * x + rotationMatrix[1][0] * y;
-		_points[i].y = rotationMatrix[0][1] * x + rotationMatrix[1][1] * y;
-	}*/
 }
 
 /*
@@ -90,7 +92,6 @@ void Player::Accelerate()
 
 void Player::Collide()
 {
-	std::cout << "collision" << std::endl;
-	// collision code here
+	alive = false;
 }
 
