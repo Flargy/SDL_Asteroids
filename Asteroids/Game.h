@@ -25,7 +25,7 @@ public:
 	
 
 private:
-	double _shotDelay = 0.7;
+	double _shotDelay = 0.1;
 	bool gameActive = true;
 	std::chrono::steady_clock::time_point _lastShot = std::chrono::steady_clock::now();
 

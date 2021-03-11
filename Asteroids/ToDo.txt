@@ -1,1 +1,4 @@
 clean up gameplay loop
+
+
+use move constructors in spawn system

@@ -9,15 +9,26 @@
 Particles::Particles() {
 }
 
+Particles& Particles::operator=(Particles&& src)
+{
+	int iteratorIndex = std::distance(src.particles.begin(), src.end);
+
+	// TODO: insert return statement here
+	particles = std::move(src.particles);
+	end = particles.begin() + iteratorIndex;
+	return *this;
+}
+
 
 
 void Particles::Instantiate(int numberOfParticles, int speed, Vector2 spawnPos, int lifeTime, double variance, int entity_ID)
 {	
 	// get time from static function
 	entity_id = entity_ID;
-	particles.resize(fmax(numberOfParticles, 1), { spawnPos, { 0,0 }, 1, 0 } );
+	particles.resize(fmax(numberOfParticles, 1));
 	for (auto& particle : particles)
 	{
+		particle.position = spawnPos;
 		double randTau = static_cast <double> (rand()) / (static_cast <double> (RAND_MAX / TAU));
 		particle.velocity = { cos(randTau), sin(randTau) };
 		particle.velocity = particle.velocity * speed ;
@@ -42,6 +53,7 @@ void Particles::Update()
 		_spawnSystem->DestroyParticle(entity_id);
 		return;
 	}
+	
 
 	while (it != end && it->deathTime > Time::time) // todo get time from static or update?
 	{
@@ -57,14 +69,14 @@ void Particles::Draw(SDL_Renderer* renderer)
 	SDL_Rect rect;
 	rect.w = 10;
 	rect.h = 10;
+
 	double currentTime = Time::time;
 	auto it = particles.begin();
 	while (it != end) // todo get time from static or update?
 	{
 		rect.x = it->position.x - (rect.w >> 1);
 		rect.y = it->position.y - (rect.h >> 1);
+		SDL_RenderDrawRect(renderer, &rect);
 		it++;
-
 	}
-	SDL_RenderDrawRect(renderer, &rect);
 }

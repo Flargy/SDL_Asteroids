@@ -30,6 +30,8 @@ void SpawnSystem::DestroyAsteroid(const int entity_id, int split)
 
  	if (split == 0)
 	{
+		SpawnParticles(_particleAmount * split, _particleSpeed, pos, _particleLifeTime, _particleVariance);
+
 		_asteroids[entity_id] = _asteroids[_asteroids.active_size() - 1];
 		_asteroids[entity_id].collisionFunction = std::bind(&Asteroid::Collide, &_asteroids[entity_id]);
 		_asteroids[entity_id].entity_id = entity_id;
@@ -38,24 +40,24 @@ void SpawnSystem::DestroyAsteroid(const int entity_id, int split)
 		{
 			SpawnAsteroids();
 		}*/
-		SpawnParticles(_particleAmount * split, _particleSpeed, pos, _particleLifeTime, _particleVariance);
 	}
 	else if (split == 1)
 	{
+		SpawnParticles(_particleAmount * split, _particleSpeed, pos, _particleLifeTime, _particleVariance);
 		//overwrite old with new asteroid info
 		_asteroids[entity_id].Instantiate(pos, _asteroidSpeed * _smallMultiplier, entity_id, split - 1);
 
 		_asteroids.increase_active_size();
 		_asteroids.get_last().Instantiate(pos, _asteroidSpeed * _smallMultiplier, _asteroids.active_size() - 1, split - 1);
-		SpawnParticles(_particleAmount * split, _particleSpeed, pos, _particleLifeTime, _particleVariance);
 	}
 	else if (split == 2)
 	{
+		SpawnParticles(_particleAmount * split, _particleSpeed, pos, _particleLifeTime, _particleVariance);
+		
 		_asteroids[entity_id].Instantiate(pos, _asteroidSpeed * _mediumMultiplier, entity_id, split - 1);
 
 		_asteroids.increase_active_size();
 		_asteroids.get_last().Instantiate(pos, _asteroidSpeed * _mediumMultiplier, _asteroids.active_size() - 1, split - 1);
-		SpawnParticles(_particleAmount * split, _particleSpeed, pos, _particleLifeTime, _particleVariance);
 	}
 }
 
@@ -81,6 +83,7 @@ void SpawnSystem::Reset()
 {
 	SpawnAsteroids();
 	_projectiles.reset();
+	_particles.reset();
 	_player.Reset();
 	_alien.Reset();
 }
@@ -103,12 +106,14 @@ void SpawnSystem::AlienKilled(double timeOfDeath)
 void SpawnSystem::SpawnParticles(int numberOfParticles, int speed, Vector2 position, int lifeTime, double variance)
 {
 	_particles.increase_active_size();
-	_particles.get_last().Instantiate(numberOfParticles, speed, position, lifeTime, variance, _particles.active_size() - 1);
+	_particles.get_last().Instantiate(numberOfParticles, speed, 
+		position, lifeTime, variance, _particles.active_size() - 1);
 }
 
 void SpawnSystem::DestroyParticle(const int entity_id)
 {
-	_particles[entity_id] = _particles[_particles.active_size() - 1];
+	assert(_particles[_particles.active_size() - 1].entity_id == _particles.active_size() - 1);
+	_particles[entity_id] = std::move(_particles[_particles.active_size() - 1]);
 	_particles[entity_id].entity_id = entity_id;
 	_particles.decrease_active_size();
 }

@@ -11,6 +11,8 @@ class Particles
 public:
 	Particles();
 
+	Particles& operator= (Particles&& src);
+
 
 	void Instantiate(int numberOfParticles, int speed, Vector2 spawnPos,
 		int lifeTime, double variance, int entity_ID);

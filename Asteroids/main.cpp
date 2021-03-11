@@ -34,7 +34,7 @@ int main(int args, char** argv) {
 	windowHeight = 800;
 	windowWidth = 800;
 	Window window = Window("Asteroids", windowWidth, windowHeight);
-	Game session = Game(window);
+	Game session(window);
 	session.GameLoop();
 
 	return 0;
