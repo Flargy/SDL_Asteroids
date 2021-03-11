@@ -40,3 +40,8 @@ double Vector2::operator*(Vector2 other)
 	return (x * other.x + y * other.y);
 }
 
+Vector2 Vector2::operator*(double d)
+{
+	return Vector2(x * d, y * d);
+}
+

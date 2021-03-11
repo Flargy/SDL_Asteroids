@@ -33,6 +33,7 @@ struct Vector2
 
 	double operator*(Vector2 other);
 
+	Vector2 operator*(double d);
 
 };
 
