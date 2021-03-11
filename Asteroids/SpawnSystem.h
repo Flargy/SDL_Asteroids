@@ -6,6 +6,7 @@
 #include "Alien.h"
 #include "Player.h"
 #include "GameObjectBuffer.h"
+#include "Particles.h"
 //resource pool
 
 class SpawnSystem
@@ -14,7 +15,7 @@ public:
 
 	SpawnSystem(GameObjectBuffer<Asteroid, 32>& asteroids,
 		GameObjectBuffer<Projectile, 16>& projectiles,
-		Alien& alien, Player& player);
+		Alien& alien, Player& player, GameObjectBuffer<Particles, 16>& particles);
 
 	/*
 	todo asteroid spawn perimeter	
@@ -32,14 +33,17 @@ public:
 	void DestroyProjectile(const int entity_id);
 	void SpawnProjectile(Vector2 position, Matrix2D rotation);
 	void SpawnProjectile(Vector2 position, Vector2 velocityDirection);
-	void AlienTimeCounter(double currentTime);
+	void AlienTimeCounter();
 	void AlienKilled(double timeOfDeath);
+	void SpawnParticles(int numberOfParticles, int speed, Vector2 position, int lifeTime, double variance);
+	void DestroyParticle(const int entity_id);
 
 	void Reset();
 
 
 	GameObjectBuffer<Asteroid, 32>& _asteroids;
 	GameObjectBuffer<Projectile, 16>& _projectiles;
+	GameObjectBuffer<Particles, 16>& _particles;
 	Alien& _alien;
 	Player& _player;
 	std::array<Vector2, 8> _spawnPoints = {
@@ -61,4 +65,9 @@ public:
 	int _startingSplits = 2;
 	int _spawnPointsMaxIndex = 7;
 	int _asteroidSpawnAmount = 8;
+
+	int _particleAmount = 3;
+	int _particleSpeed = 2;
+	int _particleLifeTime = 1;
+	double _particleVariance = 0.2;
 };

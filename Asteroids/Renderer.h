@@ -20,6 +20,7 @@ public:
 	void DrawObject(CollidableObject& obj);
 	void DrawPlayer();
 
+	SDL_Renderer* _renderer = nullptr;
 
 private:
 	bool Init();
@@ -28,7 +29,6 @@ private:
 	int _height = 600;
 	bool _closed = false;
 	SDL_Window* _window = nullptr;
-	SDL_Renderer* _renderer = nullptr;
 	
 
 };

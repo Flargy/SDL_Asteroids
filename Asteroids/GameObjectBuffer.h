@@ -14,7 +14,7 @@ public:
 	{
 	}
 
-	
+	~GameObjectBuffer(){}
 
 	int decrease_active_size() {
 		if (activeSize > 0)

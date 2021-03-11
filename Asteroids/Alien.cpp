@@ -1,6 +1,7 @@
 #include "Alien.h"
-#include <chrono>
 #include "SpawnSystem.h"
+#include "Time.h"
+
 
 Alien::Alien()
 {
@@ -26,7 +27,7 @@ Alien::~Alien()
 void Alien::Reset()
 {
 	alive = false;
-	_spawnSystem->AlienKilled(time);
+	_spawnSystem->AlienKilled(Time::time);
 }
 
 void Alien::CreatePoints()
@@ -39,22 +40,21 @@ void Alien::CreatePoints()
 void Alien::Collide()
 {
 	alive = false;
-	_spawnSystem->AlienKilled(time);
+	_spawnSystem->AlienKilled(Time::time);
 }
 
-void Alien::Update(double currentTime)
+void Alien::Update()
 {
 	if (_player->alive == false)
 	{
 		return;
 	}
-	time = currentTime;
 	CalculateDirectionToPlayer();
 	transform.Move();
 
-	if (currentTime >= nextShotTime)
+	if (Time::time >= nextShotTime)
 	{
-		nextShotTime = currentTime + shotDelay;
+		nextShotTime = Time::time + shotDelay;
 		Shoot();
 	}
 }

@@ -4,8 +4,22 @@
 #include <vector>
 #include <SDL.h>
 
+class SpawnSystem;
+
 class Particles
 {
+public:
+	Particles();
+
+
+	void Instantiate(int numberOfParticles, int speed, Vector2 spawnPos,
+		int lifeTime, double variance, int entity_ID);
+	void Update();
+	void Draw(SDL_Renderer* renderer);
+
+	int entity_id = 0;
+	SpawnSystem* _spawnSystem;
+private:
 
 	struct Particle {
 		Vector2 position = { 0,0 };
@@ -14,35 +28,10 @@ class Particles
 		double deathTime = 0;
 	};
 
-
-	std::vector<Particle>::iterator end;
-
-	std::vector<Particle> particles = {};
-
-
-
-	bool particleLifetimeOrder(Particle particle1, Particle particle2);
-
-	Particles(int numberOfParticles, int speed, Vector2 spawnPos,
-		int lifeTime, double variance, double spawnTime);
-
 	double RandVariance(double variance);
 
-	void Update(double time);
-	
-	void Draw(SDL_Renderer* renderer) {
-		SDL_Rect rect;
-		rect.w = 2;
-		rect.h = 2;
-		auto it = particles.begin();
-		while (it != end) // todo get time from static or update?
-		{
-			rect.x = it->position.x - (rect.w >> 1);
-			rect.y = it->position.y - (rect.h >> 1);
-			
-		}
-		SDL_RenderDrawRect(renderer, &rect);
-	}
+	std::vector<Particle>::iterator end;
+	std::vector<Particle> particles = {};
 
 };
 

@@ -15,7 +15,7 @@ public:
 
 	void CreatePoints();
 	void Collide();
-	void Update(double currentTime);
+	void Update();
 	void Instantiate(Vector2 spawnposition);
 	void CalculateDirectionToPlayer();
 	void Shoot();
@@ -32,7 +32,6 @@ private:
 
 	double shotDelay = 5;
 	double nextShotTime = 0;
-	double time;
 	int _alienBoundsValue = 15;
 
 };

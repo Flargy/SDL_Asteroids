@@ -11,7 +11,7 @@
 #include "Renderer.h"
 #include "CollisionHandler.h"
 #include "GameObjectBuffer.h"
-
+#include "Particles.h"
 
 /*
 this class represents the game state, in this game there is only one state.
@@ -22,6 +22,7 @@ public:
 	void PlayerInput();
 	void GameLoop();
 	Game(Window& window);
+	
 
 private:
 	double _shotDelay = 0.7;
@@ -30,6 +31,7 @@ private:
 
 	GameObjectBuffer<Asteroid, 32> _asteroids;
 	GameObjectBuffer<Projectile,16> _projectiles;
+	GameObjectBuffer<Particles, 16> _particles;
 	Alien _alien;
 	Player _player;
 

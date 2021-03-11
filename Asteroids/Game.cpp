@@ -1,11 +1,12 @@
 #include "Game.h"
 #include <SDL.h>
 #include "Global.h"
+#include "Time.h"
 
 
 Game::Game(Window& window)
 	: _renderer(window), 
-	_spawnSystem(_asteroids, _projectiles, _alien, _player),
+	_spawnSystem(_asteroids, _projectiles, _alien, _player, _particles),
 	_collisionHandler(_renderer)
 {
 	_spawnSystem.SpawnAsteroids();
@@ -41,7 +42,7 @@ void Game::GameLoop()
 		{
 			// ---------------------- update ------------------------------- 
 
-			double time = duration_cast<duration<double>>(currentTime - startTime).count();
+			Time::time = duration_cast<duration<double>>(currentTime - startTime).count();
 			_player.Move();
 
 			for (size_t i = 0; i < _projectiles.active_size(); i++)
@@ -54,9 +55,13 @@ void Game::GameLoop()
 			}
 			if (_alien.alive == true)
 			{
-				_alien.Update(time);
+				_alien.Update();
 			}
-			_spawnSystem.AlienTimeCounter(time);
+			for (size_t i = 0; i < _particles.active_size(); i++)
+			{
+				_particles[i].Update();
+			}
+			_spawnSystem.AlienTimeCounter();
 
 			PlayerInput();
 			_collisionHandler.FindAllCollisions(_asteroids, _projectiles, _player, _alien, 20);
@@ -74,6 +79,10 @@ void Game::GameLoop()
 		for (size_t i = 0; i < _projectiles.active_size(); i++)
 		{
 			_renderer.DrawObject(_projectiles[i]);
+		}
+		for (size_t i = 0; i < _particles.active_size(); i++)
+		{
+			_particles[i].Draw(_renderer._renderer);
 		}
 		if(_player.alive)
 			_renderer.DrawObject(_player);
