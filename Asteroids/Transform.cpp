@@ -2,8 +2,7 @@
 #include <math.h>
 #include <iostream>
 
-#define SIN(x) sin(x * 3.141592653589 / 180) 
-#define COS(x) cos(x * 3.141592653589 / 180)
+
 
 Transform::Transform(double rotation[4], double movementDirection[2], int position[2]) {
 
@@ -12,11 +11,11 @@ Transform::Transform(double rotation[4], double movementDirection[2], int positi
 	_velocity.x = movementDirection[0];
 	_velocity.y = movementDirection[1];
 	// x1 & x2
-	_currentRotation[0][0] = rotation[0];
-	_currentRotation[0][1] = rotation[1];
+	_currentRotation.m00 = rotation[0];
+	_currentRotation.m01 = rotation[1];
 	// y1 & y2
-	_currentRotation[1][0] = rotation[2];
-	_currentRotation[1][1] = rotation[3];
+	_currentRotation.m10 = rotation[2];
+	_currentRotation.m11 = rotation[3];
 }
 
 Transform::~Transform() {
@@ -25,32 +24,20 @@ Transform::~Transform() {
 
 void Transform::Rotate(int degrees) {
 
-	Matrix2D rotationMatrix;
 
 	// remakes the rotation in degrees into a 2d rotation matrix
 	double cosValue = COS(degrees);
 	double sinValue = SIN(degrees);
 
-	rotationMatrix.m00 = cosValue;
-	rotationMatrix.m10 = sinValue;
-
-	rotationMatrix.m01 = -sinValue;
-	rotationMatrix.m11 = cosValue;
+	Matrix2D rotationMatrix(cosValue, sinValue, -sinValue, cosValue);
 
 	// creates a new matrix which is the (players current rotation * rotation matrix from degrees)
 	Matrix2D product;
 
-	product = (_matrixRotation * rotationMatrix);
-
-	// overwrites the current rotation with the previously created rotation matrix
-	//std::cout << product.vec1.x << " " << product.vec1.y << " " << product.vec2.x << " " << product.vec2.y << " " << std::endl;
-	_matrixRotation = product;
+	product = (_currentRotation * rotationMatrix);
 
 
-	_currentRotation[0][0] = _matrixRotation.m00;
-	_currentRotation[1][0] = _matrixRotation.m10;
-	_currentRotation[0][1] = _matrixRotation.m01;
-	_currentRotation[1][1] = _matrixRotation.m11;
+	_currentRotation = product;
 }
 
 
@@ -85,8 +72,8 @@ void Transform::AccelerateForward()
 {
 	Vector2 accelerationDirection;
 
-	accelerationDirection.x = -_currentRotation[0][1]; // no need to multiply X component of matrix as the ship moves in x = 1, y = 0
-	accelerationDirection.y = _currentRotation[1][1];
+	accelerationDirection.x = -_currentRotation.m01; // no need to multiply X component of matrix as the ship moves in x = 1, y = 0
+	accelerationDirection.y = _currentRotation.m11;
 
 
 	_velocity.x += accelerationDirection.x * _acceleration;
@@ -108,39 +95,19 @@ void Transform::Decelerate() {
 	_velocity.y *= _deceleration;
 }
 
-void Transform::VelocityFromRotation(array2D<double, 2, 2> newRotation)
+void Transform::VelocityFromRotation(Matrix2D newRotation)
 {
 	_currentRotation = newRotation;
-
-	double xDirection = (_currentRotation[0][0] * _velocity.x + _currentRotation[0][1] * _velocity.y) * -1;
-	double yDirection = _currentRotation[1][0] * _velocity.x + _currentRotation[1][1] * _velocity.y;
-
-	_velocity.x = xDirection;
-	_velocity.y = yDirection;
+	_velocity = _velocity * _currentRotation;
+	_velocity.x *= -1;
 
 }
 
 
 
-void Transform::SetRotation(array2D<double, 2, 2> rotation)
+void Transform::SetRotation(Matrix2D rotation)
 {
 	_currentRotation = rotation;
 }
 
-array2D <double, 2, 2> Transform::ConvertRotationToMatrix(double degrees)
-{
-	array2D<double, 2, 2> rotationMatrix;
-
-	// remakes the rotation in degrees into a 2d rotation matrix
-	double cosValue = COS(degrees);
-	double sinValue = SIN(degrees);
-
-	rotationMatrix[0][0] = cosValue;
-	rotationMatrix[1][0] = sinValue;
-
-	rotationMatrix[0][1] = -sinValue;
-	rotationMatrix[1][1] = cosValue;
-
-	return rotationMatrix;
-}
 

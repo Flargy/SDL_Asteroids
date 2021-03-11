@@ -29,10 +29,6 @@ private:
 	bool _closed = false;
 	SDL_Window* _window = nullptr;
 	SDL_Renderer* _renderer = nullptr;
-	Player* _player;
-	std::vector<std::array<double, 2>>* _points;
-
-	Asteroid* debugAsteroid;
-	std::vector<std::array<double, 2>>* _debugPoints;
+	
 
 };

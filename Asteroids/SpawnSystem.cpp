@@ -13,10 +13,10 @@ SpawnSystem::SpawnSystem(GameObjectBuffer<Asteroid, 32>& asteroids,
 void SpawnSystem::SpawnAsteroids()
 {
 	_asteroids.reset();
-	for (size_t i = 0; i < 8; i++) 
+	for (size_t i = 0; i < _asteroidSpawnAmount; i++)
 	{
 		_asteroids.increase_active_size();
-		_asteroids[i].Instantiate(_spawnPoints[i], 1, i, 2); // todo set spawn positions according to some perimeter
+		_asteroids[i].Instantiate(_spawnPoints[i], _asteroidSpeed, i, _startingSplits); // todo set spawn positions according to some perimeter
 	}
 }
 
@@ -33,18 +33,18 @@ void SpawnSystem::DestroyAsteroid(const int entity_id, int split)
 	{
 		//overwrite old with new asteroid info
 		Vector2 pos = _asteroids[entity_id].transform.GetPosition();
-		_asteroids[entity_id].Instantiate(pos, 1, entity_id, split - 1);	
+		_asteroids[entity_id].Instantiate(pos, _asteroidSpeed * _smallMultiplier, entity_id, split - 1);
 
 		_asteroids.increase_active_size();
-		_asteroids.get_last().Instantiate(pos, 1, _asteroids.active_size() - 1, split - 1);
+		_asteroids.get_last().Instantiate(pos, _asteroidSpeed * _smallMultiplier, _asteroids.active_size() - 1, split - 1);
 	}
 	else if (split == 2)
 	{
 		Vector2 pos = _asteroids[entity_id].transform.GetPosition();
-		_asteroids[entity_id].Instantiate(pos, 1, entity_id, split - 1);
+		_asteroids[entity_id].Instantiate(pos, _asteroidSpeed * _mediumMultiplier, entity_id, split - 1);
 
 		_asteroids.increase_active_size();
-		_asteroids.get_last().Instantiate(pos, 1, _asteroids.active_size() - 1, split - 1);
+		_asteroids.get_last().Instantiate(pos, _asteroidSpeed * _mediumMultiplier, _asteroids.active_size() - 1, split - 1);
 	}
 }
 
@@ -55,7 +55,7 @@ void SpawnSystem::DestroyProjectile(const int entity_id) {
 	_projectiles.decrease_active_size();
 }
 
-void SpawnSystem::SpawnProjectile(Vector2 position, array2D<double,2,2> rotation) {
+void SpawnSystem::SpawnProjectile(Vector2 position, Matrix2D rotation) {
 	_projectiles.increase_active_size();
 	_projectiles.get_last().Instantiate(position, rotation, _projectiles.active_size() - 1);
 }
@@ -79,7 +79,7 @@ void SpawnSystem::AlienTimeCounter(double currentTime)
 	if (!_alien.alive && currentTime >= alienSpawnTime)
 	{
 		_alien.alive = true;
-		int randomPoint = rand() % 7;
+		int randomPoint = rand() % _spawnPointsMaxIndex;
 		_alien.transform.SetPosition(_spawnPoints[randomPoint].x, _spawnPoints[randomPoint].y);
 	}
 }

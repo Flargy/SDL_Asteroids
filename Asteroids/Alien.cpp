@@ -32,7 +32,7 @@ void Alien::Reset()
 void Alien::CreatePoints()
 {
 	_points = ResourceManager::getInstance()._shapes["alien"];
-	int alienBounds[4] = { -15, 15, -15, 15 };
+	int alienBounds[4] = { -_alienBoundsValue, _alienBoundsValue, -_alienBoundsValue, _alienBoundsValue };
 	SetBoundingBox(alienBounds);
 }
 

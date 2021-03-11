@@ -1,8 +1,6 @@
 #pragma once
 #include <array>
 
-template<typename T, int X, int Y>
-using array2D = std::array<std::array<T, X>, Y>;
 
 class Matrix2D;
 
@@ -24,7 +22,6 @@ struct Vector2
 
 	void Rotate(Matrix2D rotation);
 
-	void Rotate(array2D<double, 2, 2> rotation);
 
 	Vector2 Normalized();
 

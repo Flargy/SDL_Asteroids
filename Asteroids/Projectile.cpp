@@ -1,13 +1,6 @@
 #include "Projectile.h"
-
 #include "SpawnSystem.h"
 
-//Projectile::Projectile(int ID)
-//{
-//	CreateDrawPoints();
-//	transform.SetVelocity(0, speed);
-//	collisionFunction = std::bind(&Projectile::Collide, this);
-//}
 
 Projectile::Projectile(Projectile& projectileToCopy)
 {
@@ -27,7 +20,6 @@ void Projectile::Collide()
 {
 	alive = false;
 
-	std::cout << "projectile destroyed: " << entity_id << std::endl;
 	_spawnSystem->DestroyProjectile(entity_id);
 }
 
@@ -35,7 +27,7 @@ void Projectile::CreateDrawPoints() // sets a shot to be 2x2 pixels
 {
 	_points = ResourceManager::getInstance()._shapes["projectile"];
 
-	int projectileBounds[4] = {-4, 4, -4, 4};
+	int projectileBounds[4] = {-_projectileBoundsValue, _projectileBoundsValue, -_projectileBoundsValue, _projectileBoundsValue };
 	SetBoundingBox(projectileBounds);
 }
 
@@ -46,7 +38,6 @@ void Projectile::Update()
 	if (diff > _lifeDuration)
 	{
 		alive = false;
-		std::cout << "projectile destroyed: " << entity_id << std::endl;
 		_spawnSystem->DestroyProjectile(entity_id);
 		return;
 	}
@@ -54,12 +45,12 @@ void Projectile::Update()
 	transform.Move();
 }
 
-void Projectile::Instantiate(Vector2 position, array2D<double, 2, 2> fireRotation, int entity_ID)
+void Projectile::Instantiate(Vector2 position, Matrix2D fireRotation, int entity_ID)
 {
 	Vector2 dir;
 
-	dir.x = -fireRotation[0][1]; // no need to multiply X component of matrix as the ship moves in x = 1, y = 0
-	dir.y = fireRotation[1][1];
+	dir.x = -fireRotation.m01; // no need to multiply X component of matrix as the ship moves in x = 1, y = 0
+	dir.y = fireRotation.m11;
 	Instantiate(position, dir, entity_ID);
 
 }

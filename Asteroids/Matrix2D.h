@@ -1,5 +1,6 @@
 #pragma once
-#include "Vector2.h"
+
+class Vector2;
 
 struct Matrix2D
 {
@@ -18,13 +19,7 @@ struct Matrix2D
 		m01 = 0;
 		m11 = 0;
 	}
-	Matrix2D(Vector2 v1, Vector2 v2)
-	{
-		m00 = v1.x;
-		m10 = v1.y;
-		m01 = v2.x;
-		m11 = v2.y;
-	}
+	Matrix2D(Vector2 v1, Vector2 v2);
 
 	double m00, m10, m01, m11;
 

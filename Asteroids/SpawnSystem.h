@@ -30,7 +30,7 @@ public:
 	void SpawnAsteroids();
 	void DestroyAsteroid(const int entity_id, int split);
 	void DestroyProjectile(const int entity_id);
-	void SpawnProjectile(Vector2 position, array2D<double, 2, 2> rotation);
+	void SpawnProjectile(Vector2 position, Matrix2D rotation);
 	void SpawnProjectile(Vector2 position, Vector2 velocityDirection);
 	void AlienTimeCounter(double currentTime);
 	void AlienKilled(double timeOfDeath);
@@ -54,4 +54,11 @@ public:
 	};
 	const int alienDelay = 30;
 	int alienSpawnTime = 30;
+
+	double _asteroidSpeed = 1;
+	double _mediumMultiplier = 1.3;
+	double _smallMultiplier = 1.5;
+	int _startingSplits = 2;
+	int _spawnPointsMaxIndex = 7;
+	int _asteroidSpawnAmount = 8;
 };

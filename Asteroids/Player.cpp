@@ -11,7 +11,6 @@ Player::Player()
 }
 
 
-
 void Player::Init(int xPos, int yPos, int width, int height)
 {
 	_width = width;
@@ -24,7 +23,6 @@ void Player::Init(int xPos, int yPos, int width, int height)
 	int position[2]{ xPos, yPos };
 	collisionFunction = std::bind(&Player::Collide, this);
 
-
 	transform = Transform(rotation, movement, position);
 	transform.SetDeceleration(0.98);
 
@@ -32,9 +30,7 @@ void Player::Init(int xPos, int yPos, int width, int height)
 	SetBoundingBox(PlayerBounds);
 }
 
-/*
-* Destructor for the player, clears out the 2d array
-*/
+
 Player::~Player() 
 {
 }
@@ -43,7 +39,7 @@ void Player::Reset()
 {
 	alive = true;
 	transform.SetPosition(startPosition.x, startPosition.y);
-	transform.SetRotation(array2D<double, 2, 2>{1,0,0,1});
+	transform.SetRotation(Matrix2D(1,0,0,1));
 	transform.SetVelocity(0,0);
 }
 

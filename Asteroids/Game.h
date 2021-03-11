@@ -25,6 +25,7 @@ public:
 
 private:
 	double _shotDelay = 0.7;
+	bool gameActive = true;
 	std::chrono::steady_clock::time_point _lastShot = std::chrono::steady_clock::now();
 
 	GameObjectBuffer<Asteroid, 32> _asteroids;

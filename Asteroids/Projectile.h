@@ -6,7 +6,6 @@
 class Projectile : public CollidableObject
 {
 public:
-	//Projectile(int ID);
 	Projectile();
 	Projectile(Projectile& projectileToCopy);
 	~Projectile(){}
@@ -15,7 +14,7 @@ public:
 	void CreateDrawPoints();
 
 	void Update();
-	void Instantiate(Vector2 spawnPosition, array2D<double, 2, 2> fireRotation, int entity_ID);
+	void Instantiate(Vector2 spawnPosition, Matrix2D fireRotation, int entity_ID);
 	void Instantiate(Vector2 spawnPosition, Vector2 velocityDirection, int entity_ID);
 	
 
@@ -25,4 +24,5 @@ private:
 	std::chrono::steady_clock::time_point _timeAlive = std::chrono::steady_clock::now();
 	double _lifeDuration = 2;
 	double speed = 6;
+	double _projectileBoundsValue = 4;
 };

@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include "Global.h"
+#include "MathExtension.h"
 #include <memory>
 
 class ResourceManager
@@ -36,7 +37,6 @@ public:
             (*ptr)[i] = points[i];
         }
 
-        //_shapes.emplace(std::make_pair(key, ptr));
         _shapes[key] = ptr;
     }
 

@@ -2,6 +2,7 @@
 #include <vector>
 #include <array>
 #include "Global.h"
+#include "MathExtension.h"
 
 class Transform {
 public:
@@ -10,11 +11,11 @@ public:
 	~Transform();
 
 	Vector2& GetPosition() { return _position; }
-	array2D<double, 2,2>& GetRotation() { return _currentRotation; }
+	Matrix2D& GetRotation() { return _currentRotation; }
 	Vector2 GetVelocity() { return _velocity; }
 	void SetVelocity(double x, double y) { _velocity.x = x, _velocity.y = y; }
 	void Rotate(int degrees);
-	void VelocityFromRotation(array2D<double, 2, 2> newRotation);
+	void VelocityFromRotation(Matrix2D newRotation);
 	void Move();
 	void AccelerateForward();
 	void Decelerate();
@@ -22,14 +23,12 @@ public:
 	void SetPosition(int x, int y) { _position.x = x, _position.y = y; }
 	void SetAcceleration(double accel) { _acceleration = accel; }
 	void SetDeceleration(double decel) { _deceleration = decel; }
-	void SetRotation(array2D<double, 2, 2> rotation);
-	array2D<double, 2, 2> ConvertRotationToMatrix(double rotation);
+	void SetRotation(Matrix2D rotation);
 
 
 private:
 	Vector2 _position = {50,50};
-	array2D<double, 2, 2> _currentRotation = {1,0,0,1};
-	Matrix2D _matrixRotation = {1,0,0,1};
+	Matrix2D _currentRotation = {1,0,0,1};
 	Vector2 _velocity = {0,0};
 	double _acceleration = 0.07;
 	double _maxMagnitude = 3;

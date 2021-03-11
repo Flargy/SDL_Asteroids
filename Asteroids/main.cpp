@@ -28,8 +28,6 @@ void init()
 	resources.AddShape("projectile", projectile);
 }
 
-
-
 int main(int args, char** argv) {
 	
 	init();

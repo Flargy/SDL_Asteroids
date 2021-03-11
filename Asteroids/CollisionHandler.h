@@ -50,7 +50,8 @@ private:
 				; currentCell.second <= std::ceil((object.boundingBox.yMax + y) / gridSize)
 				; ++currentCell.second)
 			{
-				debugRenderer.DrawRect(gridSize, gridSize, currentCell.first * gridSize, currentCell.second * gridSize);				
+				// ----------- Grid debug visuals ----------------
+				//debugRenderer.DrawRect(gridSize, gridSize, currentCell.first * gridSize, currentCell.second * gridSize);				
 				func(object, currentCell);
 			}
 		}

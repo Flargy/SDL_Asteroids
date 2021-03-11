@@ -27,7 +27,7 @@ void Game::GameLoop()
 	steady_clock::time_point currentTime = startTime;
 
 
-	while (!_renderer.IsClosed())
+	while (gameActive)
 	{
 
 		steady_clock::time_point newTime = steady_clock::now();
@@ -39,8 +39,9 @@ void Game::GameLoop()
 
 		while (accumulator >= dt)
 		{
+			// ---------------------- update ------------------------------- 
+
 			double time = duration_cast<duration<double>>(currentTime - startTime).count();
-			//Do physics here
 			_player.Move();
 
 			for (size_t i = 0; i < _projectiles.active_size(); i++)
@@ -64,7 +65,7 @@ void Game::GameLoop()
 			accumulator -= dt;
 
 		}
-		// draw call here
+		// ---------------------- draw call ------------------------------- 
 
 		for (size_t i = 0; i < _asteroids.active_size(); i++)
 		{
@@ -86,8 +87,6 @@ void Game::GameLoop()
 void Game::PlayerInput()
 {
 	SDL_Event event;
-
-	//std::vector<int> positions;
 
 	SDL_PumpEvents();
 	const Uint8* state = SDL_GetKeyboardState(NULL);
@@ -122,13 +121,12 @@ void Game::PlayerInput()
 		_spawnSystem.Reset();
 	}
 
-
 	while (SDL_PollEvent(&event))
 	{
 		switch (event.type)
 		{
 		case SDL_QUIT:
-			//_closed = true;
+			gameActive = false;
 			break;
 		default:
 			break;

@@ -21,4 +21,5 @@ public:
 
 private:
 	int _split = 2;
+	int _asteroidBoundsValue = 5;
 };

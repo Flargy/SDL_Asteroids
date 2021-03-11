@@ -33,5 +33,6 @@ private:
 	double shotDelay = 5;
 	double nextShotTime = 0;
 	double time;
+	int _alienBoundsValue = 15;
 
 };

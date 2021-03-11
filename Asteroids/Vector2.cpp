@@ -1,5 +1,5 @@
+#include "Vector2.h"
 #include "Matrix2D.h"
-
 
 void Vector2::Rotate(Matrix2D rotation)
 {
@@ -12,16 +12,6 @@ void Vector2::Rotate(Matrix2D rotation)
 	y = tempY;
 }
 
-void Vector2::Rotate(array2D<double, 2, 2> rotation)
-{
-	double tempX, tempY;
-
-	tempX = (rotation[0][0] * x + rotation[0][1] * y) * -1;
-	tempY = (rotation[1][0] * x + rotation[1][1] * y);
-
-	x = tempX;
-	y = tempY;
-}
 
 Vector2 Vector2::Normalized()
 {

@@ -38,14 +38,13 @@ void Asteroid::GetShape()
 	_points = ResourceManager::getInstance()._shapes[key];
 
 	auto t = _split + 1;
-	int asteroidBounds[4] = { -t * 5, t * 5, -t * 5, t * 5};
+	int asteroidBounds[4] = { -t * _asteroidBoundsValue, t * _asteroidBoundsValue, -t * _asteroidBoundsValue, t * _asteroidBoundsValue };
 
 	SetBoundingBox(asteroidBounds);
 }
 
 void Asteroid::Collide()
 {
-	std::cout << "asteroid collided: " << entity_id << std::endl;
 	alive = false; 
 	_spawnSystem->DestroyAsteroid(entity_id, _split);
 }

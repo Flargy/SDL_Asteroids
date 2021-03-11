@@ -1,11 +1,1 @@
-vector and matrix operators and class
-
-magic numbers cleanup
-
-remove comments
-
 clean up gameplay loop
-
-remove couts
-
-clean up code that is reused
