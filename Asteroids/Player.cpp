@@ -61,18 +61,6 @@ void Player::CreatePoints()
 */
 void Player::Rotate(int degrees) 
 {
-	double rotationMatrix[2][2];
-
-	// remakes the rotation in degrees into a 2d rotation matrix
-	double cosValue = COS(degrees);
-	double sinValue = SIN(degrees);
-
-	rotationMatrix[0][0] = cosValue;
-	rotationMatrix[1][0] = sinValue;
-
-	rotationMatrix[0][1] = -sinValue;
-	rotationMatrix[1][1] = cosValue;
-
 	transform.Rotate(degrees);
 
 }

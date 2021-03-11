@@ -21,5 +21,4 @@ public:
 
 private:
 	int _split = 2;
-	constexpr static Vector2 _smallShape[] = { Vector2{4,4}, Vector2{4,4} };
 };

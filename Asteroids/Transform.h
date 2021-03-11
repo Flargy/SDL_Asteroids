@@ -3,9 +3,6 @@
 #include <array>
 #include "Global.h"
 
-//template<typename T ,int X, int Y>
-//using array2D = std::array<std::array<T, X>, Y>;
-
 class Transform {
 public:
 	Transform(double rotation[4], double movementDirection[2], int position[2]);
@@ -32,6 +29,7 @@ public:
 private:
 	Vector2 _position = {50,50};
 	array2D<double, 2, 2> _currentRotation = {1,0,0,1};
+	Matrix2D _matrixRotation = {1,0,0,1};
 	Vector2 _velocity = {0,0};
 	double _acceleration = 0.07;
 	double _maxMagnitude = 3;

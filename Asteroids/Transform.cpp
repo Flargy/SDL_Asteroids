@@ -25,38 +25,32 @@ Transform::~Transform() {
 
 void Transform::Rotate(int degrees) {
 
-	double rotationMatrix[2][2];
+	Matrix2D rotationMatrix;
 
 	// remakes the rotation in degrees into a 2d rotation matrix
 	double cosValue = COS(degrees);
 	double sinValue = SIN(degrees);
 
-	rotationMatrix[0][0] = cosValue;
-	rotationMatrix[1][0] = sinValue;
+	rotationMatrix.m00 = cosValue;
+	rotationMatrix.m10 = sinValue;
 
-	rotationMatrix[0][1] = -sinValue;
-	rotationMatrix[1][1] = cosValue;
+	rotationMatrix.m01 = -sinValue;
+	rotationMatrix.m11 = cosValue;
 
 	// creates a new matrix which is the (players current rotation * rotation matrix from degrees)
-	double product[2][2];
+	Matrix2D product;
 
-	for (int i = 0; i < 2; i++) {
-		for (int j = 0; j < 2; j++) {
-			product[i][j] = 0;
-
-			for (int k = 0; k < 2; k++)
-				product[i][j] = product[i][j] + (_currentRotation[i][k] * rotationMatrix[k][j]);
-		}
-	}
+	product = (_matrixRotation * rotationMatrix);
 
 	// overwrites the current rotation with the previously created rotation matrix
-	for (int i = 0; i < 2; i++)
-	{
-		for (int j = 0; j < 2; j++)
-		{
-			_currentRotation[i][j] = product[i][j];
-		}
-	}
+	//std::cout << product.vec1.x << " " << product.vec1.y << " " << product.vec2.x << " " << product.vec2.y << " " << std::endl;
+	_matrixRotation = product;
+
+
+	_currentRotation[0][0] = _matrixRotation.m00;
+	_currentRotation[1][0] = _matrixRotation.m10;
+	_currentRotation[0][1] = _matrixRotation.m01;
+	_currentRotation[1][1] = _matrixRotation.m11;
 }
 
 
