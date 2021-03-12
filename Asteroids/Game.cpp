@@ -1,7 +1,6 @@
 #include "Game.h"
 #include <SDL.h>
 #include "Global.h"
-#include "Time.h"
 
 
 Game::Game(Window& window)
@@ -22,10 +21,8 @@ void Game::GameLoop()
 	bool quit = false;
 	bool play = false;
 	double t = 0.0;
-	double dt = 1.0 / 60.0;
 	double accumulator = 0.0;
-	steady_clock::time_point startTime = steady_clock::now();
-	steady_clock::time_point currentTime = startTime;
+	steady_clock::time_point currentTime = steady_clock::now();
 
 
 	while (gameActive)
@@ -38,12 +35,12 @@ void Game::GameLoop()
 		accumulator += frameTime;
 		_renderer.SetBackground();
 
-		while (accumulator >= dt)
+		while (accumulator >= Time::deltaTime)
 		{
 			// ---------------------- update ------------------------------- 
 
-			Time::time = duration_cast<duration<double>>(currentTime - startTime).count();
-			_player.Move();
+			PlayerInput();
+			_player.Update();
 
 			for (size_t i = 0; i < _projectiles.active_size(); i++)
 			{
@@ -63,11 +60,10 @@ void Game::GameLoop()
 			}
 			_spawnSystem.AlienTimeCounter();
 
-			PlayerInput();
 			_collisionHandler.FindAllCollisions(_asteroids, _projectiles, _player, _alien, 20);
 			
-			t += dt;
-			accumulator -= dt;
+			Time::time += Time::deltaTime;
+			accumulator -= Time::deltaTime;
 
 		}
 		// ---------------------- draw call ------------------------------- 
@@ -103,11 +99,11 @@ void Game::PlayerInput()
 	{
 		if (state[SDL_SCANCODE_LEFT])
 		{
-			_player.Rotate(3);
+			_player.Rotate(deltaRotation);
 		}
 		if (state[SDL_SCANCODE_RIGHT])
 		{
-			_player.Rotate(-3);
+			_player.Rotate(-deltaRotation);
 		}
 		if (state[SDL_SCANCODE_UP])
 		{

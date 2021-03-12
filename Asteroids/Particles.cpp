@@ -57,7 +57,8 @@ void Particles::Update()
 
 	while (it != end && it->deathTime > Time::time) // todo get time from static or update?
 	{
-		it->position = it->position + it->velocity;
+		it->position = it->position + (it->velocity * Time::deltaTime);
+		it->velocity = it->velocity * it->drag;
 		it++;
 	}
 	end = it;
@@ -67,8 +68,8 @@ void Particles::Update()
 void Particles::Draw(SDL_Renderer* renderer)
 {
 	SDL_Rect rect;
-	rect.w = 10;
-	rect.h = 10;
+	rect.w = _particleSize;
+	rect.h = _particleSize;
 
 	double currentTime = Time::time;
 	auto it = particles.begin();
@@ -76,7 +77,7 @@ void Particles::Draw(SDL_Renderer* renderer)
 	{
 		rect.x = it->position.x - (rect.w >> 1);
 		rect.y = it->position.y - (rect.h >> 1);
-		SDL_RenderDrawRect(renderer, &rect);
+		SDL_RenderFillRect(renderer, &rect);
 		it++;
 	}
 }

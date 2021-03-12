@@ -22,11 +22,12 @@ public:
 	int entity_id = 0;
 	SpawnSystem* _spawnSystem;
 private:
+	int _particleSize = 2;
 
 	struct Particle {
 		Vector2 position = { 0,0 };
 		Vector2 velocity = { 0,0 };
-		double drag = 1;
+		double drag = 0.95;
 		double deathTime = 0;
 	};
 

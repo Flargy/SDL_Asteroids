@@ -3,6 +3,8 @@
 #include <array>
 #include "Global.h"
 #include "MathExtension.h"
+#include "Time.h"
+
 
 class Transform {
 public:
@@ -30,7 +32,8 @@ private:
 	Vector2 _position = {50,50};
 	Matrix2D _currentRotation = {1,0,0,1};
 	Vector2 _velocity = {0,0};
-	double _acceleration = 0.07;
-	double _maxMagnitude = 3;
+	double _acceleration = 120;
+	double _maxMagnitude = 180;
 	double _deceleration = 1;
+	double _originalDrag = _deceleration;
 };

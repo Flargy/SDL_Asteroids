@@ -24,10 +24,10 @@ Transform::~Transform() {
 
 void Transform::Rotate(int degrees) {
 
-
+	double deltaRotation = degrees;
 	// remakes the rotation in degrees into a 2d rotation matrix
-	double cosValue = COS(degrees);
-	double sinValue = SIN(degrees);
+	double cosValue = COS(deltaRotation);
+	double sinValue = SIN(deltaRotation);
 
 	Matrix2D rotationMatrix(cosValue, sinValue, -sinValue, cosValue);
 
@@ -43,8 +43,8 @@ void Transform::Rotate(int degrees) {
 
 void Transform::Move() { //ToDo Make the objects loop back around when exiting the view of the window
 	
-	_position.x += _velocity.x;
-	_position.y += _velocity.y;
+	_position.x += _velocity.x * Time::deltaTime;
+	_position.y += _velocity.y * Time::deltaTime;
 
 	if (_position.x < 0) //Basic functionality that is non dynamic,
 	{
@@ -64,7 +64,7 @@ void Transform::Move() { //ToDo Make the objects loop back around when exiting t
 		_position.y = 0;
 	}
 
-	if(_deceleration != 1)
+	if(_deceleration != _originalDrag)
 		Decelerate();
 }
 
@@ -76,8 +76,8 @@ void Transform::AccelerateForward()
 	accelerationDirection.y = _currentRotation.m11;
 
 
-	_velocity.x += accelerationDirection.x * _acceleration;
-	_velocity.y += accelerationDirection.y * _acceleration;
+	_velocity.x += accelerationDirection.x * _acceleration * Time::deltaTime;
+	_velocity.y += accelerationDirection.y * _acceleration * Time::deltaTime;
 
 	// Clamps the magnitude to _maxMagnitude
 	double currentMagnitude = sqrt(pow(_velocity.x, 2) + pow(_velocity.y, 2));
@@ -91,8 +91,8 @@ void Transform::AccelerateForward()
 }
 
 void Transform::Decelerate() {
-	_velocity.x *= _deceleration;
-	_velocity.y *= _deceleration;
+	_velocity.x *= 1 - _deceleration * Time::deltaTime;
+	_velocity.y *= 1 - _deceleration * Time::deltaTime;
 }
 
 void Transform::VelocityFromRotation(Matrix2D newRotation)

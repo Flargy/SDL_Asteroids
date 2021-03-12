@@ -11,7 +11,7 @@ public:
 
 	void CreatePoints();
 	void Rotate(int direction);
-	void Move();
+	void Update();
 	void Accelerate();
 	void Collide();
 	void Init(int xPos, int yPos, int width, int height);

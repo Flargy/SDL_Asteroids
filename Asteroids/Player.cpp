@@ -64,7 +64,7 @@ void Player::Rotate(int degrees)
 /*
 * moves the player "forwards" * rotation
 */
-void Player::Move() 
+void Player::Update() 
 {
 	transform.Move();
 }

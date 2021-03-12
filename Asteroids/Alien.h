@@ -24,7 +24,7 @@ public:
 
 private:
 	Player* _player; // pointer to player for chasing purposes
-	double _speed = 1.5;
+	double _speed = 75;
 	Vector2 directionToPlayer;
 	double shotSpawnOffset = 2;
 	double _height = 6;

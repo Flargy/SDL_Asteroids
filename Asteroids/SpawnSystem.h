@@ -59,7 +59,7 @@ public:
 	const int alienDelay = 30;
 	int alienSpawnTime = 30;
 
-	double _asteroidSpeed = 1;
+	double _asteroidSpeed = 60;
 	double _mediumMultiplier = 1.3;
 	double _smallMultiplier = 1.5;
 	int _startingSplits = 2;
@@ -67,7 +67,7 @@ public:
 	int _asteroidSpawnAmount = 8;
 
 	int _particleAmount = 3;
-	int _particleSpeed = 2;
+	int _particleSpeed = 120;
 	int _particleLifeTime = 1;
 	double _particleVariance = 0.2;
 };

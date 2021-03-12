@@ -12,6 +12,7 @@
 #include "CollisionHandler.h"
 #include "GameObjectBuffer.h"
 #include "Particles.h"
+#include "Time.h"
 
 /*
 this class represents the game state, in this game there is only one state.
@@ -27,6 +28,7 @@ public:
 private:
 	double _shotDelay = 0.1;
 	bool gameActive = true;
+	double deltaRotation = 180 * Time::deltaTime;
 	std::chrono::steady_clock::time_point _lastShot = std::chrono::steady_clock::now();
 
 	GameObjectBuffer<Asteroid, 32> _asteroids;
