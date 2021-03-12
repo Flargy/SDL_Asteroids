@@ -13,6 +13,10 @@
 
 #include "ShapeData.h"
 
+#include "StateMachine.h"
+#include "MenuState.h"
+#include "PlayState.h"
+
 int windowHeight, windowWidth;
 
 
@@ -30,6 +34,11 @@ void init()
 
 int main(int args, char** argv) {
 	
+	GameState a;
+	a.getState<MenuState<GameState>>().Init();
+	a.getState<PlayState<GameState>>().Init();
+
+
 	init();
 	windowHeight = 800;
 	windowWidth = 800;
