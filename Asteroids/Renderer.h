@@ -7,6 +7,7 @@
 #include <vector>
 #include <array>
 #include "Asteroid.h"
+#include "SDL_ttf.h"
 
 class Window {
 public:
@@ -18,7 +19,7 @@ public:
 	void DrawRect(int height, int width, int xPos, int yPos);
 	void PresentRenderer();
 	void DrawObject(CollidableObject& obj);
-	void DrawPlayer();
+	void DrawText(std::string text, int xPos, int yPos);
 
 	SDL_Renderer* _renderer = nullptr;
 
@@ -29,6 +30,10 @@ private:
 	int _height = 600;
 	bool _closed = false;
 	SDL_Window* _window = nullptr;
-	
+	SDL_Rect messageDest;
+	SDL_Rect messageSrc;
+	TTF_Font* font;
+	int textSize = 20;
+	SDL_Color textColor = { 255,255,255 };
 
 };

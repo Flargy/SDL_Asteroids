@@ -34,6 +34,13 @@ bool Window::Init() {
 		return false;
 	}
 
+	if (TTF_Init() == -1)
+	{
+		printf("TTF_Init: %s\n", TTF_GetError());
+		return false;
+	}
+	font = TTF_OpenFont("res/arial.ttf", textSize);
+
 	return true;
 
 }
@@ -87,5 +94,24 @@ void Window::DrawObject(CollidableObject& obj) // needs to be tested
 	delete[] drawPoints;
 }
 
+void Window::DrawText(std::string text, int xPos, int yPos)
+{
+	SDL_Surface* textSurface = TTF_RenderText_Blended(font, text.c_str(), textColor);
+
+	SDL_Texture* Message = SDL_CreateTextureFromSurface(_renderer, textSurface);
+
+	messageDest.x = xPos;
+	messageDest.y = yPos;
+	messageDest.w = textSurface->w;
+	messageDest.h = textSurface->h;
+
+	
+	messageSrc.w = textSurface->w;
+	messageSrc.h = textSurface->h;
+	SDL_RenderCopy(_renderer, Message, &messageSrc, &messageDest);
+	SDL_FreeSurface(textSurface);
+	SDL_DestroyTexture(Message);
+
+}
 
 
