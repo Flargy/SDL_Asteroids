@@ -7,7 +7,9 @@ class Projectile : public CollidableObject
 {
 public:
 	Projectile();
-	Projectile(Projectile& projectileToCopy);
+	//todo delete
+	//void Replace(Projectile&& src);
+	//Projectile(Projectile& projectileToCopy);
 	~Projectile(){}
 
 	void Collide();

@@ -6,19 +6,29 @@
 #define TAU 6.28318530718
 
 
-Particles::Particles() {
+Particles::Particles() 
+{
+
 }
 
-Particles& Particles::operator=(Particles&& src)
-{
+//todo remove
+//Particles& Particles::operator=(Particles&& src)
+//{
+//	int iteratorIndex = std::distance(src.particles.begin(), src.end);
+//
+//	// TODO: insert return statement here
+//	particles = std::move(src.particles);
+//	end = particles.begin() + iteratorIndex;
+//	return *this;
+//}
+
+void Particles::Replace(Particles&& src) {
 	int iteratorIndex = std::distance(src.particles.begin(), src.end);
 
 	// TODO: insert return statement here
 	particles = std::move(src.particles);
 	end = particles.begin() + iteratorIndex;
-	return *this;
-}
-
+};
 
 
 void Particles::Instantiate(int numberOfParticles, int speed, Vector2 spawnPos, int lifeTime, double variance, int entity_ID)

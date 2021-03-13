@@ -5,9 +5,14 @@
 
 void GameState::Execute()
 {
-	assert(currentState != nullptr,
-		"statemachine was not set to a state before executing");
+	assert(currentState != nullptr);
 	currentState->Execute();
+}
+
+void GameState::Draw(Window& window)
+{
+	assert(currentState != nullptr);
+	currentState->Draw(window);
 }
 
 template<typename TState>

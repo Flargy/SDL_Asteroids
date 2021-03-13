@@ -13,6 +13,8 @@ public:
 	void Execute();
 	
 	void End();
+
+	void Draw(Window& window);
 	
 };
 

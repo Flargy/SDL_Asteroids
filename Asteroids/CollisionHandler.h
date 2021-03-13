@@ -1,19 +1,15 @@
 #pragma once
 #include <map>
 #include <utility>
-#include "Renderer.h"
 #include "Projectile.h"
+#include "Asteroid.h"
 #include "GameObjectBuffer.h"
 #include "Alien.h"
 
 class CollisionHandler
 {
 public:
-	CollisionHandler(Window& w)
-		:debugRenderer(w)
-	{
-
-	};
+	CollisionHandler()	{	};
 
 	void FindAllCollisions(
 		GameObjectBuffer<Asteroid, 32>& asteroids,
@@ -26,9 +22,6 @@ private:
 	using grid_map = std::map<grid_cell, std::vector<CollidableObject*>>;
 
 	grid_map map;
-	Window& debugRenderer;
-
-	bool CheckCollision(CollidableObject* obj, CollidableObject* otherObj, int iteration, bool looped);
 
 	bool CheckCollisionV2(CollidableObject* obj, CollidableObject* otherObj);
 	
@@ -50,8 +43,6 @@ private:
 				; currentCell.second <= std::ceil((object.boundingBox.yMax + y) / gridSize)
 				; ++currentCell.second)
 			{
-				// ----------- Grid debug visuals ----------------
-				//debugRenderer.DrawRect(gridSize, gridSize, currentCell.first * gridSize, currentCell.second * gridSize);				
 				func(object, currentCell);
 			}
 		}

@@ -14,15 +14,17 @@
 #include "Particles.h"
 #include "Time.h"
 
-/*
-this class represents the game state, in this game there is only one state.
-*/
+
+class SimpleGameStates;
+
 class Game
 {
 public:
-	void PlayerInput();
+	Game(SimpleGameStates& statemachine);
+	//void PlayerInput();
 	void GameLoop();
-	Game(Window& window);
+	void Execute();
+	void Draw(Window& window);
 	
 
 private:
@@ -37,10 +39,13 @@ private:
 	Alien _alien;
 	Player _player;
 
+	SimpleGameStates& statemachine;
 	SpawnSystem _spawnSystem;
-	Window& _renderer;
 	CollisionHandler _collisionHandler;
 
 	void Update();
+
+	void Input();
+
 
 };

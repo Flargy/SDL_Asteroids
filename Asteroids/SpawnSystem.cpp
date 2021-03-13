@@ -113,7 +113,7 @@ void SpawnSystem::SpawnParticles(int numberOfParticles, int speed, Vector2 posit
 void SpawnSystem::DestroyParticle(const int entity_id)
 {
 	assert(_particles[_particles.active_size() - 1].entity_id == _particles.active_size() - 1);
-	_particles[entity_id] = std::move(_particles[_particles.active_size() - 1]);
+	_particles[entity_id].Replace(std::move(_particles[_particles.active_size() - 1]));//todo bugcheck this
 	_particles[entity_id].entity_id = entity_id;
 	_particles.decrease_active_size();
 }

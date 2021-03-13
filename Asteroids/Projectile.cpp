@@ -1,12 +1,17 @@
 #include "Projectile.h"
 #include "SpawnSystem.h"
 
-
-Projectile::Projectile(Projectile& projectileToCopy)
-{
-	entity_id = projectileToCopy.entity_id;
-	collisionFunction = std::bind(&Projectile::Collide, this);
-}
+//todo delete
+//Projectile::Projectile(Projectile& projectileToCopy)
+//{
+//	entity_id = projectileToCopy.entity_id;
+//	collisionFunction = std::bind(&Projectile::Collide, this);
+//}
+//
+//Projectile::Replace(Projectile& src) 
+//{
+//	collisionFunction = std::bind(&Projectile::Collide, this);
+//}
 
 
 Projectile::Projectile()

@@ -2,14 +2,13 @@
 #include <SDL.h>
 #include "Global.h"
 
+#include "SimpleGameStates.h"
 
-Game::Game(Window& window)
-	: _renderer(window), 
-	_spawnSystem(_asteroids, _projectiles, _alien, _player, _particles),
-	_collisionHandler(_renderer)
+Game::Game(SimpleGameStates& statemachine)
+	: _spawnSystem(_asteroids, _projectiles, _alien, _player, _particles),
+	statemachine(statemachine)
 {
 	_spawnSystem.SpawnAsteroids();
-
 	_player.Init(400, 400, 10, 10);
 	_alien.ReceivePlayer(&_player);
 }
@@ -33,66 +32,54 @@ void Game::GameLoop()
 		currentTime = newTime;
 
 		accumulator += frameTime;
-		_renderer.SetBackground();
+		//_renderer.SetBackground();
 
 		while (accumulator >= Time::deltaTime)
 		{
-			// ---------------------- update ------------------------------- 
-
-			PlayerInput();
-			_player.Update();
-
-			for (size_t i = 0; i < _projectiles.active_size(); i++)
-			{
-				_projectiles[i].Update();
-			}
-			for (size_t i = 0; i < _asteroids.active_size(); i++)
-			{
-				_asteroids[i].Update();
-			}
-			if (_alien.alive == true)
-			{
-				_alien.Update();
-			}
-			for (size_t i = 0; i < _particles.active_size(); i++)
-			{
-				_particles[i].Update();
-			}
-			_spawnSystem.AlienTimeCounter();
-
-			_collisionHandler.FindAllCollisions(_asteroids, _projectiles, _player, _alien, 20);
+			
 			
 			Time::time += Time::deltaTime;
 			accumulator -= Time::deltaTime;
-
 		}
-		// ---------------------- draw call ------------------------------- 
-
-		for (size_t i = 0; i < _asteroids.active_size(); i++)
-		{
-			_renderer.DrawObject(_asteroids[i]);
-		}
-		for (size_t i = 0; i < _projectiles.active_size(); i++)
-		{
-			_renderer.DrawObject(_projectiles[i]);
-		}
-		for (size_t i = 0; i < _particles.active_size(); i++)
-		{
-			_particles[i].Draw(_renderer._renderer);
-		}
-		if(_player.alive)
-			_renderer.DrawObject(_player);
-
-		if(_alien.alive)
-			_renderer.DrawObject(_alien);
-		_renderer.PresentRenderer();
+		
 	}
 }
 
-void Game::PlayerInput()
+void Game::Execute() {
+	Input();
+	Update();
+}
+
+void Game::Update() {
+	//---------------------- update ------------------------------- 
+	
+	_player.Update();
+	
+	for (size_t i = 0; i < _projectiles.active_size(); i++)
+	{
+		_projectiles[i].Update();
+	}
+	for (size_t i = 0; i < _asteroids.active_size(); i++)
+	{
+		_asteroids[i].Update();
+	}
+	if (_alien.alive == true)
+	{
+		_alien.Update();
+	}
+	for (size_t i = 0; i < _particles.active_size(); i++)
+	{
+		_particles[i].Update();
+	}
+	_spawnSystem.AlienTimeCounter();
+	
+	_collisionHandler.FindAllCollisions(_asteroids, _projectiles, _player, _alien, 20);
+}
+
+void Game::Input()
 {
 	SDL_Event event;
-
+	
 	SDL_PumpEvents();
 	const Uint8* state = SDL_GetKeyboardState(NULL);
 	if (_player.alive)
@@ -125,16 +112,38 @@ void Game::PlayerInput()
 	{
 		_spawnSystem.Reset();
 	}
-
+	
 	while (SDL_PollEvent(&event))
 	{
 		switch (event.type)
 		{
 		case SDL_QUIT:
-			gameActive = false;
+			statemachine.gameActive = false;
 			break;
 		default:
 			break;
 		}
 	}
 }
+
+void Game::Draw(Window& window) {
+	// ---------------------- draw call ------------------------------- 
+	for (size_t i = 0; i < _asteroids.active_size(); i++)
+	{
+		window.DrawObject(_asteroids[i]);
+	}
+	for (size_t i = 0; i < _projectiles.active_size(); i++)
+	{
+		window.DrawObject(_projectiles[i]);
+	}
+	for (size_t i = 0; i < _particles.active_size(); i++)
+	{
+		_particles[i].Draw(window._renderer);
+	}
+	if(_player.alive)
+		window.DrawObject(_player);
+	if(_alien.alive)
+		window.DrawObject(_alien);
+	window.PresentRenderer();
+}
+

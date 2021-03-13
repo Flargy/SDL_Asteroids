@@ -8,6 +8,7 @@ class Asteroid : public CollidableObject
 public:
 	Asteroid();
 	Asteroid(double length);
+	void Steroid(Asteroid& roid); // todo remove
 	~Asteroid();
 
 	void GetShape();

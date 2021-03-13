@@ -1,6 +1,11 @@
 #pragma once
 #include <tuple>
 
+/// <summary>
+/// Given a tuple, you can extract the type of the Nth element in the tuple 
+/// with the help of std::tuple_element_t<N, Tuple>:
+/// https://devblogs.microsoft.com/oldnewthing/20200629-00/?p=103910
+/// </summary>
 namespace impl {
 
 	template<typename T, typename Tuple>

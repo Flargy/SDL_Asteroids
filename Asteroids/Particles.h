@@ -11,7 +11,11 @@ class Particles
 public:
 	Particles();
 
-	Particles& operator= (Particles&& src);
+	//todo remove
+	//Particles& operator= (Particles&& src);
+
+	void Replace(Particles&& src);
+
 
 
 	void Instantiate(int numberOfParticles, int speed, Vector2 spawnPos,
@@ -21,7 +25,6 @@ public:
 
 	int entity_id = 0;
 	SpawnSystem* _spawnSystem;
-private:
 	int _particleSize = 2;
 
 	struct Particle {
@@ -35,6 +38,7 @@ private:
 
 	std::vector<Particle>::iterator end;
 	std::vector<Particle> particles = {};
+private:
 
 };
 

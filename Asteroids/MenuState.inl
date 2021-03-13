@@ -38,3 +38,9 @@ void MenuState<TStateMachine>::End()
 {
 	std::cout << "END " << typeid(MenuState).name() << std::endl;
 };
+
+template<typename TStateMachine>
+void MenuState<TStateMachine>::Draw(Window& window) 
+{
+
+};

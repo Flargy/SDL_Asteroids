@@ -13,6 +13,11 @@ Asteroid::Asteroid(double halfSided)
 	collisionFunction = std::bind(&Asteroid::Collide, this); //this seems to work, it binds a member function to a function variable
 }
 
+void Asteroid::Steroid(Asteroid& roid) // todo remove
+{
+	entity_id = roid.entity_id;
+}
+
 Asteroid::~Asteroid()
 {
 }

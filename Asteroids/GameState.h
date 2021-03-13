@@ -38,11 +38,12 @@ public:
 		virtual void Prepare() = 0;
 		virtual void Execute() = 0;
 		virtual void End() = 0;
+		virtual void Draw(Window& window) = 0;
 	};
 private:
 
 	std::tuple<PlayState<GameState>, MenuState<GameState>>
-		states_tuple = { {*this}, { *this } };
+		states_tuple = std::make_tuple(PlayState<GameState>(*this), MenuState<GameState>( *this ) );
 	
 
 	State* currentState = nullptr;
@@ -66,7 +67,7 @@ public:
 	//}
 
 	void Execute();
-	
+	void Draw(Window& window);
 
 };
 
