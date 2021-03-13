@@ -67,7 +67,7 @@ double dot(std::array<double, 2> left, std::array<double, 2> right)
 	return left[0] * right[0] + left[1] * right[1];
 }
 
-bool CollisionHandler::CheckCollisionV2(CollidableObject* obj, CollidableObject* otherObj) {
+bool CollisionHandler::CheckCollision(CollidableObject* obj, CollidableObject* otherObj) {
 	//todo should returns true if the objects intersect, fine grained collision algorithm here.
 	//Algorithm is in place, just needs to be tested now
 
@@ -111,6 +111,8 @@ bool CollisionHandler::CheckCollisionV2(CollidableObject* obj, CollidableObject*
 
 
 
+CollisionHandler::CollisionHandler() {}
+
 void CollisionHandler::FindAllCollisions(
 	GameObjectBuffer<Asteroid, 32>& asteroids,
 	GameObjectBuffer<Projectile, 16>& bullets,
@@ -136,7 +138,7 @@ void CollisionHandler::FindAllCollisions(
 			for (CollidableObject* otherObject : mapIterator->second)
 			{
 				if ((object.alive && otherObject->alive)
-					&& CheckCollisionV2(&object, otherObject))
+					&& CheckCollision(&object, otherObject))
 				{
 					otherObject->Collision();//todo ugly pointers?
 					object.Collision();

@@ -1,15 +1,14 @@
 #pragma once
-
-
 #include "Game.h"
 #include "GameStateEnum.h"
+#include "Menu.h"
 
 
 
 class SimpleGameStates
 {
 	Game playState;
-	Game menuState; //change this type
+	Menu menuState; 
 public:
 
 	bool gameActive = true;

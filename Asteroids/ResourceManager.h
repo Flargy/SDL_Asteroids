@@ -5,16 +5,13 @@
 #include "Global.h"
 #include "MathExtension.h"
 #include <memory>
+#include <SDL_ttf.h>
+#include "Font.h"
 
 class ResourceManager
 {
 public:
-    static ResourceManager& getInstance()
-    {
-        static ResourceManager instance; // Guaranteed to be destroyed.
-                              // Instantiated on first use.
-        return instance;
-    }
+    static ResourceManager& getInstance();
 private:
     ResourceManager() {}
       
@@ -24,9 +21,10 @@ public:
     void operator=(ResourceManager const&) = delete;
 
 	std::map<const std::string, std::shared_ptr<std::vector<Vector2>>> _shapes;
-        
+    std::map<const std::string, std::shared_ptr<Font>> _fonts;
+
     template<typename TArray>
-    void AddShape(std::string&& key, TArray points)
+    void AddShape(std::string key, TArray points)
     {
         int arrSize = points.size();
 
@@ -39,6 +37,8 @@ public:
 
         _shapes[key] = ptr;
     }
+
+    void AddFont(std::string key, std::string path, int fontSize);
 
 };
 

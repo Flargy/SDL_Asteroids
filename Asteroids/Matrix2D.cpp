@@ -17,6 +17,22 @@ Matrix2D Matrix2D::operator*(Matrix2D other)
 	return Matrix2D(new00, new10, new01, new11 );
 }
 
+Matrix2D::Matrix2D(double x1, double y1, double x2, double y2)
+{
+	m00 = x1;
+	m10 = y1;
+	m01 = x2;
+	m11 = y2;
+}
+
+Matrix2D::Matrix2D()
+{
+	m00 = 0;
+	m10 = 0;
+	m01 = 0;
+	m11 = 0;
+}
+
 Matrix2D::Matrix2D(Vector2 v1, Vector2 v2)
 {
 	m00 = v1.x;

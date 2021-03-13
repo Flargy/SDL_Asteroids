@@ -7,19 +7,22 @@
 #include "CollisionHandler.h"
 #include "Global.h"
 #include "Game.h"
-
 #include "ResourceManager.h"
 #include <string>
-
 #include "ShapeData.h"
-
 #include "SimpleGameStates.h"
+#include <SDL_ttf.h>
 
 int windowHeight, windowWidth;
 
 
-void init()
+void initResources()
 {
+	if (TTF_Init() == -1)
+	{
+		printf("TTF_Init: %s\n", TTF_GetError());
+	}
+
 	auto& resources = ResourceManager::getInstance();
 		
 	resources.AddShape("smallAsteroid", smallAsteroid);
@@ -28,35 +31,32 @@ void init()
 	resources.AddShape("player", player);
 	resources.AddShape("alien", alien);
 	resources.AddShape("projectile", projectile);
+	resources.AddFont("arial", "res/arial.ttf", 20);
+
 }
 
 int main(int args, char** argv) {
 	
-	//resources todo rename this
-	init();
+	initResources();
 	
 	windowHeight = 800;
 	windowWidth = 800;
 	Window window = Window("Asteroids", windowWidth, windowHeight);
 
 	SimpleGameStates gameState;
-	//a.Execute();
 
 	using namespace std::chrono;
-	bool quit = false;
-	bool play = false;
-	double t = 0.0;
 	double accumulator = 0.0;
 	steady_clock::time_point currentTime = steady_clock::now();
 
 	while (gameState.gameActive)
 	{
+		window.SetBackground();
 		steady_clock::time_point newTime = steady_clock::now();
 		double frameTime = duration_cast<duration<double>>(newTime - currentTime).count();
 		currentTime = newTime;
 
 		accumulator += frameTime;
-		window.SetBackground();
 
 		while (accumulator >= Time::deltaTime)
 		{			
@@ -66,6 +66,8 @@ int main(int args, char** argv) {
 			accumulator -= Time::deltaTime;
 		}		
 		gameState.Draw(window);
+		window.PresentRenderer();
+
 	}
 
 	return 0;

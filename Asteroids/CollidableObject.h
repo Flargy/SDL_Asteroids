@@ -13,10 +13,7 @@ class CollidableObject
 public:
 	Transform transform;
 
-	CollidableObject() : transform()
-	{
-
-	}
+	CollidableObject();
 
 	
 	struct AABB
@@ -29,16 +26,9 @@ public:
 
 	
 
-	void SetBoundingBox(int points[4])
-	{
-		boundingBox = { points[0], points[1], points[2], points[3] };
-	}
+	void SetBoundingBox(int points[4]);
 
-	void Collision()
-	{
-		if(alive)
-			collisionFunction(); // think it works, needs to be tested
-	}
+	void Collision();
 
 	std::shared_ptr<std::vector<Vector2>> GetPoints() { return _points; }
 

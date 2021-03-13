@@ -37,15 +37,15 @@ void SpawnSystem::DestroyAsteroid(const int entity_id, int split)
 		_asteroids[entity_id].collisionFunction = std::bind(&Asteroid::Collide, &_asteroids[entity_id]);
 		_asteroids[entity_id].entity_id = entity_id;
 		_asteroids.decrease_active_size();
-		/*if (_asteroids.active_size() <= 0)
+		if (_asteroids.active_size() <= 0)
 		{
 			SpawnAsteroids();
-		}*/
+		}
 	}
 	else if (split == 1)
 	{
 		SpawnParticles(_particleAmount * split, _particleSpeed, pos, _particleLifeTime, _particleVariance);
-		//overwrite old with new asteroid info
+		
 		_asteroids[entity_id].Instantiate(pos, _asteroidSpeed * _smallMultiplier, entity_id, split - 1);
 
 		_asteroids.increase_active_size();

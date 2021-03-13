@@ -11,15 +11,12 @@ class Particles
 public:
 	Particles();
 
-	//todo remove
-	//Particles& operator= (Particles&& src);
-
 	void Replace(Particles&& src);
 
 
 
 	void Instantiate(int numberOfParticles, int speed, Vector2 spawnPos,
-		int lifeTime, double variance, int entity_ID);
+	int lifeTime, double variance, int entity_ID);
 	void Update();
 	void Draw(SDL_Renderer* renderer);
 

@@ -29,10 +29,10 @@ public:
 	
 
 private:
-	double _shotDelay = 0.7;
+	double _shotDelay = 0.6;
 	bool gameActive = true;
 	double deltaRotation = 180 * Time::deltaTime;
-	std::chrono::steady_clock::time_point _lastShot = std::chrono::steady_clock::now();
+	double _lastShot = 0;
 
 	GameObjectBuffer<Asteroid, 32> _asteroids;
 	GameObjectBuffer<Projectile,16> _projectiles;

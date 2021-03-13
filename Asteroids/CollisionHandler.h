@@ -9,7 +9,7 @@
 class CollisionHandler
 {
 public:
-	CollisionHandler()	{	};
+	CollisionHandler();
 
 	void FindAllCollisions(
 		GameObjectBuffer<Asteroid, 32>& asteroids,
@@ -23,7 +23,7 @@ private:
 
 	grid_map map;
 
-	bool CheckCollisionV2(CollidableObject* obj, CollidableObject* otherObj);
+	bool CheckCollision(CollidableObject* obj, CollidableObject* otherObj);
 	
 	//Loops through each grid cell that `object` occupies
 	template<typename T>

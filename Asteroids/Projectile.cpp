@@ -1,18 +1,6 @@
 #include "Projectile.h"
 #include "SpawnSystem.h"
 
-//todo delete
-//Projectile::Projectile(Projectile& projectileToCopy)
-//{
-//	entity_id = projectileToCopy.entity_id;
-//	collisionFunction = std::bind(&Projectile::Collide, this);
-//}
-//
-//Projectile::Replace(Projectile& src) 
-//{
-//	collisionFunction = std::bind(&Projectile::Collide, this);
-//}
-
 
 Projectile::Projectile()
 {
@@ -28,7 +16,7 @@ void Projectile::Collide()
 	_spawnSystem->DestroyProjectile(entity_id);
 }
 
-void Projectile::CreateDrawPoints() // sets a shot to be 2x2 pixels
+void Projectile::CreateDrawPoints() 
 {
 	_points = ResourceManager::getInstance()._shapes["projectile"];
 
@@ -38,8 +26,8 @@ void Projectile::CreateDrawPoints() // sets a shot to be 2x2 pixels
 
 void Projectile::Update()
 {
-	_timeAlive = std::chrono::steady_clock::now();
-	double diff = std::chrono::duration_cast<std::chrono::duration<double>>(_timeAlive - _timeFired).count();
+	_timeAlive = Time::time;
+	double diff = _timeAlive - _timeFired;
 	if (diff > _lifeDuration)
 	{
 		alive = false;
@@ -66,7 +54,7 @@ void Projectile::Instantiate(Vector2 position, Vector2 velocityDirection, int en
 
 	spawnLocation.x += position.x;
 	spawnLocation.y += position.y;
-	_timeFired = std::chrono::steady_clock::now();
+	_timeFired = Time::time;
 	transform.SetPosition(spawnLocation);
 	transform.SetVelocity(velocityDirection.x * speed, velocityDirection.y * speed);
 	entity_id = entity_ID;

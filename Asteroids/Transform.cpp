@@ -41,12 +41,12 @@ void Transform::Rotate(int degrees) {
 }
 
 
-void Transform::Move() { //ToDo Make the objects loop back around when exiting the view of the window
+void Transform::Move() { 
 	
 	_position.x += _velocity.x * Time::deltaTime;
 	_position.y += _velocity.y * Time::deltaTime;
 
-	if (_position.x < 0) //Basic functionality that is non dynamic,
+	if (_position.x < 0) 
 	{
 		_position.x = windowWidth;
 	}
@@ -55,7 +55,7 @@ void Transform::Move() { //ToDo Make the objects loop back around when exiting t
 		_position.x = 0;
 	}
 
-	if (_position.y < 0) //Basic functionality that is non dynamic,
+	if (_position.y < 0) 
 	{
 		_position.y = windowHeight;
 	}

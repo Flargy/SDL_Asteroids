@@ -8,17 +8,9 @@ struct Vector2
 {
 	double x, y;
 
-	Vector2(double xValue, double yValue)
-	{
-		x = xValue;
-		y = yValue;
-	}
+	Vector2(double xValue, double yValue);
 
-	Vector2()
-	{
-		x = 0;
-		y = 0;
-	}
+	Vector2();
 
 	void Rotate(Matrix2D rotation);
 

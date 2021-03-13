@@ -98,13 +98,12 @@ void Game::Input()
 		}
 		if (state[SDL_SCANCODE_SPACE])
 		{
-			std::chrono::steady_clock::time_point currentTime = std::chrono::steady_clock::now();
-			double timeSinceShot = std::chrono::duration_cast<std::chrono::duration<double>>(currentTime - _lastShot).count();
+			double timeSinceShot = Time::time - _lastShot;
 			if (timeSinceShot > _shotDelay)
 			{
 				// shoot projectile
 				_spawnSystem.SpawnProjectile(_player.transform.GetPosition(), _player.transform.GetRotation());
-				_lastShot = currentTime;
+				_lastShot = Time::time;
 			}
 		}
 	}
@@ -112,6 +111,10 @@ void Game::Input()
 	{
 		_spawnSystem.Reset();
 		_highscoreSystem.Reset();
+	}
+	if (state[SDL_SCANCODE_ESCAPE])
+	{
+		statemachine.SetGameState(eMenuState);
 	}
 	
 	while (SDL_PollEvent(&event))
@@ -148,6 +151,6 @@ void Game::Draw(Window& window) {
 
 	std::string text = std::to_string(_highscoreSystem.currentScore);
 	window.DrawText(text, _scorePosX, _scorePosY);
-	window.PresentRenderer();
+
 }
 

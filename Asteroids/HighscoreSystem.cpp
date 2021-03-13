@@ -1,5 +1,11 @@
 #include "HighscoreSystem.h"
 
+HighscoreSystem::HighscoreSystem()
+{
+	scores.reserve(6);
+}
+
+
 void HighscoreSystem::SetScore()
 {
 	fromFile.open(path);
@@ -22,5 +28,32 @@ void HighscoreSystem::SetScore()
 	{
 		toFile << scores[i] << "\n";
 	}
+	scores.clear();
 	toFile.close();
+}
+
+void HighscoreSystem::IncreaseCurrentScore(int value)
+{
+	currentScore += value;
+}
+
+std::vector<std::string> HighscoreSystem::GetHighscores()
+{
+	std::vector<std::string> highscoreList;
+
+	fromFile.open(path);
+	std::string temp;
+
+	while (fromFile >> temp)
+	{
+		highscoreList.push_back(temp);
+	}
+
+	fromFile.close();
+	return highscoreList;
+}
+
+void HighscoreSystem::Reset()
+{
+	currentScore = 0;
 }

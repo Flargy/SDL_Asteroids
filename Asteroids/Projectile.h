@@ -7,9 +7,6 @@ class Projectile : public CollidableObject
 {
 public:
 	Projectile();
-	//todo delete
-	//void Replace(Projectile&& src);
-	//Projectile(Projectile& projectileToCopy);
 	~Projectile(){}
 
 	void Collide();
@@ -22,8 +19,8 @@ public:
 
 
 private:
-	std::chrono::steady_clock::time_point _timeFired = std::chrono::steady_clock::now(); // can be removed if we we dont want projectiles to have a fixed lifetime
-	std::chrono::steady_clock::time_point _timeAlive = std::chrono::steady_clock::now();
+	double _timeFired = 0;
+	double _timeAlive = 0;
 	double _lifeDuration = 2;
 	double speed = 360;
 	double _projectileBoundsValue = 4;

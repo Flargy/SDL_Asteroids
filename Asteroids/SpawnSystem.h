@@ -8,7 +8,6 @@
 #include "GameObjectBuffer.h"
 #include "Particles.h"
 #include "HighscoreSystem.h"
-//resource pool
 
 class SpawnSystem
 {
@@ -19,9 +18,6 @@ public:
 		Alien& alien, Player& player, GameObjectBuffer<Particles, 16>& particles,
 		HighscoreSystem* highscoreSystem);
 
-	/*
-	todo asteroid spawn perimeter	
-	*/
 
 	template<typename TGOBuffer>
 	void OverwriteWithLast(TGOBuffer buffer, int id) {

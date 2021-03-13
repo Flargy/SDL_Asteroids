@@ -9,6 +9,8 @@
 #include "Asteroid.h"
 #include "SDL_ttf.h"
 
+class Font;
+
 class Window {
 public:
 	Window(const std::string& title, int width, int height);
@@ -32,8 +34,7 @@ private:
 	SDL_Window* _window = nullptr;
 	SDL_Rect messageDest;
 	SDL_Rect messageSrc;
-	TTF_Font* font;
-	int textSize = 20;
+	std::shared_ptr<Font> font;
 	SDL_Color textColor = { 255,255,255 };
 
 };

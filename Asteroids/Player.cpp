@@ -2,9 +2,6 @@
 #include <math.h>
 #include <iostream>
 
-// creates a new function for calling sin and cos with degrees instead of radians
-#define SIN(x) sin(x * 3.141592653589 / 180) 
-#define COS(x) cos(x * 3.141592653589 / 180)
 
 Player::Player()
 {

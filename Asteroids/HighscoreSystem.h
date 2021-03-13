@@ -8,23 +8,15 @@
 class HighscoreSystem
 {
 public:
-	HighscoreSystem()
-	{
-		scores.reserve(6);
-	}
-	~HighscoreSystem(){}
+	HighscoreSystem();
 
 	void SetScore();
 
-	void IncreaseCurrentScore(int value)
-	{
-		currentScore += value;
-	}
+	void IncreaseCurrentScore(int value);
 
-	void Reset()
-	{
-		currentScore = 0;
-	}
+	std::vector<std::string> GetHighscores();
+
+	void Reset();
 
 	int currentScore = 0;
 private:

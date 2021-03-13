@@ -14,7 +14,7 @@ void SimpleGameStates::Execute() {
 	switch (currentState)
 	{
 	case eMenuState:
-		menuState.Execute();
+		menuState.Input();
 		break;
 	case ePlayState:
 		playState.Execute();
