@@ -11,8 +11,9 @@ Player::Player()
 }
 
 
-void Player::Init(int xPos, int yPos, int width, int height)
+void Player::Init(int xPos, int yPos, int width, int height, HighscoreSystem* highscoreSystem)
 {
+	_highscoreSystem = highscoreSystem;
 	_width = width;
 	_height = height;
 	CreatePoints();
@@ -77,5 +78,6 @@ void Player::Accelerate()
 void Player::Collide()
 {
 	alive = false;
+	_highscoreSystem->SetScore();
 }
 

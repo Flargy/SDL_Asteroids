@@ -1,6 +1,6 @@
 #include "HighscoreSystem.h"
 
-void HighscoreSystem::SetScore(int latestScore)
+void HighscoreSystem::SetScore()
 {
 	fromFile.open(path);
 	int temp = 0;
@@ -9,6 +9,7 @@ void HighscoreSystem::SetScore(int latestScore)
 	{
 		scores.push_back(temp);
 	}
+	scores.push_back(currentScore);
 
 	std::sort(scores.begin(), scores.end(), std::greater<int>());
 	fromFile.close();
@@ -21,4 +22,5 @@ void HighscoreSystem::SetScore(int latestScore)
 	{
 		toFile << scores[i] << "\n";
 	}
+	toFile.close();
 }

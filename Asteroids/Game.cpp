@@ -5,11 +5,11 @@
 #include "SimpleGameStates.h"
 
 Game::Game(SimpleGameStates& statemachine)
-	: _spawnSystem(_asteroids, _projectiles, _alien, _player, _particles),
+	: _spawnSystem(_asteroids, _projectiles, _alien, _player, _particles, &_highscoreSystem),
 	statemachine(statemachine)
 {
 	_spawnSystem.SpawnAsteroids();
-	_player.Init(400, 400, 10, 10);
+	_player.Init(400, 400, 10, 10, &_highscoreSystem);
 	_alien.ReceivePlayer(&_player);
 }
 
@@ -111,6 +111,7 @@ void Game::Input()
 	if (state[SDL_SCANCODE_R])
 	{
 		_spawnSystem.Reset();
+		_highscoreSystem.Reset();
 	}
 	
 	while (SDL_PollEvent(&event))
@@ -144,6 +145,9 @@ void Game::Draw(Window& window) {
 		window.DrawObject(_player);
 	if(_alien.alive)
 		window.DrawObject(_alien);
+
+	std::string text = std::to_string(_highscoreSystem.currentScore);
+	window.DrawText(text, _scorePosX, _scorePosY);
 	window.PresentRenderer();
 }
 

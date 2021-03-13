@@ -13,6 +13,7 @@
 #include "GameObjectBuffer.h"
 #include "Particles.h"
 #include "Time.h"
+#include "HighscoreSystem.h"
 
 
 class SimpleGameStates;
@@ -28,7 +29,7 @@ public:
 	
 
 private:
-	double _shotDelay = 0.1;
+	double _shotDelay = 0.7;
 	bool gameActive = true;
 	double deltaRotation = 180 * Time::deltaTime;
 	std::chrono::steady_clock::time_point _lastShot = std::chrono::steady_clock::now();
@@ -42,6 +43,10 @@ private:
 	SimpleGameStates& statemachine;
 	SpawnSystem _spawnSystem;
 	CollisionHandler _collisionHandler;
+	HighscoreSystem _highscoreSystem;
+
+	int _scorePosX = 400;
+	int _scorePosY = 50;
 
 	void Update();
 

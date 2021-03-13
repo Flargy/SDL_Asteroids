@@ -138,8 +138,8 @@ void CollisionHandler::FindAllCollisions(
 				if ((object.alive && otherObject->alive)
 					&& CheckCollisionV2(&object, otherObject))
 				{
-					object.Collision();
 					otherObject->Collision();//todo ugly pointers?
+					object.Collision();
 				}
 			}
 		}

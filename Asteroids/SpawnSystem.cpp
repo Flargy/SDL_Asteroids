@@ -5,8 +5,8 @@
 
 SpawnSystem::SpawnSystem(GameObjectBuffer<Asteroid, 32>& asteroids,
 	GameObjectBuffer<Projectile, 16>& projectiles, Alien& alien, Player& player,
-	GameObjectBuffer<Particles, 16>& particles)
-	: _asteroids(asteroids), _projectiles(projectiles), _alien(alien), _player(player), _particles(particles)
+	GameObjectBuffer<Particles, 16>& particles, HighscoreSystem* highscoreSystem)
+	: _asteroids(asteroids), _projectiles(projectiles), _alien(alien), _player(player), _particles(particles), _highscoreSystem(highscoreSystem)
 {	
 	_asteroids.for_each([this](Asteroid& a) { a._spawnSystem = this; });
 	_projectiles.for_each([this](Projectile& a) { a._spawnSystem = this; });
@@ -27,6 +27,7 @@ void SpawnSystem::SpawnAsteroids()
 void SpawnSystem::DestroyAsteroid(const int entity_id, int split) 
 {	
 	Vector2 pos = _asteroids[entity_id].transform.GetPosition();
+	_highscoreSystem->IncreaseCurrentScore(_pointsPerAsteroid);
 
  	if (split == 0)
 	{
@@ -101,6 +102,7 @@ void SpawnSystem::AlienTimeCounter()
 void SpawnSystem::AlienKilled(double timeOfDeath)
 {
 	alienSpawnTime = timeOfDeath + alienDelay;
+	_highscoreSystem->IncreaseCurrentScore(_pointsPerAlien);
 }
 
 void SpawnSystem::SpawnParticles(int numberOfParticles, int speed, Vector2 position, int lifeTime, double variance)

@@ -40,6 +40,7 @@ bool Window::Init() {
 		return false;
 	}
 	font = TTF_OpenFont("res/arial.ttf", textSize);
+	
 
 	return true;
 
