@@ -1,6 +1,5 @@
 #include "Alien.h"
 #include "SpawnSystem.h"
-#include "Time.h"
 
 
 Alien::Alien()

@@ -1,6 +1,4 @@
 #include "Transform.h"
-#include <math.h>
-#include <iostream>
 
 
 

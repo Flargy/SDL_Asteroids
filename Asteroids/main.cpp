@@ -1,17 +1,7 @@
 #include <memory>
-#include <map>
-#include <chrono>
-#include <vector>
 #include "Renderer.h"
-#include "Transform.h"
-#include "CollisionHandler.h"
-#include "Global.h"
-#include "Game.h"
-#include "ResourceManager.h"
-#include <string>
 #include "ShapeData.h"
 #include "SimpleGameStates.h"
-#include <SDL_ttf.h>
 
 int windowHeight, windowWidth;
 

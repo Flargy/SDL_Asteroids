@@ -1,7 +1,5 @@
 #include "Menu.h"
-#include "GameStateEnum.h"
 #include "SimpleGameStates.h"
-#include <vector>
 
 
 Menu::Menu(SimpleGameStates& statemachine) : _statemachine(statemachine)

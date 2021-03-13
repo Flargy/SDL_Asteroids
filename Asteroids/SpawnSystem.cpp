@@ -1,6 +1,5 @@
 #include "SpawnSystem.h"
 #include <cassert>
-#include "Time.h"
 
 
 SpawnSystem::SpawnSystem(GameObjectBuffer<Asteroid, 32>& asteroids,

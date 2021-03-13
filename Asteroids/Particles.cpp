@@ -1,8 +1,5 @@
 #include "Particles.h"
-#include <algorithm>
-#include <math.h>
 #include "SpawnSystem.h"
-#include "Time.h"
 
 
 Particles::Particles() 

@@ -1,6 +1,4 @@
 #include "Player.h"
-#include <math.h>
-#include <iostream>
 
 
 Player::Player()

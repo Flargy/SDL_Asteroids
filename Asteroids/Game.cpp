@@ -1,6 +1,4 @@
 #include "Game.h"
-#include <SDL.h>
-#include "Global.h"
 
 #include "SimpleGameStates.h"
 

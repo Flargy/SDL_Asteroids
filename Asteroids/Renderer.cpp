@@ -1,7 +1,5 @@
 #include <iostream>
 #include "renderer.h"
-#include "Font.h"
-#include "ResourceManager.h"
 
 Window::Window(const std::string& title, int width, int height) :
 	_title(title), _width(width), _height(height) {
