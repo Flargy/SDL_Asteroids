@@ -5,3 +5,5 @@ use move constructors in spawn system?
 use resource manager for font
 
 make a new game state to show high score screen between rounds
+
+in "input" shoot delay should use Time::time
