@@ -1,6 +1,5 @@
 #pragma once
 
-#include <iostream>
 
 template<typename TStateMachine>
 class PlayState : TStateMachine::State
@@ -8,19 +7,18 @@ class PlayState : TStateMachine::State
 	
 
 public:
-	PlayState(TStateMachine& m)
-		: TStateMachine::State(m)
-	{
-		Init();
-	}
+	PlayState(TStateMachine& m);
 	
-	void Init() {
-		std::cout << typeid(PlayState).name() << std::endl;
-	}
+	void Init();
 
-	void Prepare() {};
-	void Execute() {};
-	void End() {};
+	void Prepare();
+
+	void Execute();
+
+	void End();
+
+private:
+		int lol = 0;
 
 };
 

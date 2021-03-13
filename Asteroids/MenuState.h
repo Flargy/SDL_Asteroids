@@ -1,27 +1,18 @@
 #pragma once
 
-#include <iostream>
-
-
 template<typename TStateMachine>
 class MenuState : TStateMachine::State
 {
-	
-
 public:
-	MenuState(TStateMachine& m)
-		: TStateMachine::State(m)
-	{
-		Init();
-	}
+	MenuState(TStateMachine& m);	
 	
-	void Init() {
-		std::cout << typeid(MenuState).name() << std::endl;
-	}
+	void Init();
+	
+	void Prepare();	
 
-	void Prepare() {};
-	void Execute() {};
-	void End() {};
-
+	void Execute();
+	
+	void End();
+	
 };
 
